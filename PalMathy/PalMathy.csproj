@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Methods\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MathParser.org-mXparser" Version="6.0.0" />
+    <PackageReference Include="OxyPlot.Core" Version="2.2.0" />
     <PackageReference Include="OxyPlot.Wpf" Version="2.2.0" />
   </ItemGroup>
 
