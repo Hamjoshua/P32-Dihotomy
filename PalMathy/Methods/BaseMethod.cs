@@ -13,11 +13,17 @@ namespace PalMathy.Methods
     {
         public PlotModel Graph = new PlotModel { Title = "График" };
         public List<DataPoint> Points = new List<DataPoint>();
-        public string FunctionString = "log(x)";
+        public string FunctionString = "log(2,x)-3";
+
+        public double A = 0;
+        public double B = 0;
+        public double Epsilon = 0;
 
         public double BeginInterval = -10;
         public double EndInterval = 10;
-        
+
+        public abstract string CalculateResult();        
+
         public PlotModel CalculateGraph()
         {
             ParseFunction();
@@ -61,19 +67,21 @@ namespace PalMathy.Methods
 
             return newGraph;
         }
+        protected Function GetFunction()
+        {
+            return new Function("f(x) = " + FunctionString);
+        }
 
         void ParseFunction()
         {
             Points = new List<DataPoint>();
-            Function parsedFunction = new Function("f(x) = " + FunctionString);
+            Function parsedFunction = GetFunction();
 
             for (double counterI = BeginInterval; counterI <= EndInterval; ++counterI)
             {
                 Expression e1 = new Expression($"f({counterI})", parsedFunction);
                 Points.Add(new DataPoint(counterI, e1.calculate()));
             }
-
         }
-
     }
 }

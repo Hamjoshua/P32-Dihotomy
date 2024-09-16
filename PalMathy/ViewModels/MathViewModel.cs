@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace PalMathy.ViewModels
@@ -55,6 +56,36 @@ namespace PalMathy.ViewModels
             }
         }
 
+        public double A
+        {
+            get { return method.A; }
+            set
+            {
+                method.A= value;
+                OnPropertyChanged(nameof(method.A));
+            }
+        }
+
+        public double B
+        {
+            get { return method.B; }
+            set
+            {
+                method.B = value;
+                OnPropertyChanged(nameof(method.B));
+            }
+        }
+
+        public double Epsilon
+        {
+            get { return method.Epsilon; }
+            set
+            {
+                method.Epsilon = value;
+                OnPropertyChanged(nameof(method.Epsilon));
+            }
+        }
+
         public double EndInterval
         {
             get { return method.EndInterval; }
@@ -63,13 +94,35 @@ namespace PalMathy.ViewModels
                 OnPropertyChanged(nameof(method.EndInterval));
             }
         }
-        
+
+        private string _result;
+        public string Result
+        {
+            get { return _result; }
+            set
+            {
+                _result = value;
+                MessageBox.Show(_result);
+                OnPropertyChanged(nameof(_result));
+            }
+        }
         public PlotModel Plot
         {
             get { return method.Graph; }
             set
             {
                 Set(ref method.Graph, value);
+            }
+        }
+
+        public ICommand CalculateResult
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    Result = method.CalculateResult();
+                });
             }
         }
 

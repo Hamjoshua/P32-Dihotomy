@@ -19,12 +19,42 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
+                <Label Grid.Row="0" Grid.Column="0" Content="f(x) = " />
+                <Label Grid.Row="1" Grid.Column="0" Content="A = " />
+                <Label Grid.Row="2" Grid.Column="0" Content="B = " />
+                <Label Grid.Row="3" Grid.Column="0" Content="E = " />
+
+                <TextBox Grid.Row="0" Grid.Column="1"
+                    HorizontalAlignment="Left" Text="{Binding FunctionString}" Width="100px" />
+                <TextBox Grid.Row="1" Grid.Column="1"
+                    HorizontalAlignment="Left" Text="{Binding A}" Width="100px" />
+                <TextBox Grid.Row="2" Grid.Column="1"
+                    HorizontalAlignment="Left" Text="{Binding B}" Width="100px" />
+                <TextBox Grid.Row="3" Grid.Column="1"
+                    HorizontalAlignment="Left" Text="{Binding Epsilon}" Width="100px" />
+            </Grid>
             <Label Content="Функция" />
-            <Label Content="f(x) = " />
-            <TextBox HorizontalAlignment="Left" Text="{Binding FunctionString}" Width="100px" />
-            <TextBox HorizontalAlignment="Left" Text="{Binding BeginInterval}" Width="100px"></TextBox>
-            <TextBox HorizontalAlignment="Left" Text="{Binding EndInterval}" Width="100px"></TextBox>
-            <Button Content="Посчитать" Command="{Binding CalculateFunction}" VerticalAlignment="Top" Width="Auto"/>
+            
+            
+            <TextBox HorizontalAlignment="Left" Text="{Binding BeginInterval}" Width="50px"></TextBox>
+            <TextBox HorizontalAlignment="Right" Text="{Binding EndInterval}" Width="50px"></TextBox>
+            <Button Content="Построить график" Command="{Binding CalculateFunction}" VerticalAlignment="Top" Width="Auto"/>
+            <Button Content="Посчитать корни" Command="{Binding CalculateResult}" VerticalAlignment="Top" Width="Auto"/>
+
+            <TextBlock Text="{Binding Result}"></TextBlock>
         </StackPanel>
 
         <oxy:PlotView Grid.Column="1" x:Name="pvGraph" Model="{Binding Plot}"/>
