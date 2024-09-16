@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31727.386
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalMathy", "PalMathy.csproj", "{B7AEAE22-FA51-4DA9-A007-FBFE4B7C647D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalMathy", "PalMathy.csproj", "{81F38F47-83F7-4F3C-B9E1-77BEA56E26DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B7AEAE22-FA51-4DA9-A007-FBFE4B7C647D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7AEAE22-FA51-4DA9-A007-FBFE4B7C647D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B7AEAE22-FA51-4DA9-A007-FBFE4B7C647D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B7AEAE22-FA51-4DA9-A007-FBFE4B7C647D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81F38F47-83F7-4F3C-B9E1-77BEA56E26DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81F38F47-83F7-4F3C-B9E1-77BEA56E26DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81F38F47-83F7-4F3C-B9E1-77BEA56E26DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81F38F47-83F7-4F3C-B9E1-77BEA56E26DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E480AA87-8A68-4348-85AC-173A53E4C58E}
+		SolutionGuid = {10A6AB6D-31BC-49E6-A375-0AA7B6A8DDAD}
 	EndGlobalSection
 EndGlobal

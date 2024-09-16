@@ -4,12 +4,30 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PalMathy.Pages" 
-      xmlns:oxy="http://oxyplot.org/wpf"
+      xmlns:oxy="http://oxyplot.org/wpf" 
+      xmlns:viewmodels="clr-namespace:PalMathy.ViewModels"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DihotomyPage">
-
+    <Page.DataContext>
+        <viewmodels:MathViewModel />
+    </Page.DataContext>
     <Grid Background="#FFF3F3F3">
-        <oxy:PlotView/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Label Content="Функция" />
+            <Label Content="f(x) = " />
+            <TextBox HorizontalAlignment="Left" Text="{Binding FunctionString}" Width="100px" />
+            <TextBox HorizontalAlignment="Left" Text="{Binding BeginInterval}" Width="100px"></TextBox>
+            <TextBox HorizontalAlignment="Left" Text="{Binding EndInterval}" Width="100px"></TextBox>
+            <Button Content="Посчитать" Command="{Binding CalculateFunction}" VerticalAlignment="Top" Width="Auto"/>
+        </StackPanel>
+
+        <oxy:PlotView Grid.Column="1" x:Name="pvGraph" Model="{Binding Plot}"/>
+
     </Grid>
 </Page>

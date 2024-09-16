@@ -9,17 +9,19 @@ using OxyPlot.Series;
 
 namespace PalMathy.Methods
 {
-    class BaseMethod
+    abstract class BaseMethod
     {
-        PlotModel Graph = new PlotModel { Title = "График" };
-        List<DataPoint> Points;
-        string FunctionString;
+        public PlotModel Graph = new PlotModel { Title = "График" };
+        public List<DataPoint> Points = new List<DataPoint>();
+        public string FunctionString = "log(x)";
 
-        double BeginInterval = 0;
-        double EndInterval = 10;
+        public double BeginInterval = -10;
+        public double EndInterval = 10;
         
-        void CalculateGraph()
+        public PlotModel CalculateGraph()
         {
+            ParseFunction();
+            PlotModel newGraph = new PlotModel { Title = $"График {FunctionString}" };            
             var medianLine = new LineSeries
             {
                 Title = "X",
@@ -53,14 +55,16 @@ namespace PalMathy.Methods
             lineSeries.Points.AddRange(Points);
 
             // Добавляем серию точек к модели графика
-            Graph.Series.Add(lineSeries);
-            Graph.Series.Add(medianLine);
-            Graph.Series.Add(absicc);
+            newGraph.Series.Add(lineSeries);
+            newGraph.Series.Add(medianLine);
+            newGraph.Series.Add(absicc);
 
+            return newGraph;
         }
 
         void ParseFunction()
         {
+            Points = new List<DataPoint>();
             Function parsedFunction = new Function("f(x) = " + FunctionString);
 
             for (double counterI = BeginInterval; counterI <= EndInterval; ++counterI)
