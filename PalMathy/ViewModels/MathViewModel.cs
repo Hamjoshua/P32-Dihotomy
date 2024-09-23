@@ -34,7 +34,7 @@ namespace PalMathy.ViewModels
             get { return method.A; }
             set
             {
-                method.A= Convert.ToDouble(value);
+                method.A = Convert.ToDouble(value);
                 OnPropertyChanged(nameof(method.A));
             }
         }
@@ -68,15 +68,13 @@ namespace PalMathy.ViewModels
             }
         }
 
-        private string _result;
+        private string _result = "Пока здесь ничего нет...";
         public string Result
         {
             get { return _result; }
             set
-            {
-                _result = value;
-                MessageBox.Show(_result);
-                OnPropertyChanged(nameof(_result));
+            {                
+                Set(ref _result, value);
             }
         }
         public PlotModel Plot
@@ -105,7 +103,21 @@ namespace PalMathy.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    Plot = method.CalculateGraph();                    
+                    Plot = method.CalculateGraph();
+                });
+            }
+        }
+
+        public ICommand ClearFields
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    FunctionString = "";
+                    A = 0;
+                    B = 0;
+                    Epsilon = 0;
                 });
             }
         }

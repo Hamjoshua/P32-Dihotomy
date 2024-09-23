@@ -8,9 +8,11 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage">
 
-    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
         <TextBlock Style="{StaticResource MaterialDesignHeadline2TextBlock}"
-                Text="Добро пожаловать
-в Palmathy"/>
-    </Grid>
+                Text="Привет! Я Палмафи" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Image Source="/Materials/palmathy-char.png" Stretch="Fill" HorizontalAlignment="Center" Height="220" Width="261"/>
+        <TextBlock Text="И я помогу тебе со всеми задачками, с которыми ты столкнешься при изучении математики. 
+Просто разверни боковое меню, чтобы мы могли начать!" FontSize="18" TextWrapping="Wrap" Width="516"/>
+    </StackPanel>
 </Page>

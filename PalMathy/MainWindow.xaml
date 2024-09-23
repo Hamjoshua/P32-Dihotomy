@@ -7,28 +7,41 @@
         xmlns:local="clr-namespace:PalMathy"
         xmlns:viewmodels="clr-namespace:PalMathy.ViewModels"
         mc:Ignorable="d"        
-        Title="MainWindow" Height="450" Width="800">
+        Icon="Materials/palmathy-icon.ico"
+        Title="PalMathy" Height="450" Width="800">
     <Window.DataContext>
         <viewmodels:NavigatorViewModel />
     </Window.DataContext>
-    <Grid>        
+    <Grid>
         <Expander ExpandDirection="Right" HorizontalAlignment="Left" Panel.ZIndex="3">
+            <Expander.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF352E92"/>
+                    <GradientStop Color="#FF3676BD" Offset="1"/>
+                </LinearGradientBrush>
+            </Expander.Background>
             <Expander.Header>
-                <TextBlock RenderTransformOrigin=".5,.5" Text="Панель инструментов">
+                <TextBlock RenderTransformOrigin=".5,.5" Text="Панель инструментов" Foreground="White">
                     <TextBlock.LayoutTransform>
                         <RotateTransform Angle="90" />
                     </TextBlock.LayoutTransform>
                 </TextBlock>
             </Expander.Header>
-            <StackPanel Margin="8,24,16,24" Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+            <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+                <StackPanel.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF27246D"/>
+                        <GradientStop Color="#FF346296" Offset="1"/>
+                    </LinearGradientBrush>
+                </StackPanel.Background>
                 <Button Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" Command="{Binding GoToMenu}"
-                        Content="Домой"></Button>
+                        Content="Домой" Background="#7FFFFFFF"></Button>
                 <Button Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" Command="{Binding GoToFunctionModule}"
-                        Content="Нахождение точек"></Button>
+                        Content="Нахождение точек" Background="#7FFFFFFF"></Button>
                 <Button Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
-                        Content="Сортировка"></Button>
+                        Content="Сортировка" Background="#7FFFFFFF"></Button>
                 <Button Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
-                        Content="..."></Button>
+                        Content="..." Background="#7FFFFFFF"></Button>
             </StackPanel>
         </Expander>
         <Frame Content="{Binding CurrentPage}" Margin="50,0,0,0" NavigationUIVisibility="Hidden"/>

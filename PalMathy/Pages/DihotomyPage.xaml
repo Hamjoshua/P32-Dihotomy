@@ -13,11 +13,24 @@
     <Page.DataContext>
         <viewmodels:MathViewModel />
     </Page.DataContext>
-    <Grid Background="#FFF3F3F3">
+    
+    <Grid>       
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
+
+        <materialDesign:Card VerticalAlignment="Top">
+            <Menu>
+                <MenuItem Header="График">
+                    <MenuItem Header="Очистить все поля" Command="{Binding ClearFields}" />
+                    <MenuItem Header="Построить график" Command="{Binding CalculateFunction}" />                    
+                </MenuItem>
+                <MenuItem Header="Метод">
+                    <MenuItem Header="Посчитать корни" Command="{Binding CalculateResult}" />
+                </MenuItem>                
+            </Menu>
+        </materialDesign:Card>
 
         <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FunctionString}"
@@ -27,15 +40,19 @@
             <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding B}"
          materialDesign:HintAssist.Hint="B = " Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
             <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Epsilon}"
-         materialDesign:HintAssist.Hint="E = " Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
-            <Label Content="Функция" />          
-                        
-            <Button Content="Построить график" Command="{Binding CalculateFunction}"
-                    Style="{StaticResource MaterialDesignPaperDarkButton}" VerticalAlignment="Top" Width="Auto"/>
-            <Button Content="Посчитать корни" Command="{Binding CalculateResult}"
-                    Style="{StaticResource MaterialDesignPaperDarkButton}" VerticalAlignment="Top" Width="Auto"/>
+         materialDesign:HintAssist.Hint="E = " Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,10"/>
 
-            <TextBlock Text="{Binding Result}"></TextBlock>
+            <materialDesign:Card
+                Width="200"
+                Padding="8"
+                Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}"
+                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                UniformCornerRadius="6">
+                <TextBlock
+                    Text="{Binding Result}"
+                    TextWrapping="Wrap"/>
+            </materialDesign:Card>
+
         </StackPanel>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
