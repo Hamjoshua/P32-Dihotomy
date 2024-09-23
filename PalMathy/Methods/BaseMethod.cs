@@ -9,7 +9,7 @@ using OxyPlot.Series;
 
 namespace PalMathy.Methods
 {
-    abstract class BaseMethod
+    abstract class BaseNumericalMethod
     {
         public PlotModel Graph = new PlotModel { Title = "График" };
         public List<DataPoint> Points = new List<DataPoint>();

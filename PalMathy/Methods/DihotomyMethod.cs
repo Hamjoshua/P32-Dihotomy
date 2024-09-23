@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PalMathy.Methods
 {
-    class DihotomyMethod : BaseMethod
+    class DihotomyMethod : BaseNumericalMethod
     {
         private double GetResultFromFunction(Function function, double value)
         {
@@ -31,7 +31,7 @@ namespace PalMathy.Methods
                     middle = (a + b) / 2;
                     double resultMiddle = GetResultFromFunction(parsedFunction, middle);
 
-                    if(Math.Abs(resultMiddle) < Epsilon || resultMiddle == 0)
+                    if(resultMiddle == 0)
                     {
                         break;                        
                     }

@@ -1,40 +1,13 @@
 ﻿using OxyPlot;
 using PalMathy.Methods;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
 namespace PalMathy.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged
-    {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
-
-        protected void Set<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
-        {
-            if (propertyName == null)
-                throw new ArgumentNullException(nameof(propertyName));
-
-            if (EqualityComparer<T>.Default.Equals(field, newValue)) return;
-            field = newValue;
-            OnPropertyChanged(propertyName);
-        }
-    }
-
     public class MathViewModel : BaseViewModel
     {
-        BaseMethod method = new DihotomyMethod();
+        BaseNumericalMethod method = new DihotomyMethod();
 
         public string FunctionString
         {
@@ -61,7 +34,7 @@ namespace PalMathy.ViewModels
             get { return method.A; }
             set
             {
-                method.A= value;
+                method.A= Convert.ToDouble(value);
                 OnPropertyChanged(nameof(method.A));
             }
         }
@@ -71,7 +44,7 @@ namespace PalMathy.ViewModels
             get { return method.B; }
             set
             {
-                method.B = value;
+                method.B = Convert.ToDouble(value);
                 OnPropertyChanged(nameof(method.B));
             }
         }
@@ -81,7 +54,7 @@ namespace PalMathy.ViewModels
             get { return method.Epsilon; }
             set
             {
-                method.Epsilon = value;
+                method.Epsilon = Convert.ToDouble(value);
                 OnPropertyChanged(nameof(method.Epsilon));
             }
         }
