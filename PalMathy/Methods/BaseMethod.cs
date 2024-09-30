@@ -22,7 +22,17 @@ namespace PalMathy.Methods
         public double BeginInterval = -10;
         public double EndInterval = 10;
 
-        public abstract string CalculateResult();        
+        public abstract string CalculateResult();
+
+        public bool IsFunctionContinious()
+        {
+            if (Points.Count > 0)
+            {
+
+            }
+
+            return false;
+        }
 
         public PlotModel CalculateGraph()
         {
