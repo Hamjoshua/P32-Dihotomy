@@ -64,6 +64,7 @@ namespace PalMathy.ViewModels
             get { return method.EndInterval; }
             set
             {
+                method.EndInterval = value;
                 OnPropertyChanged(nameof(method.EndInterval));
             }
         }

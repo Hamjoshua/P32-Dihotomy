@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 using org.mariuszgromada.math.mxparser;
 using OxyPlot;
 using OxyPlot.Series;
@@ -15,9 +16,9 @@ namespace PalMathy.Methods
         public List<DataPoint> Points = new List<DataPoint>();
         public string FunctionString = "log(2,x)-3";
 
-        public double A = 0;
-        public double B = 0;
-        public double Epsilon = 0;
+        public double A = -5;
+        public double B = 10;
+        public double Epsilon = 0.5;
 
         public double BeginInterval = -10;
         public double EndInterval = 10;
@@ -31,34 +32,44 @@ namespace PalMathy.Methods
 
             }
 
-            return false;
+            return true;
         }
 
-        public PlotModel CalculateGraph()
+        public LineSeries MakeXLine()
         {
-            ParseFunction();
-            PlotModel newGraph = new PlotModel { Title = $"График {FunctionString}" };            
-            var medianLine = new LineSeries
+            var xLine = new LineSeries
             {
                 Title = "X",
                 Color = OxyColor.FromRgb(255, 0, 0), // Красный цвет
                 StrokeThickness = 2
             };
 
-            medianLine.Points.Add(new DataPoint(-10, 0));
-            medianLine.Points.Add(new DataPoint(10, 0));
+            xLine.Points.Add(new DataPoint(10 ^ 5, 0));
+            xLine.Points.Add(new DataPoint(-10 ^ 5, 0));
 
-            var absicc = new LineSeries
+            return xLine;
+        }
+
+        public LineSeries MakeYLine()
+        {
+            var yLine = new LineSeries
             {
                 Title = "Y",
                 Color = OxyColor.FromRgb(255, 0, 0), // Красный цвет
-                StrokeThickness = 2,
+                StrokeThickness = 2
             };
 
-            absicc.Points.Add(new DataPoint(0, 10));
-            absicc.Points.Add(new DataPoint(0, -10));
+            yLine.Points.Add(new DataPoint(0, 10 ^ 5));
+            yLine.Points.Add(new DataPoint(0, -10 ^ 5));
 
+            return yLine;
+        }
 
+        public PlotModel CalculateGraph()
+        {
+            ParseFunction();
+            PlotModel newGraph = new PlotModel { Title = $"График {FunctionString}" };            
+                        
             // Создаем серию точек графика
             var lineSeries = new LineSeries
             {
@@ -72,8 +83,8 @@ namespace PalMathy.Methods
 
             // Добавляем серию точек к модели графика
             newGraph.Series.Add(lineSeries);
-            newGraph.Series.Add(medianLine);
-            newGraph.Series.Add(absicc);
+            newGraph.Series.Add(MakeXLine());
+            newGraph.Series.Add(MakeYLine());
 
             return newGraph;
         }
@@ -87,9 +98,9 @@ namespace PalMathy.Methods
             Points = new List<DataPoint>();
             Function parsedFunction = GetFunction();
 
-            for (double counterI = BeginInterval; counterI <= EndInterval; ++counterI)
+            for (double counterI = BeginInterval; counterI <= EndInterval; counterI += 0.15)
             {
-                Expression e1 = new Expression($"f({counterI})", parsedFunction);
+                Expression e1 = new Expression($"f({counterI.ToString().Replace(",", ".")})", parsedFunction);
                 Points.Add(new DataPoint(counterI, e1.calculate()));
             }
         }
