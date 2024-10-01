@@ -15,6 +15,11 @@ namespace PalMathy.Methods
         }
         public override string CalculateResult()
         {
+            if (!IsFunctionContinious())
+            {
+                return "Данная функция не является непрерывной, расчет корня уравнения невозможен";
+            }
+
             double a = A;
             double b = B;
             double middle = (a + b) / 2;
