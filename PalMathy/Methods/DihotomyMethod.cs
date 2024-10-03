@@ -39,6 +39,7 @@ namespace PalMathy.Methods
             while (b - a > Epsilon)
             {
                 middle = (a + b) / 2;
+                resultA = GetResultFromFunction(parsedFunction, a);
                 double resultMiddle = GetResultFromFunction(parsedFunction, middle);
 
                 if (resultMiddle == 0)
@@ -60,4 +61,4 @@ namespace PalMathy.Methods
     }
 
 }
-}
+
