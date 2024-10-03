@@ -34,6 +34,10 @@ namespace PalMathy.Methods
 
             return true;
         }
+        protected double GetResultFromFunction(Function function, double value)
+        {
+            return (new Expression($"f({value.ToString().Replace(",", ".")})", function)).calculate();
+        }
 
         public LineSeries MakeXLine()
         {

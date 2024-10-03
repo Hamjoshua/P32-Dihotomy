@@ -8,11 +8,7 @@ using System.Threading.Tasks;
 namespace PalMathy.Methods
 {
     class DihotomyMethod : BaseNumericalMethod
-    {
-        private double GetResultFromFunction(Function function, double value)
-        {
-            return (new Expression($"f({value.ToString().Replace(",", ".")})", function)).calculate();
-        }
+    {        
         public override string CalculateResult()
         {
             if (!IsFunctionContinious())

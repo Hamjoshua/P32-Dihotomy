@@ -6,15 +6,19 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PalMathy.Pages" 
       xmlns:oxy="http://oxyplot.org/wpf"       
+      xmlns:rbc="clr-namespace:PalMathy.Converters"
       xmlns:viewmodels="clr-namespace:PalMathy.ViewModels"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DihotomyPage">
-    <Page.DataContext>
-        <viewmodels:MathViewModel />
+    <Page.Resources>
+        <rbc:RadioButtonConverter x:Key="RBConverter"></rbc:RadioButtonConverter>
+    </Page.Resources>
+    <Page.DataContext>        
+        <viewmodels:MathViewModel />        
     </Page.DataContext>
-    
-    <Grid>       
+
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
@@ -24,11 +28,12 @@
             <Menu>
                 <MenuItem Header="График">
                     <MenuItem Header="Очистить все поля" Command="{Binding ClearFields}" />
-                    <MenuItem Header="Построить график" Command="{Binding CalculateFunction}" />                    
+                    <MenuItem Header="Построить график" Command="{Binding CalculateFunction}" />
                 </MenuItem>
                 <MenuItem Header="Метод">
                     <MenuItem Header="Посчитать корни" Command="{Binding CalculateResult}" />
-                </MenuItem>                
+
+                </MenuItem>
             </Menu>
         </materialDesign:Card>
 
@@ -52,14 +57,19 @@
                     Text="{Binding Result}"
                     TextWrapping="Wrap"/>
             </materialDesign:Card>
+            <RadioButton Content="Метод дихотомии" GroupName="GroupChoiceChip" Style="{StaticResource MaterialDesignChoiceChipRadioButton}"
+                         IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=D }"/>
+            <RadioButton Content="Метод золотого сечения" GroupName="GroupChoiceChip" Style="{StaticResource MaterialDesignChoiceChipRadioButton}" 
+                         IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=G }"/>
 
+            <RadioButton Content="Метод бинома Ньютона" IsEnabled="False" GroupName="GroupChoiceChip" Style="{StaticResource MaterialDesignChoiceChipRadioButton}" />
         </StackPanel>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="9*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
             </Grid.RowDefinitions>
-            
+
             <oxy:PlotView Grid.Row="0" x:Name="pvGraph" Model="{Binding Plot}"/>
             <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBlock Text="Строить функцию от x=" VerticalAlignment="Center"></TextBlock>
@@ -68,8 +78,8 @@
                 <TextBox HorizontalAlignment="Right" Text="{Binding EndInterval}" Width="50px"></TextBox>
             </StackPanel>
         </Grid>
-        
-        
+
+
 
     </Grid>
 </Page>

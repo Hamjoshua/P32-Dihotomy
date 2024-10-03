@@ -9,6 +9,26 @@ namespace PalMathy.ViewModels
     {
         BaseNumericalMethod method = new DihotomyMethod();
 
+        private string _chosenMethod = "D";
+        public string ChosenMethod
+        {
+            get { return _chosenMethod; }
+            set
+            {
+                _chosenMethod = value;
+                switch (_chosenMethod)
+                {
+                    case "D":
+                        method = new DihotomyMethod(); 
+                        break;
+                    case "G":
+                        method = new GoldenRatioMethod();
+                        break;
+                }
+                Set(ref _chosenMethod, value);                
+            }
+        }
+
         public string FunctionString
         {
             get { return method.FunctionString; }
