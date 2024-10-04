@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Animation;
@@ -23,17 +24,25 @@ namespace PalMathy.Methods
         public double BeginInterval = -10;
         public double EndInterval = 10;
 
-        public abstract string CalculateResult();
+        protected int _countOfZeros;
 
-        public bool IsFunctionContinious()
+        public BaseNumericalMethod()
         {
-            if (Points.Count > 0)
-            {
 
-            }
-
-            return true;
         }
+
+        public BaseNumericalMethod(BaseNumericalMethod method)
+        {
+            A = method.A;
+            B = method.B;
+            Epsilon = method.Epsilon;
+            BeginInterval = method.BeginInterval;
+            EndInterval = method.EndInterval;
+            FunctionString = method.FunctionString;
+        }
+
+        public abstract string CalculateResult();
+        
         protected double GetResultFromFunction(Function function, double value)
         {
             return (new Expression($"f({value.ToString().Replace(",", ".")})", function)).calculate();
@@ -72,8 +81,8 @@ namespace PalMathy.Methods
         public PlotModel CalculateGraph()
         {
             ParseFunction();
-            PlotModel newGraph = new PlotModel { Title = $"График {FunctionString}" };            
-                        
+            PlotModel newGraph = new PlotModel { Title = $"График {FunctionString}" };
+
             // Создаем серию точек графика
             var lineSeries = new LineSeries
             {
@@ -101,12 +110,27 @@ namespace PalMathy.Methods
         {
             Points = new List<DataPoint>();
             Function parsedFunction = GetFunction();
+            double prevY = 0;
 
             for (double counterI = BeginInterval; counterI <= EndInterval; counterI += 0.15)
             {
                 Expression e1 = new Expression($"f({counterI.ToString().Replace(",", ".")})", parsedFunction);
-                Points.Add(new DataPoint(counterI, e1.calculate()));
+                double newY = e1.calculate();
+                Points.Add(new DataPoint(counterI, newY));
+
+                if (newY == 0)
+                {
+                    _countOfZeros += 1;
+                }
+                else if (prevY != 0)
+                {
+                    if(prevY * newY < 0)
+                    {
+                        _countOfZeros += 1;
+                    }
+                }
+                prevY = newY;
             }
-        }
+        }        
     }
 }

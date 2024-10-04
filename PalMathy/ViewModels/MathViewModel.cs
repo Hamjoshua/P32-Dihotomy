@@ -19,10 +19,10 @@ namespace PalMathy.ViewModels
                 switch (_chosenMethod)
                 {
                     case "D":
-                        method = new DihotomyMethod(); 
+                        method = new DihotomyMethod(method);
                         break;
                     case "G":
-                        method = new GoldenRatioMethod();
+                        method = new GoldenRatioMethod(method);
                         break;
                 }
                 Set(ref _chosenMethod, value);                

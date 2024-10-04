@@ -8,21 +8,40 @@ namespace PalMathy.Methods
 {
     class GoldenRatioMethod : BaseNumericalMethod
     {
+        public GoldenRatioMethod() { }
+
+        public GoldenRatioMethod(BaseNumericalMethod method) : base(method) { }
+
         public double GoldenRatio = (1 + Math.Sqrt(5)) / 2;
         
         public override string CalculateResult()
+        {
+            string result = "";
+
+            if (_countOfZeros > 1)
+            {
+                result += "Внимание! Функция содержит больше одного корня. Расчет может быть некорректен.\n";
+            }
+
+            result += $"Минимум функции: {GetResult(true)}\n" +
+                $"Максимум функции: {GetResult(false)}";
+            
+            return result;
+        }
+
+        private double GetResult(bool findMin)
         {
             double a = A;
             double b = B;
             double x1 = b - ((b - a) / GoldenRatio);
             double x2 = a + ((b - a) / GoldenRatio);
-            
+
             while (Math.Abs(b - a) > Epsilon)
-            {                
+            {
                 double f1 = GetResultFromFunction(GetFunction(), x1);
                 double f2 = GetResultFromFunction(GetFunction(), x2);
-                
-                if (f1 < f2)
+
+                if ((f1 < f2 && findMin) || (f1 > f2 && !findMin))
                 {
                     b = x2;
                     x2 = x1;
@@ -35,8 +54,8 @@ namespace PalMathy.Methods
                     x2 = a + (b - a) / GoldenRatio;
                 }
             }
-            
-            return $"Минимум функции: {(a + b) / 2}";
+
+            return (a + b) / 2;
         }
     }
 }

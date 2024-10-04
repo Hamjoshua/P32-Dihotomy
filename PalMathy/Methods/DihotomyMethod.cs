@@ -10,11 +10,18 @@ namespace PalMathy.Methods
 {
     class DihotomyMethod : BaseNumericalMethod
     {
+        public DihotomyMethod() { }
+        public DihotomyMethod(BaseNumericalMethod method) : base(method)
+        {
+        }
+
         public override string CalculateResult()
         {
-            if (!IsFunctionContinious())
+            string result = "";
+
+            if (_countOfZeros > 1)
             {
-                return "Данная функция не является непрерывной, расчет корня уравнения невозможен";
+                result += "Внимание! Функция содержит больше одного корня. Расчет может быть некорректен.\n";
             }
 
             double a = A;
@@ -26,14 +33,16 @@ namespace PalMathy.Methods
             double resultA = GetResultFromFunction(parsedFunction, a);
             double resultB = GetResultFromFunction(parsedFunction, b);
 
-            if(resultA == 0)
+            if (resultA == 0)
             {
-                return $"Корень уравнения: {a}";
+                result += $"Корень уравнения: {a}";
+                return result;
             }
 
             if (resultB == 0)
             {
-                return $"Корень уравнения: {b}";
+                result += $"Корень уравнения: {b}";
+                return result;
             }
 
             while (b - a > Epsilon)
@@ -56,7 +65,9 @@ namespace PalMathy.Methods
                 }
             }
 
-            return $"Корень уравнения: {middle}";
+            result += $"Корень уравнения: {middle}";
+
+            return result;
         }
     }
 
