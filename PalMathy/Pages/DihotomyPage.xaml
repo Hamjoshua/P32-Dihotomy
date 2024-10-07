@@ -14,8 +14,8 @@
     <Page.Resources>
         <rbc:RadioButtonConverter x:Key="RBConverter"></rbc:RadioButtonConverter>
     </Page.Resources>
-    <Page.DataContext>        
-        <viewmodels:MathViewModel />        
+    <Page.DataContext>
+        <viewmodels:MathViewModel />
     </Page.DataContext>
 
     <Grid>
@@ -26,14 +26,9 @@
 
         <materialDesign:Card VerticalAlignment="Top">
             <Menu>
-                <MenuItem Header="График">
-                    <MenuItem Header="Очистить все поля" Command="{Binding ClearFields}" />
-                    <MenuItem Header="Построить график" Command="{Binding CalculateFunction}" />
-                </MenuItem>
-                <MenuItem Header="Метод">
-                    <MenuItem Header="Посчитать корни" Command="{Binding CalculateResult}" />
-
-                </MenuItem>
+                <MenuItem Header="Очистка полей" Command="{Binding ClearFields}" />
+                <MenuItem Header="График" Command="{Binding CalculateFunction}" />
+                <MenuItem Header="Решение" Command="{Binding CalculateResult}" />
             </Menu>
         </materialDesign:Card>
 
@@ -61,8 +56,8 @@
                          IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=D }"/>
             <RadioButton Content="Метод золотого сечения" GroupName="GroupChoiceChip" Style="{StaticResource MaterialDesignChoiceChipRadioButton}" 
                          IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=G }"/>
-
-            <RadioButton Content="Метод бинома Ньютона" IsEnabled="False" GroupName="GroupChoiceChip" Style="{StaticResource MaterialDesignChoiceChipRadioButton}" />
+            <RadioButton Content="Метод Ньютона" GroupName="GroupChoiceChip" Style="{StaticResource MaterialDesignChoiceChipRadioButton}" 
+                         IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=N }"/>
         </StackPanel>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>

@@ -24,6 +24,9 @@ namespace PalMathy.ViewModels
                     case "G":
                         method = new GoldenRatioMethod(method);
                         break;
+                    case "N":
+                        method = new NewtonMethod(method);
+                        break;
                 }
                 Set(ref _chosenMethod, value);                
             }

@@ -17,12 +17,7 @@ namespace PalMathy.Methods
 
         public override string CalculateResult()
         {
-            string result = "";
-
-            if (_countOfZeros > 1)
-            {
-                result += "Внимание! Функция содержит больше одного корня. Расчет может быть некорректен.\n";
-            }
+            string result = base.CalculateResult();
 
             double a = A;
             double b = B;

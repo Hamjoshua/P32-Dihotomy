@@ -41,11 +41,28 @@ namespace PalMathy.Methods
             FunctionString = method.FunctionString;
         }
 
-        public abstract string CalculateResult();
-        
-        protected double GetResultFromFunction(Function function, double value)
+        public virtual string CalculateResult()
         {
-            return (new Expression($"f({value.ToString().Replace(",", ".")})", function)).calculate();
+            string result = "";
+            if(_countOfZeros > 1)
+            {
+                result += "Внимание! Функция содержит больше одного корня. Расчет может быть некорректен.\n";
+            }
+
+            return result;
+        }
+        
+        protected double GetResultFromFunction(Function function, double value, bool derivative = false)
+        {
+            if (derivative)
+            {
+                return (new Expression($"f({value.ToString().Replace(",", ".")})'", function)).calculate();
+            }
+            else
+            {
+                return (new Expression($"f({value.ToString().Replace(",", ".")})", function)).calculate();
+
+            }
         }
 
         public LineSeries MakeXLine()
