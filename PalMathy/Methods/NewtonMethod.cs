@@ -27,9 +27,7 @@ namespace PalMathy.Methods
                 double fXDerivative = GetResultFromFunction(GetFunction(), x, true);
                 double newX = x - (fX / fXDerivative);
 
-                double fNewX = GetResultFromFunction(GetFunction(), newX);
-
-                if((fX == 0) || Math.Abs(newX - x) > Epsilon)
+                if((fX == 0) || Math.Abs(newX - x) < Epsilon)
                 {
                     currentIterationIndex = iterationIndex; 
                     break;
@@ -41,6 +39,12 @@ namespace PalMathy.Methods
             }
 
             result += $"Корень уравнения: {x}\nКоличество итераций: {currentIterationIndex}";
+
+            if(double.IsNaN(x) || double.IsInfinity(x))
+            {
+                result += "\nМетод Ньютона может показать некорректные результаты, если начальное приближение недостаточно близко к решению." +
+                    "Попробуйте выбрать другие число.";
+            }
 
             return result;
 

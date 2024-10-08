@@ -51,18 +51,24 @@ namespace PalMathy.Methods
 
             return result;
         }
-        
+
         protected double GetResultFromFunction(Function function, double value, bool derivative = false)
         {
             if (derivative)
             {
-                return (new Expression($"f({value.ToString().Replace(",", ".")})'", function)).calculate();
+                Expression derivExpression = new Expression($"der({FunctionString}, x, {FormatDouble(value)})");
+                return derivExpression.calculate();
             }
             else
             {
-                return (new Expression($"f({value.ToString().Replace(",", ".")})", function)).calculate();
+                return (new Expression($"f({FormatDouble(value)})", function)).calculate();
 
             }
+        }
+
+        protected string FormatDouble(double value)
+        {
+            return value.ToString().Replace(",", ".");
         }
 
         public LineSeries MakeXLine()
