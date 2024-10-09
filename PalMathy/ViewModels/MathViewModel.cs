@@ -1,6 +1,7 @@
 ﻿using OxyPlot;
 using PalMathy.Methods;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace PalMathy.ViewModels
@@ -142,6 +143,27 @@ namespace PalMathy.ViewModels
                     A = 0;
                     B = 0;
                     Epsilon = 0;
+                });
+            }
+        }
+
+        public KeyEventHandler KeyDown
+        {
+            get
+            {
+                return new KeyEventHandler((object sender, KeyEventArgs e) =>
+                {
+                    TextBox textBox = sender as TextBox;
+                    if (textBox != null)
+                    {
+                        if (e.Key == Key.Return)
+                        {
+                            if (e.Key == Key.Enter)
+                            {
+                                textBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                            }
+                        }
+                    }
                 });
             }
         }
