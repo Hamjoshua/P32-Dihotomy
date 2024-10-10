@@ -19,6 +19,11 @@ namespace PalMathy.Methods
         {
             string result = base.CalculateResult();
 
+            if (result == NO_ZEROS)
+            {
+                return result;
+            }
+
             double a = A;
             double b = B;
             double middle = (a + b) / 2;

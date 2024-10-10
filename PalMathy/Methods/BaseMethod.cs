@@ -13,6 +13,8 @@ namespace PalMathy.Methods
 {
     abstract class BaseNumericalMethod
     {
+        protected const string NO_ZEROS = "Пересечений с осью Х нет\n";
+            
         public PlotModel Graph = new PlotModel { Title = "График" };
         public List<DataPoint> Points = new List<DataPoint>();
         public string FunctionString = "log(2,x)-3";
@@ -43,7 +45,12 @@ namespace PalMathy.Methods
 
         public virtual string CalculateResult()
         {
+            ParseFunction();
             string result = "";
+            if(_countOfZeros == 0)
+            {
+                result += NO_ZEROS;
+            }
             if(_countOfZeros > 1)
             {
                 result += "Внимание! Функция содержит больше одного корня. Расчет может быть некорректен.\n";

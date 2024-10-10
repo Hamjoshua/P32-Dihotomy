@@ -17,6 +17,11 @@ namespace PalMathy.Methods
         {
             string result = base.CalculateResult();
 
+            if(result == NO_ZEROS)
+            {
+                return result;
+            }
+
             double x = A;
             int countOfIterations = (int) B;
             int currentIterationIndex = 0;
