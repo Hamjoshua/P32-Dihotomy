@@ -45,7 +45,7 @@ namespace PalMathy.Methods
 
         public virtual string CalculateResult()
         {
-            ParseFunction();
+            ParseFunction(A, B);
             string result = "";
             if(_countOfZeros == 0)
             {
@@ -110,7 +110,7 @@ namespace PalMathy.Methods
 
         public PlotModel CalculateGraph()
         {
-            ParseFunction();
+            ParseFunction(BeginInterval, EndInterval);
             PlotModel newGraph = new PlotModel { Title = $"График {FunctionString}" };
 
             // Создаем серию точек графика
@@ -136,13 +136,13 @@ namespace PalMathy.Methods
             return new Function("f(x) = " + FunctionString);
         }
 
-        void ParseFunction()
+        void ParseFunction(double start, double end)
         {
             Points = new List<DataPoint>();
             Function parsedFunction = GetFunction();
             double prevY = 0;
 
-            for (double counterI = BeginInterval; counterI <= EndInterval; counterI += 0.15)
+            for (double counterI = start; counterI <= end; counterI += 0.15)
             {
                 Expression e1 = new Expression($"f({counterI.ToString().Replace(",", ".")})", parsedFunction);
                 double newY = e1.calculate();

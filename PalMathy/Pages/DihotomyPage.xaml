@@ -8,23 +8,37 @@
       xmlns:oxy="http://oxyplot.org/wpf"       
       xmlns:rbc="clr-namespace:PalMathy.Converters"
       xmlns:viewmodels="clr-namespace:PalMathy.ViewModels"      
-      xmlns:i="System.Windows.Interactivity"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DihotomyPage">
     <Page.Resources>
-        <rbc:RadioButtonConverter x:Key="RBConverter"></rbc:RadioButtonConverter>                
+        <rbc:RadioButtonConverter x:Key="RBConverter"></rbc:RadioButtonConverter>
     </Page.Resources>
     <Page.DataContext>
         <viewmodels:MathViewModel />
     </Page.DataContext>
 
     <Grid Background="#FFFFFF">
+        <Grid.RowDefinitions></Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        
+
+        <StackPanel Margin="4"
+            Orientation="Vertical">
+            <RadioButton Margin="4" Content="FIRST"
+                IsChecked="True"
+                Style="{StaticResource MaterialDesignTabRadioButtonRight}" />
+            <RadioButton Margin="4"
+                Content="SECOND" IsChecked="False"
+                Style="{StaticResource MaterialDesignTabRadioButtonRight}" />
+            <RadioButton Margin="4" Content="THIRD"
+                IsChecked="False" IsEnabled="False"
+                Style="{StaticResource MaterialDesignTabRadioButtonRight}" />
+        </StackPanel>
+
         <materialDesign:Card VerticalAlignment="Top">
             <Menu>
                 <MenuItem Header="Очистка полей" Command="{Binding ClearFields}" />
@@ -60,12 +74,12 @@
                         <TextBlock Style="{StaticResource PopupText}" Text="Делит отрезок поиска пополам, выбирая для следующего шага ту половину, где функция принимает меньшее (для минимума) или большее (для максимума) значение. "></TextBlock>
                     </Grid>
                     <materialDesign:PopupBox.ToggleContent>
-                            <materialDesign:PackIcon Kind="InformationSlabCircleOutline" />
-                            
-                        </materialDesign:PopupBox.ToggleContent>
-                    </materialDesign:PopupBox>
+                        <materialDesign:PackIcon Kind="InformationSlabCircleOutline" />
+
+                    </materialDesign:PopupBox.ToggleContent>
+                </materialDesign:PopupBox>
             </StackPanel>
-                    
+
             <StackPanel Orientation="Horizontal">
                 <RadioButton Content="Метод золотого сечения" GroupName="GroupChoiceChip" Style="{StaticResource MaterialDesignChoiceChipRadioButton}" 
     IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=G }"/>
@@ -79,22 +93,22 @@
                     </materialDesign:PopupBox.ToggleContent>
                 </materialDesign:PopupBox>
             </StackPanel>
-            
-            <StackPanel Orientation="Horizontal">
-                    <RadioButton Content="Метод Ньютона" GroupName="GroupChoiceChip" Style="{StaticResource MaterialDesignChoiceChipRadioButton}" 
-                        IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=N }"/>
-                    <materialDesign:PopupBox HorizontalAlignment="Right" Cursor="">
-                        <Grid Style="{StaticResource PopupBox}">
-                            <TextBlock Style="{StaticResource PopupText}" Text="Использует производную функции для нахождения экстремума. Метод находит точку, где производная равна нулю, что является экстремумом."></TextBlock>
-                        </Grid>
-                        <materialDesign:PopupBox.ToggleContent>
-                            <materialDesign:PackIcon Kind="InformationSlabCircleOutline" />
 
-                        </materialDesign:PopupBox.ToggleContent>
-                    </materialDesign:PopupBox>
+            <StackPanel Orientation="Horizontal">
+                <RadioButton Content="Метод Ньютона" GroupName="GroupChoiceChip" Style="{StaticResource MaterialDesignChoiceChipRadioButton}" 
+                        IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=N }"/>
+                <materialDesign:PopupBox HorizontalAlignment="Right" Cursor="">
+                    <Grid Style="{StaticResource PopupBox}">
+                        <TextBlock Style="{StaticResource PopupText}" Text="Использует производную функции для нахождения экстремума. Метод находит точку, где производная равна нулю, что является экстремумом."></TextBlock>
+                    </Grid>
+                    <materialDesign:PopupBox.ToggleContent>
+                        <materialDesign:PackIcon Kind="InformationSlabCircleOutline" />
+
+                    </materialDesign:PopupBox.ToggleContent>
+                </materialDesign:PopupBox>
             </StackPanel>
-            
-            
+
+
         </StackPanel>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
