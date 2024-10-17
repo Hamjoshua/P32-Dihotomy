@@ -11,7 +11,10 @@ namespace PalMathy.Methods
     {
         public NewtonMethod() { }
 
-        public NewtonMethod(BaseNumericalMethod method) : base(method) { }
+        public NewtonMethod(BaseNumericalMethod method) : base(method) {
+            Description = "Использует производную функции для нахождения экстремума. " +
+                        "Метод находит точку, где производная равна нулю, что является экстремумом.";
+        }
 
         public override string CalculateResult()
         {

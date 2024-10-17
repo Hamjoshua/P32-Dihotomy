@@ -9,18 +9,22 @@ namespace PalMathy.Methods
     class GoldenRatioMethod : BaseNumericalMethod
     {
         public GoldenRatioMethod() { }
-
-        public GoldenRatioMethod(BaseNumericalMethod method) : base(method) { }
+        
+        public GoldenRatioMethod(BaseNumericalMethod method) : base(method)
+        {
+            Description = "Делит отрезок поиска в соотношении 0,618:0,382, что позволяет сократить число итераций " +
+                        "по сравнению с методом дихотомии.";
+        }
 
         public double GoldenRatio = (1 + Math.Sqrt(5)) / 2;
-        
+
         public override string CalculateResult()
         {
             string result = base.CalculateResult();
 
             result += $"Минимум функции: {GetResult(true)}\n" +
                 $"Максимум функции: {GetResult(false)}";
-            
+
             return result;
         }
 

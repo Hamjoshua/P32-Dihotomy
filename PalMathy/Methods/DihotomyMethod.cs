@@ -10,9 +10,16 @@ namespace PalMathy.Methods
 {
     class DihotomyMethod : BaseNumericalMethod
     {
-        public DihotomyMethod() { }
+        public DihotomyMethod()
+        {
+            Description = "Делит отрезок поиска пополам, выбирая для следующего шага ту половину," +
+                    " где функция принимает меньшее (для минимума) или большее (для максимума) значение";
+        }
+
         public DihotomyMethod(BaseNumericalMethod method) : base(method)
         {
+            Description = "Делит отрезок поиска пополам, выбирая для следующего шага ту половину," +
+                    " где функция принимает меньшее (для минимума) или большее (для максимума) значение";
         }
 
         public override string CalculateResult()

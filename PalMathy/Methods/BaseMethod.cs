@@ -26,6 +26,8 @@ namespace PalMathy.Methods
         public double BeginInterval = -10;
         public double EndInterval = 10;
 
+        public string Description;
+
         protected int _countOfZeros;
 
         public BaseNumericalMethod()
@@ -36,7 +38,7 @@ namespace PalMathy.Methods
         public BaseNumericalMethod(BaseNumericalMethod method)
         {
             A = method.A;
-            B = method.B;
+            B = method.B;            
             Epsilon = method.Epsilon;
             BeginInterval = method.BeginInterval;
             EndInterval = method.EndInterval;

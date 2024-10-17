@@ -29,6 +29,7 @@ namespace PalMathy.ViewModels
                         method = new NewtonMethod(method);
                         break;
                 }
+                OnPropertyChanged(nameof(method.Description));
                 Set(ref _chosenMethod, value);                
             }
         }
@@ -51,6 +52,11 @@ namespace PalMathy.ViewModels
                 method.BeginInterval = value;
                 OnPropertyChanged(nameof(method.BeginInterval));
             }
+        }
+
+        public string Description
+        {
+            get { return method.Description; }
         }
 
         public double A
