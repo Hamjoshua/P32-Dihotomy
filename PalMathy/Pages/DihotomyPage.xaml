@@ -38,6 +38,8 @@
                          GroupName="Method" IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=G }"/>
             <RadioButton Margin="4" Content="НЬЮТОНА" Style="{StaticResource MaterialDesignTabRadioButtonRight}"
                          GroupName="Method" IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=N }"/>
+            <RadioButton Margin="4" Content="КООРД. СПУСКА" Style="{StaticResource MaterialDesignTabRadioButtonRight}"
+                         GroupName="Method" IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=C }"/>
         </StackPanel>
 
         <materialDesign:Card VerticalAlignment="Top" Grid.Row="0" Grid.ColumnSpan="3">

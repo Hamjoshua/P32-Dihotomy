@@ -28,6 +28,9 @@ namespace PalMathy.ViewModels
                     case "N":
                         method = new NewtonMethod(method);
                         break;
+                    case "C":
+                        method = new CoordinateDescentMethod(method);
+                        break;
                 }
                 OnPropertyChanged(nameof(method.Description));
                 Set(ref _chosenMethod, value);                
