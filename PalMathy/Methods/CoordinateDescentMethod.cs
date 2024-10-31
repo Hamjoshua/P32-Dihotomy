@@ -40,29 +40,15 @@ namespace PalMathy.Methods
 
                 if (fx > fNewX)
                 {
-                    if (isMax)
-                    {
-                        direction = -1;
-                    }
-                    else
-                    {
-                        direction = 1;
-                    }
+                    direction = 1;
                 }
                 else
                 {
-                    if (isMax)
-                    {
-                        direction = 1;
-                    }
-                    else
-                    {
-                        direction = -1;
-                    }
+                    direction = -1;
                 }
-                
+
                 x = newX;
-                newX = x + (step * direction);                
+                newX = x + (step * direction);
             }
 
             return newX;
