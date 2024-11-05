@@ -133,9 +133,14 @@ namespace PalMathy.Methods
 
             return newGraph;
         }
-        protected Function GetFunction()
+        protected Function GetFunction(bool withMinus = false)
         {
-            return new Function("f(x) = " + FunctionString);
+            string function = FunctionString;
+            if (withMinus)
+            {
+                function = $"-({function})";
+            }
+            return new Function($"f(x) = {function}");
         }
 
         void ParseFunction(double start, double end)

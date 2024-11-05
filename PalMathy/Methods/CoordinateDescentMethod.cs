@@ -28,27 +28,31 @@ namespace PalMathy.Methods
             return result;
         }
 
-        public double GetPoint(double x, double step, bool isMax)
+        public double GetPoint(double x, double step, bool isMax=true, int iterations = 10)
         {
             int direction = 1;
             double newX = x + (step * direction);
 
-            while (Math.Abs(x - newX) < Epsilon && (x > BeginInterval & x < EndInterval))
+            while (Math.Abs(x - newX) > Epsilon && (x > BeginInterval & x < EndInterval) && iterations > 0)
             {
-                double fx = GetResultFromFunction(GetFunction(), x);
-                double fNewX = GetResultFromFunction(GetFunction(), newX);
+                double fx = GetResultFromFunction(GetFunction(!isMax), x);
+                double fNewX = GetResultFromFunction(GetFunction(!isMax), newX);                
 
                 if (fx > fNewX)
                 {
-                    direction = 1;
+                    if (Double.IsNaN(fNewX))
+                    {
+                        break;
+                    }
+                    x = newX;
+                    newX = x + (step * direction);                    
                 }
                 else
                 {
-                    direction = -1;
+                    direction *= -1;
+                    newX = x + (step * direction);
                 }
-
-                x = newX;
-                newX = x + (step * direction);
+                iterations -= 1;
             }
 
             return newX;
