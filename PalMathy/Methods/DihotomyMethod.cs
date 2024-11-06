@@ -1,10 +1,4 @@
 ﻿using org.mariuszgromada.math.mxparser;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
 
 namespace PalMathy.Methods
 {
@@ -31,8 +25,8 @@ namespace PalMathy.Methods
                 return result;
             }
 
-            double a = A;
-            double b = B;
+            double a = A.Value;
+            double b = B.Value;
             double middle = (a + b) / 2;
 
             Function parsedFunction = GetFunction();

@@ -33,6 +33,9 @@ namespace PalMathy.ViewModels
                         break;
                 }
                 OnPropertyChanged(nameof(method.Description));
+                OnPropertyChanged(nameof(method.A));
+                OnPropertyChanged(nameof(method.B));
+                OnPropertyChanged(nameof(method.C));
                 Set(ref _chosenMethod, value);                
             }
         }
@@ -62,23 +65,33 @@ namespace PalMathy.ViewModels
             get { return method.Description; }
         }
 
-        public double A
+        public BindedValue<double> A
         {
             get { return method.A; }
             set
             {
-                method.A = Convert.ToDouble(value);
+                method.A.Value = Convert.ToDouble(value);
                 OnPropertyChanged(nameof(method.A));
             }
-        }
+        }        
 
-        public double B
+        public BindedValue<double> B
         {
             get { return method.B; }
             set
             {
-                method.B = Convert.ToDouble(value);
+                method.B.Value = Convert.ToDouble(value);
                 OnPropertyChanged(nameof(method.B));
+            }
+        }
+
+        public BindedValue<double> C
+        {
+            get { return method.C; }
+            set
+            {
+                method.C.Value = Convert.ToDouble(value);
+                OnPropertyChanged(nameof(method.C));
             }
         }
 
@@ -149,8 +162,9 @@ namespace PalMathy.ViewModels
                 return new DelegateCommand((obj) =>
                 {
                     FunctionString = "";
-                    A = 0;
-                    B = 0;
+                    A.Value = 0;
+                    B.Value = 0;
+                    C.Value = 0;
                     Epsilon = 0;
                 });
             }

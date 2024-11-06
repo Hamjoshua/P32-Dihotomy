@@ -11,6 +11,17 @@ using OxyPlot.Series;
 
 namespace PalMathy.Methods
 {
+    public class BindedValue<T> {
+        public BindedValue(T value, string hint, bool isVisible) {
+            Value = value;
+            Hint = hint;
+            IsVisible = isVisible;
+        }
+        public T Value { get; set; }
+        public string Hint { get; set; }
+        public bool IsVisible { get; set; }
+    }
+
     abstract class BaseNumericalMethod
     {
         protected const string NO_ZEROS = "Пересечений с осью Х нет\n";
@@ -19,8 +30,9 @@ namespace PalMathy.Methods
         public List<DataPoint> Points = new List<DataPoint>();
         public string FunctionString = "log(2,x)-3";
 
-        public double A = -5;
-        public double B = 10;
+        public BindedValue<double> A;
+        public BindedValue<double> B;
+        public BindedValue<double> C;        
         public double Epsilon = 0.5;
 
         public double BeginInterval = -10;
@@ -32,22 +44,32 @@ namespace PalMathy.Methods
 
         public BaseNumericalMethod()
         {
-
+            A = new BindedValue<double>(-5, "A", true);
+            B = new BindedValue<double>(5, "B", true);
+            C = new BindedValue<double>(10, "C", false);
         }
 
         public BaseNumericalMethod(BaseNumericalMethod method)
         {
             A = method.A;
-            B = method.B;            
+            A.Hint = "A";
+
+            B = method.B;
+            B.Hint = "B";
+
+            C = method.C;
+            C.Hint = "C";
+            C.IsVisible = false;
+               
             Epsilon = method.Epsilon;
             BeginInterval = method.BeginInterval;
             EndInterval = method.EndInterval;
-            FunctionString = method.FunctionString;
-        }
+            FunctionString = method.FunctionString;            
+    }
 
         public virtual string CalculateResult()
         {
-            ParseFunction(A, B);
+            ParseFunction(A.Value, B.Value);
             string result = "";
             if(_countOfZeros == 0)
             {

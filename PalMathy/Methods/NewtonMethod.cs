@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls.Primitives;
-
-namespace PalMathy.Methods
+﻿namespace PalMathy.Methods
 {
     class NewtonMethod : BaseNumericalMethod
     {
         public NewtonMethod() { }
 
         public NewtonMethod(BaseNumericalMethod method) : base(method) {
+            A.Hint = "Первое приближение";
+            B.Hint = "Кол-во итераций";
             Description = "Использует производную функции для нахождения экстремума. " +
                         "Метод находит точку, где производная равна нулю, что является экстремумом.";
         }
@@ -25,8 +20,8 @@ namespace PalMathy.Methods
                 return result;
             }
 
-            double x = A;
-            int countOfIterations = (int) B;
+            double x = A.Value;
+            int countOfIterations = (int) B.Value;  
             int currentIterationIndex = 0;
 
             for (int iterationIndex = 0; iterationIndex < countOfIterations; ++iterationIndex)

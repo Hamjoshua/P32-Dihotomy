@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PalMathy.Methods
+﻿namespace PalMathy.Methods
 {
     class GoldenRatioMethod : BaseNumericalMethod
     {
@@ -30,8 +24,8 @@ namespace PalMathy.Methods
 
         private double GetResult(bool findMin)
         {
-            double a = A;
-            double b = B;
+            double a = A.Value;
+            double b = B.Value;
             double x1 = b - ((b - a) / GoldenRatio);
             double x2 = a + ((b - a) / GoldenRatio);
 
