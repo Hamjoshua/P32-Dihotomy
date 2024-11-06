@@ -34,13 +34,13 @@
 
         <StackPanel Margin="4" Orientation="Vertical" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0">
             <RadioButton Margin="4" Content="ДИХОТОМИЯ" Style="{StaticResource MaterialDesignTabRadioButtonRight}"
-                         GroupName="Method" IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=D }"/>
+                         GroupName="Method" IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=D }" HorizontalAlignment="Right"/>
             <RadioButton Margin="4" Content="ЗОЛ. СЕЧЕНИЕ" Style="{StaticResource MaterialDesignTabRadioButtonRight}"
-                         GroupName="Method" IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=G }"/>
+                         GroupName="Method" IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=G }" HorizontalAlignment="Right"/>
             <RadioButton Margin="4" Content="НЬЮТОНА" Style="{StaticResource MaterialDesignTabRadioButtonRight}"
-                         GroupName="Method" IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=N }"/>
+                         GroupName="Method" IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=N }" HorizontalAlignment="Right"/>
             <RadioButton Margin="4" Content="КООРД. СПУСКА" Style="{StaticResource MaterialDesignTabRadioButtonRight}"
-                         GroupName="Method" IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=C }"/>
+                         GroupName="Method" IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=C }" HorizontalAlignment="Right"/>
         </StackPanel>
 
         <materialDesign:Card VerticalAlignment="Top" Grid.Row="0" Grid.ColumnSpan="3">
@@ -51,7 +51,7 @@
             </Menu>
         </materialDesign:Card>
 
-        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Margin="10">            
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Margin="10">
             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FunctionString}"
                 materialDesign:HintAssist.Hint="f(x) = " Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding A.Value}"
