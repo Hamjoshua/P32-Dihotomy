@@ -1,31 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PalMathy.Sortings
 {
-    class WholeReport
+    public class WholeReport
     {
-        List<int> Elements;
-        DateTime BeginTime;
-        List<BaseSorting> Sortings;
-        List<SingleReport> OutReports;
+        public ObservableCollection<int> Elements { get; set; }
+        public DateTime BeginTime { get; set; }
+        List<BaseSorting> Sortings { get; set; }
+        public ObservableCollection<SingleReport> OutReports { get; set; }
 
-        public WholeReport(List<int> elements, List<BaseSorting> sortings)
+        public WholeReport(ObservableCollection<int> elements, List<BaseSorting> sortings)
         {
             BeginTime = DateTime.Now;
             Elements = elements;
-            Sortings = sortings.Where(d => d.IsActivated == false).ToList();
-            OutReports = new List<SingleReport>();
+            Sortings = sortings.Where(d => d.IsActivated == true).ToList();
+            OutReports = new ObservableCollection<SingleReport>();
         }
         
         public async void MakeReports()
         {
             foreach (BaseSorting sorting in Sortings)
             {
-                SingleReport report = new SingleReport(sorting, Elements.ToList());
+                var elems = new ObservableCollection<int>(Elements.ToList());
+                SingleReport report = new SingleReport(sorting, elems);
                 OutReports.Add(report);
                 await report.BeginSort();
             }

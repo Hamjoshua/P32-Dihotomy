@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -7,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace PalMathy.Sortings
 {
-    class SingleReport
+    public class SingleReport
     {
-        public BaseSorting Sorting;
-        public long ExecutingTime;
-        public DateTime Begin;
+        public BaseSorting Sorting { get; set; }
+        public long ExecutingTime { get; set; }
+        public DateTime Begin { get; set; }
         public DateTime Difference;
-        public List<int> Elements;
-        public SingleReport(BaseSorting sorting, List<int> elements)
+        public ObservableCollection<int> Elements { get; set; }
+        public SingleReport(BaseSorting sorting, ObservableCollection<int> elements)
         {
             Sorting = sorting;
             Elements = elements;

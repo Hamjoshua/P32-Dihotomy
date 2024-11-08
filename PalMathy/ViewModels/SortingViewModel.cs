@@ -1,19 +1,46 @@
 ﻿using PalMathy.Sortings;
+using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace PalMathy.ViewModels
 {
     public class SortingViewModel : BaseViewModel
     {
-        private List<WholeReport> _wholeReports = new List<WholeReport>();
-        private List<BaseSorting> _allSortings = new List<BaseSorting> {
-            new BubbleSorting()
+        private ObservableCollection<WholeReport> _wholeReports = new ObservableCollection<WholeReport>();
+        private List<BaseSorting> _allSortings = new List<BaseSorting>
+        {
+            new BubbleSorting(),
+            new InsertSorting(),
+            new QuickSorting(),
+            new ShakeSorting(),
+            new BogoSorting()
         };
-        private List<int> _elements = new List<int>();
+        private ObservableCollection<int> _elements = new ObservableCollection<int>()
+        {
+            1, 2, 3, 4
+        };
 
+        public ObservableCollection<int> Elements
+        {
+            get { return _elements; }
+            set
+            {
+                Set<ObservableCollection<int>>(ref _elements, value);
+            }
+        }
         public List<BaseSorting> AllSortings
         {
             get { return _allSortings; }
+        } 
+
+        public ObservableCollection<WholeReport> WholeReports { 
+            get { return _wholeReports; }
+            set
+            {
+                OnPropertyChanged(nameof(WholeReports));
+                // Set(ref _wholeReports, value);
+            }
         }
 
         public ICommand SortElements
@@ -22,8 +49,17 @@ namespace PalMathy.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    WholeReport newWholeReport = new WholeReport(_elements.ToList(), _allSortings);
-                    _wholeReports.Add(newWholeReport);
+                    bool anyOfSortingsIsActivated = AllSortings.Any(x => x.IsActivated);
+
+                    if (!anyOfSortingsIsActivated)
+                    {
+                        MessageBox.Show("Не выбраны методы сортировки!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    var elems = new ObservableCollection<int>(Elements.ToList());
+                    WholeReport newWholeReport = new WholeReport(elems, _allSortings);
+                    WholeReports.Add(newWholeReport);
                     newWholeReport.MakeReports();
                 });
             }

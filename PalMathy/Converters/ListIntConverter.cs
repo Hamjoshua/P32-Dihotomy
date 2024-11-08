@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -13,15 +14,22 @@ namespace PalMathy.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((List<int>) value).ToString();
+            return String.Join(", ", (ObservableCollection<int>) value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string[] myStrings = ((string) value).Split(',');
-            List<int> list = new List<int>();
-            foreach (string str in myStrings) { 
-                list.Add(int.Parse(str));
+            string[] myStrings = ((string) value).Split(", ");
+            ObservableCollection<int> list = new ObservableCollection<int>();
+            foreach (string str in myStrings) {
+                try
+                {
+                    list.Add(int.Parse(str));
+                }
+                catch
+                {
+
+                }
             }
 
             return list;
