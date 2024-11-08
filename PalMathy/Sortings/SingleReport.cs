@@ -13,19 +13,21 @@ namespace PalMathy.Sortings
         public long ExecutingTime;
         public DateTime Begin;
         public DateTime Difference;
-        public SingleReport(BaseSorting sorting)
+        public List<int> Elements;
+        public SingleReport(BaseSorting sorting, List<int> elements)
         {
             Sorting = sorting;
+            Elements = elements;
         }
         
         // TODO проверка на правильную сортировку
 
         // TODO отмена действия
-        public async Task BeginSort(List<int> elements)
+        public async Task BeginSort()
         {
             Begin = DateTime.Now;
             var watch = Stopwatch.StartNew();
-            Sorting.Sort(elements);            
+            Sorting.Sort(Elements);            
             watch.Stop();
             ExecutingTime = watch.ElapsedMilliseconds;
         }

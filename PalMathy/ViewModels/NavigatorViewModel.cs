@@ -45,5 +45,16 @@ namespace PalMathy.ViewModels
                 });
             }
         }
+
+        public ICommand GoToSortingsModule
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    CurrentPage = new SortingPage();
+                });
+            }
+        }
     }
 }

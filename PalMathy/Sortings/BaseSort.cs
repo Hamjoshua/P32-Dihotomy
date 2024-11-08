@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PalMathy.Sortings
 {
-    abstract class BaseSorting
+    public abstract class BaseSorting
     {
         public string Name;
         public string Description;
@@ -14,7 +14,7 @@ namespace PalMathy.Sortings
 
         public BaseSorting()
         {
-
+            IsActivated = false;
         }
         
         public abstract List<int> Sort(List<int> elements);

@@ -13,20 +13,21 @@ namespace PalMathy.Sortings
         List<BaseSorting> Sortings;
         List<SingleReport> OutReports;
 
-        WholeReport(List<int> elements, List<BaseSorting> sortings)
+        public WholeReport(List<int> elements, List<BaseSorting> sortings)
         {
             BeginTime = DateTime.Now;
+            Elements = elements;
             Sortings = sortings.Where(d => d.IsActivated == false).ToList();
             OutReports = new List<SingleReport>();
         }
         
-        async void MakeReports()
+        public async void MakeReports()
         {
             foreach (BaseSorting sorting in Sortings)
             {
-                SingleReport report = new SingleReport(sorting);
+                SingleReport report = new SingleReport(sorting, Elements.ToList());
                 OutReports.Add(report);
-                await report.BeginSort(Elements);
+                await report.BeginSort();
             }
         }
     }
