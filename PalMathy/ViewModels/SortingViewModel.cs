@@ -18,7 +18,7 @@ namespace PalMathy.ViewModels
         };
         private ObservableCollection<int> _elements = new ObservableCollection<int>()
         {
-            1, 2, 3, 4
+            111, 2, 3, 4, 0, -1, -2, 8, -14, 1, -63, 32, -52, 321, 32, -9, 21, -6
         };
 
         public ObservableCollection<int> Elements

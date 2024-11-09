@@ -11,7 +11,7 @@ namespace PalMathy.Sortings
     public class SingleReport
     {
         public BaseSorting Sorting { get; set; }
-        public long ExecutingTime { get; set; }
+        public long ExecutingTime { get; set; } = -1;
         public DateTime Begin { get; set; }
         public DateTime Difference;
         public ObservableCollection<int> Elements { get; set; }
@@ -27,10 +27,8 @@ namespace PalMathy.Sortings
         public async Task BeginSort()
         {
             Begin = DateTime.Now;
-            var watch = Stopwatch.StartNew();
-            Sorting.Sort(Elements);            
-            watch.Stop();
-            ExecutingTime = watch.ElapsedMilliseconds;
+            
+            Elements = Sorting.Sort(Elements);           
         }
     }
 }

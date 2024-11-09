@@ -127,7 +127,7 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                                                     </Grid.ColumnDefinitions>
                                                     <TextBlock Grid.Column="0" Text="{Binding Sorting.Name}"></TextBlock>
                                                     <TextBlock Grid.Column="1" Text="{Binding Elements, Converter={StaticResource ListConv}}"></TextBlock>
-                                                    <TextBlock Grid.Column="2" Text="{Binding ExecutingTime}"></TextBlock>
+                                                    <TextBlock Grid.Column="2" Text="{Binding ExecutingTime, StringFormat={}{0} ms}"></TextBlock>
                                                 </Grid>
                                             </materialDesign:Card>
                                         </DataTemplate>

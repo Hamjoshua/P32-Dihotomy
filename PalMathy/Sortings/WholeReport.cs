@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +30,12 @@ namespace PalMathy.Sortings
                 var elems = new ObservableCollection<int>(Elements.ToList());
                 SingleReport report = new SingleReport(sorting, elems);
                 OutReports.Add(report);
-                await report.BeginSort();
+
+                var watch = Stopwatch.StartNew();
+                await Task.WhenAll(report.BeginSort());
+                watch.Stop();
+
+                report.ExecutingTime = watch.ElapsedMilliseconds;                
             }
         }
     }

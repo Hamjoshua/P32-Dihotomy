@@ -21,6 +21,29 @@ namespace PalMathy.Sortings
 
         public override ObservableCollection<int> Sort(ObservableCollection<int> elements)
         {
+            int length = elements.Count;
+
+            for(int j = 1; j < length; ++j)
+            {
+                bool isSorted = true;
+
+                for(int i = 0; i < length - j; ++i)
+                {
+                    if (elements[i] > elements[i + 1])
+                    {
+                        int prevElem = elements[i];
+                        elements[i] = elements[i + 1];
+                        elements[i + 1] = prevElem;
+                        isSorted = false;
+                    }
+                }
+
+                if (isSorted)
+                {
+                    break;
+                }
+            }
+
             return elements;
         }
     }
