@@ -127,7 +127,34 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                                                     </Grid.ColumnDefinitions>
                                                     <TextBlock Grid.Column="0" Text="{Binding Sorting.Name}"></TextBlock>
                                                     <TextBlock Grid.Column="1" Text="{Binding Elements, Converter={StaticResource ListConv}}"></TextBlock>
-                                                    <TextBlock Grid.Column="2" Text="{Binding ExecutingTime, StringFormat={}{0} ms}"></TextBlock>
+                                                    <TextBlock Grid.Column="2" HorizontalAlignment="Center" Text="{Binding ExecutingTime, StringFormat={}{0} ms}">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">                                                                
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Path=SortingIsOver}" Value="False">
+                                                                        <Setter Property="Visibility" Value="Hidden"></Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Path=SortingIsOver}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>                                                                
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                    <ProgressBar Grid.Column="2" IsIndeterminate="True" Value="35">
+                                                        <ProgressBar.Style>
+                                                            <Style TargetType="ProgressBar" BasedOn="{StaticResource MaterialDesignCircularProgressBar}">                                                                
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Path=SortingIsOver}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Hidden"></Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Path=SortingIsOver}" Value="False">
+                                                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>                                                                
+                                                            </Style>
+                                                        </ProgressBar.Style>
+                                                    </ProgressBar>
                                                 </Grid>
                                             </materialDesign:Card>
                                         </DataTemplate>

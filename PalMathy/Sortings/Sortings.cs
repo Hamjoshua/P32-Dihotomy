@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 // TODO Запихать все текста в xaml файлы или что-нибудь такое. Код бухнет от текста
 
@@ -58,9 +59,41 @@ namespace PalMathy.Sortings
                 "перетряхиваем список случайным образом до тех пор, пока он внезапно не отсортируется.";
         }
 
+        private bool IsSorted(ObservableCollection<int> elements)
+        {
+            for (int i = 0; i < elements.Count - 1; ++i) {
+                if (elements[i] > elements[i + 1])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private ObservableCollection<int> Shuffle(ObservableCollection<int> elements)
+        {
+            var count = elements.Count;
+            var last = count - 1;
+            for (var i = 0; i < last; ++i)
+            {
+                var r = Random.Shared.Next(i, count);
+                var tmp = elements[i];
+                elements[i] = elements[r];
+                elements[r] = tmp;
+            }
+
+            return elements;
+        }
+
         public override ObservableCollection<int> Sort(ObservableCollection<int> elements)
         {
-            throw new NotImplementedException();
+            while (!IsSorted(elements))
+            {                
+                elements = Shuffle(elements);
+            }
+
+            return elements;
         }
     }
 

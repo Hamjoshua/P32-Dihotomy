@@ -13,22 +13,27 @@ namespace PalMathy.Sortings
         public BaseSorting Sorting { get; set; }
         public long ExecutingTime { get; set; } = -1;
         public DateTime Begin { get; set; }
-        public DateTime Difference;
+        public bool SortingIsOver { get; set; } = false;
         public ObservableCollection<int> Elements { get; set; }
         public SingleReport(BaseSorting sorting, ObservableCollection<int> elements)
         {
             Sorting = sorting;
             Elements = elements;
         }
-        
+
         // TODO проверка на правильную сортировку
 
         // TODO отмена действия
         public async Task BeginSort()
         {
+            var elems = new ObservableCollection<int>(Elements.ToList());
+
             Begin = DateTime.Now;
-            
-            Elements = Sorting.Sort(Elements);           
+            var watch = Stopwatch.StartNew();
+            Elements = Sorting.Sort(elems);
+            watch.Stop();
+            ExecutingTime = watch.ElapsedMilliseconds;
+            SortingIsOver = true;
         }
     }
 }

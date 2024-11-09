@@ -23,20 +23,22 @@ namespace PalMathy.Sortings
             OutReports = new ObservableCollection<SingleReport>();
         }
         
-        public async void MakeReports()
+        public async Task MakeReports()
         {
-            foreach (BaseSorting sorting in Sortings)
+            Task[] sortTasks = new Task[Sortings.Count];
+
+            for (int sortingIndex = 0; sortingIndex < Sortings.Count; ++sortingIndex)
             {
+                BaseSorting sorting = Sortings[sortingIndex];
                 var elems = new ObservableCollection<int>(Elements.ToList());
                 SingleReport report = new SingleReport(sorting, elems);
                 OutReports.Add(report);
 
-                var watch = Stopwatch.StartNew();
-                await Task.WhenAll(report.BeginSort());
-                watch.Stop();
-
-                report.ExecutingTime = watch.ElapsedMilliseconds;                
+                
+                sortTasks[sortingIndex] = Task.Run(() => report.BeginSort());                
             }
+
+            await Task.WhenAll(sortTasks);
         }
     }
 }

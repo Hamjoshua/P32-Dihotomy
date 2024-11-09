@@ -43,11 +43,11 @@ namespace PalMathy.ViewModels
             }
         }
 
-        public ICommand SortElements
+        public IAsyncCommand SortElements
         {
             get
             {
-                return new DelegateCommand((obj) =>
+                return new AsyncCommand(async () =>
                 {
                     bool anyOfSortingsIsActivated = AllSortings.Any(x => x.IsActivated);
 
@@ -60,7 +60,7 @@ namespace PalMathy.ViewModels
                     var elems = new ObservableCollection<int>(Elements.ToList());
                     WholeReport newWholeReport = new WholeReport(elems, _allSortings);
                     WholeReports.Add(newWholeReport);
-                    newWholeReport.MakeReports();
+                    await newWholeReport.MakeReports();
                 });
             }
         }
@@ -69,7 +69,7 @@ namespace PalMathy.ViewModels
         {
             get
             {
-                return new DelegateCommand((obj) =>
+                return new Commands((obj) =>
                 {
 
                 });
@@ -80,7 +80,7 @@ namespace PalMathy.ViewModels
         {
             get
             {
-                return new DelegateCommand((obj) =>
+                return new Commands((obj) =>
                 {
 
                 });
