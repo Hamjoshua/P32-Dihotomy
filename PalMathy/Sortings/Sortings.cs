@@ -30,6 +30,11 @@ namespace PalMathy.Sortings
 
                 for(int i = 0; i < length - j; ++i)
                 {
+                    if (CancelToken.Instance.cancellationTokenSource.IsCancellationRequested)
+                    {
+                        return elements;
+                    }
+
                     if (elements[i] > elements[i + 1])
                     {
                         int prevElem = elements[i];
@@ -44,7 +49,7 @@ namespace PalMathy.Sortings
                     break;
                 }
             }
-
+            
             return elements;
         }
     }
@@ -76,7 +81,7 @@ namespace PalMathy.Sortings
             var count = elements.Count;
             var last = count - 1;
             for (var i = 0; i < last; ++i)
-            {
+            {              
                 var r = Random.Shared.Next(i, count);
                 var tmp = elements[i];
                 elements[i] = elements[r];
@@ -89,7 +94,11 @@ namespace PalMathy.Sortings
         public override ObservableCollection<int> Sort(ObservableCollection<int> elements)
         {
             while (!IsSorted(elements))
-            {                
+            {
+                if (CancelToken.Instance.cancellationTokenSource.IsCancellationRequested)
+                {
+                    return elements;
+                }
                 elements = Shuffle(elements);
             }
 

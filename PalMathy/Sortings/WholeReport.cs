@@ -35,7 +35,8 @@ namespace PalMathy.Sortings
                 OutReports.Add(report);
 
                 
-                sortTasks[sortingIndex] = Task.Run(() => report.BeginSort());                
+                sortTasks[sortingIndex] = Task.Run(() => report.BeginSort(), 
+                    CancelToken.Instance.cancellationTokenSource.Token);                
             }
 
             await Task.WhenAll(sortTasks);

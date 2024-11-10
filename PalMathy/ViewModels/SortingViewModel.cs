@@ -7,6 +7,7 @@ namespace PalMathy.ViewModels
 {
     public class SortingViewModel : BaseViewModel
     {
+        
         private ObservableCollection<WholeReport> _wholeReports = new ObservableCollection<WholeReport>();
         private List<BaseSorting> _allSortings = new List<BaseSorting>
         {
@@ -38,8 +39,8 @@ namespace PalMathy.ViewModels
             get { return _wholeReports; }
             set
             {
-                OnPropertyChanged(nameof(WholeReports));
-                // Set(ref _wholeReports, value);
+                // OnPropertyChanged(nameof(WholeReports));
+                Set(ref _wholeReports, value);
             }
         }
 
@@ -61,6 +62,8 @@ namespace PalMathy.ViewModels
                     WholeReport newWholeReport = new WholeReport(elems, _allSortings);
                     WholeReports.Add(newWholeReport);
                     await newWholeReport.MakeReports();
+                    
+                    OnPropertyChanged(nameof(WholeReports));                    
                 });
             }
         }
@@ -72,6 +75,17 @@ namespace PalMathy.ViewModels
                 return new Commands((obj) =>
                 {
 
+                });
+            }
+        }
+
+        public ICommand CancelSortings
+        {
+            get
+            {
+                return new Commands((obj) =>
+                {
+                    CancelToken.Instance.Cancel();                    
                 });
             }
         }
