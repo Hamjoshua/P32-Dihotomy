@@ -15,7 +15,7 @@ namespace PalMathy.Sortings
         public BaseSorting Sorting { get; set; }
         public long ExecutingTime { get; set; } = -1;
         public DateTime Begin { get; set; }
-        public bool SortingIsOver { get; set; } = false;
+        public bool SortingIsOver { get; set; } = false;        
         public ObservableCollection<int> Elements { get; set; }
         public SingleReport(BaseSorting sorting, ObservableCollection<int> elements)
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PalMathy.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -74,22 +75,7 @@ namespace PalMathy.Sortings
             }
 
             return true;
-        }
-
-        private ObservableCollection<int> Shuffle(ObservableCollection<int> elements)
-        {
-            var count = elements.Count;
-            var last = count - 1;
-            for (var i = 0; i < last; ++i)
-            {              
-                var r = Random.Shared.Next(i, count);
-                var tmp = elements[i];
-                elements[i] = elements[r];
-                elements[r] = tmp;
-            }
-
-            return elements;
-        }
+        }        
 
         public override ObservableCollection<int> Sort(ObservableCollection<int> elements)
         {
@@ -99,7 +85,7 @@ namespace PalMathy.Sortings
                 {
                     return elements;
                 }
-                elements = Shuffle(elements);
+                elements.Shuffle();
             }
 
             return elements;

@@ -105,21 +105,22 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                 </StackPanel>
             </Grid>
             <materialDesign:Card Grid.Row="1">
-                <ItemsControl ItemsSource="{Binding WholeReports}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <GroupBox Grid.Row="1">
-                                <GroupBox.Header>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding BeginTime}" Foreground="White" />
-                                        <TextBlock Text="   " Foreground="White" />
-                                        <TextBlock Text="{Binding Elements, Converter={StaticResource ListConv}}" Foreground="White" />
-                                    </StackPanel>
-                                </GroupBox.Header>
-                                <ItemsControl ItemsSource="{Binding OutReports, NotifyOnSourceUpdated=True}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <materialDesign:Card>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" >
+                    <ItemsControl ItemsSource="{Binding WholeReports}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <GroupBox Grid.Row="1">
+                                    <GroupBox.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding BeginTime}" Foreground="White" />
+                                            <TextBlock Text="   " Foreground="White" />
+                                            <TextBlock Text="{Binding Elements, Converter={StaticResource ListConv}}" Foreground="White" />
+                                        </StackPanel>
+                                    </GroupBox.Header>
+                                    <ItemsControl ItemsSource="{Binding OutReports, NotifyOnSourceUpdated=True}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+
                                                 <Grid VerticalAlignment="Bottom" Margin="5,0,5,3">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition></ColumnDefinition>
@@ -138,13 +139,13 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                                                                     <DataTrigger Binding="{Binding Path=SortingIsOver}" Value="True">
                                                                         <Setter Property="Visibility" Value="Visible"></Setter>
                                                                     </DataTrigger>
-                                                                </Style.Triggers>                                                                
+                                                                </Style.Triggers>
                                                             </Style>
                                                         </TextBlock.Style>
                                                     </TextBlock>
                                                     <ProgressBar Grid.Column="2" IsIndeterminate="True" Value="35">
                                                         <ProgressBar.Style>
-                                                            <Style TargetType="ProgressBar" BasedOn="{StaticResource MaterialDesignCircularProgressBar}">                                                                
+                                                            <Style TargetType="ProgressBar" BasedOn="{StaticResource MaterialDesignCircularProgressBar}">
                                                                 <Style.Triggers>
                                                                     <DataTrigger Binding="{Binding Path=SortingIsOver}" Value="True">
                                                                         <Setter Property="Visibility" Value="Hidden"></Setter>
@@ -152,20 +153,21 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                                                                     <DataTrigger Binding="{Binding Path=SortingIsOver}" Value="False">
                                                                         <Setter Property="Visibility" Value="Visible"></Setter>
                                                                     </DataTrigger>
-                                                                </Style.Triggers>                                                                
+                                                                </Style.Triggers>
                                                             </Style>
                                                         </ProgressBar.Style>
                                                     </ProgressBar>
                                                 </Grid>
-                                            </materialDesign:Card>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                    
-                                </ItemsControl>                                
-                            </GroupBox>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+
+                                    </ItemsControl>
+                                </GroupBox>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
             </materialDesign:Card>
             <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right">
                 <Button Height="24" Content="ОТМЕНИТЬ ВСЕ СОРТИРОВКИ" FontSize="12" materialDesign:ButtonAssist.CornerRadius="10"

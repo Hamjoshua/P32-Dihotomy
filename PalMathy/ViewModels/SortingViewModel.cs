@@ -1,4 +1,5 @@
-﻿using PalMathy.Sortings;
+﻿using PalMathy.Extensions;
+using PalMathy.Sortings;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -60,7 +61,7 @@ namespace PalMathy.ViewModels
 
                     var elems = new ObservableCollection<int>(Elements.ToList());
                     WholeReport newWholeReport = new WholeReport(elems, _allSortings);
-                    WholeReports.Add(newWholeReport);
+                    WholeReports.Insert(0, newWholeReport);
                     await newWholeReport.MakeReports();
                     
                     OnPropertyChanged(nameof(WholeReports));                    
@@ -74,7 +75,8 @@ namespace PalMathy.ViewModels
             {
                 return new Commands((obj) =>
                 {
-
+                    Elements.Shuffle();
+                    OnPropertyChanged(nameof(Elements));
                 });
             }
         }
