@@ -36,12 +36,5 @@ namespace PalMathy.Extensions
                 }                
             }            
         }
-
-        public static void Swap<T>(this ObservableCollection<T> elements, int firstIndex, int secondIndex)
-        {
-            T temp = elements[firstIndex];
-            elements[firstIndex] = elements[secondIndex];
-            elements[secondIndex] = temp;
-        }
     }
 }

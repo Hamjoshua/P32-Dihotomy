@@ -18,19 +18,20 @@ namespace PalMathy.Sortings
                 "\n\nАлгоритм пузырьковой сортировки считается учебным и практически не применяется вне учебной литературы, а на практике применяются более эффективные.";
         }
 
-        public override ObservableCollection<int> Sort(ObservableCollection<int> elements)
+        public override SortingResult Sort(ObservableCollection<int> elements)
         {
             int length = elements.Count;
+            int iters = 0;
 
-            for(int j = 1; j < length; ++j)
+            for (int j = 1; j < length; ++j)
             {
                 bool isSorted = true;
 
-                for(int i = 0; i < length - j; ++i)
+                for (int i = 0; i < length - j; ++i)
                 {
                     if (CancelToken.Instance.cancellationTokenSource.IsCancellationRequested)
                     {
-                        return elements;
+                        return new SortingResult(elements, iters);
                     }
 
                     if (elements[i] > elements[i + 1])
@@ -41,14 +42,14 @@ namespace PalMathy.Sortings
                         isSorted = false;
                     }
                 }
-
+                ++iters;
                 if (isSorted)
                 {
                     break;
                 }
             }
-            
-            return elements;
+
+            return new SortingResult(elements, iters);
         }
     }
 
@@ -64,7 +65,8 @@ namespace PalMathy.Sortings
 
         private bool IsSorted(ObservableCollection<int> elements)
         {
-            for (int i = 0; i < elements.Count - 1; ++i) {
+            for (int i = 0; i < elements.Count - 1; ++i)
+            {
                 if (elements[i] > elements[i + 1])
                 {
                     return false;
@@ -72,20 +74,22 @@ namespace PalMathy.Sortings
             }
 
             return true;
-        }        
+        }
 
-        public override ObservableCollection<int> Sort(ObservableCollection<int> elements)
+        public override SortingResult Sort(ObservableCollection<int> elements)
         {
+            int iters = 0;
             while (!IsSorted(elements))
             {
                 if (CancelToken.Instance.cancellationTokenSource.IsCancellationRequested)
                 {
-                    return elements;
+                    break;
                 }
                 elements.Shuffle();
+                ++iters;
             }
 
-            return elements;
+            return new SortingResult(elements, iters);
         }
     }
 
@@ -100,7 +104,7 @@ namespace PalMathy.Sortings
                 "2. Все остальные элементы массива сравниваются с опорным и те, которые меньше него, ставятся слева от него, а которые больше или равны — справа.\r\n" +
                 "3. Для двух получившихся блоков массива (меньше опорного, и больше либо равны опорному) производится точно такая же операция — " +
                 "выделяется опорный элемент и всё идёт точно так же, пока в блоке не останется один элемент.";
-        }            
+        }
 
         int Partition(ObservableCollection<int> array, int start, int end)
         {
@@ -118,21 +122,24 @@ namespace PalMathy.Sortings
             return marker;
         }
 
+        private int _iters;
+
         void QuickSort(ObservableCollection<int> array, int start, int end)
         {
             if (start >= end)
                 return;
 
             int pivot = Partition(array, start, end);
+            ++_iters;
             QuickSort(array, start, pivot - 1);
             QuickSort(array, pivot + 1, end);
         }
 
-        public override ObservableCollection<int> Sort(ObservableCollection<int> elements)
+        public override SortingResult Sort(ObservableCollection<int> elements)
         {
-            QuickSort(elements, 0, elements.Count - 1);            
+            QuickSort(elements, 0, elements.Count - 1);
 
-            return elements;
+            return new SortingResult(elements, _iters);
         }
     }
 
@@ -153,22 +160,24 @@ namespace PalMathy.Sortings
             elements[index - 1] = tempElement;
         }
 
-        public override ObservableCollection<int> Sort(ObservableCollection<int> elements)
+        public override SortingResult Sort(ObservableCollection<int> elements)
         {
             int firstMark = 1;
             int lastMark = elements.Count - 1;
+            int iters = 0;
 
-            while (firstMark <= lastMark) {
+            while (firstMark <= lastMark)
+            {
                 if (CancelToken.Instance.cancellationTokenSource.IsCancellationRequested)
                 {
-                    return elements;
+                    break;
                 }
 
-                for(int descIndex = lastMark; descIndex >= firstMark; --descIndex)
+                for (int descIndex = lastMark; descIndex >= firstMark; --descIndex)
                 {
                     if (elements[descIndex] < elements[descIndex - 1])
                     {
-                        SwapElements(elements, descIndex);  
+                        SwapElements(elements, descIndex);
                     }
                 }
 
@@ -180,10 +189,11 @@ namespace PalMathy.Sortings
                     }
                 }
 
+                ++iters;
                 --lastMark;
             }
 
-            return elements;
+            return new SortingResult(elements, iters);
         }
     }
 
@@ -197,27 +207,30 @@ namespace PalMathy.Sortings
                 "\n\nСортировка простыми вставками наиболее эффективна, " +
                 "когда список уже частично отсортирован и элементов массива немного. Если элементов в списке меньше 10, то этот алгоритм — один из самых быстрых.";
         }
-        public override ObservableCollection<int> Sort(ObservableCollection<int> elements)
+        public override SortingResult Sort(ObservableCollection<int> elements)
         {
-            for(int unsortedIndex = 1; unsortedIndex < elements.Count; ++unsortedIndex)
+            int iters = 0;
+            for (int unsortedIndex = 1; unsortedIndex < elements.Count; ++unsortedIndex)
             {
                 if (CancelToken.Instance.cancellationTokenSource.IsCancellationRequested)
                 {
-                    return elements;
+                    break;
                 }
 
-                int currentElem = elements[unsortedIndex];                
+                int currentElem = elements[unsortedIndex];
                 int sortedIndex = unsortedIndex;
 
                 while (sortedIndex >= 1 && elements[sortedIndex - 1] > currentElem)
                 {
                     elements[sortedIndex] = elements[sortedIndex - 1];
-                    --sortedIndex;                        
+                    --sortedIndex;
                 }
-                elements[sortedIndex] = currentElem;                
+                elements[sortedIndex] = currentElem;
+
+                ++iters;
             }
 
-            return elements;
+            return new SortingResult(elements, iters);
         }
     }
 }

@@ -17,7 +17,18 @@ namespace PalMathy.Sortings
         {
             IsActivated = false;
         }
-        
-        public abstract ObservableCollection<int> Sort(ObservableCollection<int> elements);
-    }    
+
+        public abstract SortingResult Sort(ObservableCollection<int> elements);
+    }
+
+    public struct SortingResult
+    {
+        public ObservableCollection<int> Elements { get; set; }
+        public int IterationsCount { get; set; }
+        public SortingResult(ObservableCollection<int> elements, int iterationsCount)
+        {
+            Elements = elements;
+            IterationsCount = iterationsCount;
+        }
+    }
 }
