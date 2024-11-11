@@ -18,7 +18,8 @@ namespace PalMathy.Sortings
             Name = "Пузырьковая (обмены)";
             Description = "Простейший для понимания и реализации. Выполняется некоторое количество " +
                 "проходов по массиву — начиная от начала массива, перебираются пары соседних элементов " +
-                "массива. Если 1-й элемент пары больше 2-го, элементы переставляются (выполняется обмен).";
+                "массива. Если 1-й элемент пары больше 2-го, элементы переставляются (выполняется обмен)." +
+                "\n\nАлгоритм пузырьковой сортировки считается учебным и практически не применяется вне учебной литературы, а на практике применяются более эффективные.";
         }
 
         public override ObservableCollection<int> Sort(ObservableCollection<int> elements)
@@ -132,11 +133,26 @@ namespace PalMathy.Sortings
         {
             Name = "Вставочная";
             Description = "Сортировка вставками - алгоритм сортировки, в котором элементы входной последовательности просматриваются по одному, " +
-                "и каждый новый поступивший элемент размещается в подходящее место среди ранее упорядоченных элементов";
+                "и каждый новый поступивший элемент размещается в подходящее место среди ранее упорядоченных элементов" +
+                "\n\nСортировка простыми вставками наиболее эффективна, " +
+                "когда список уже частично отсортирован и элементов массива немного. Если элементов в списке меньше 10, то этот алгоритм — один из самых быстрых.";
         }
         public override ObservableCollection<int> Sort(ObservableCollection<int> elements)
         {
-            throw new NotImplementedException();
+            for(int unsortedIndex = 1; unsortedIndex < elements.Count; ++unsortedIndex)
+            {
+                int currentElem = elements[unsortedIndex];                
+                int sortedIndex = unsortedIndex;
+
+                while (sortedIndex >= 1 && elements[sortedIndex - 1] > currentElem)
+                {
+                    elements[sortedIndex] = elements[sortedIndex - 1];
+                    --sortedIndex;                        
+                }
+                elements[sortedIndex] = currentElem;                
+            }
+
+            return elements;
         }
     }
 }
