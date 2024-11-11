@@ -1,4 +1,5 @@
 ﻿using PalMathy.Extensions;
+using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 
 // TODO Запихать все текста в xaml файлы или что-нибудь такое. Код бухнет от текста
@@ -99,9 +100,57 @@ namespace PalMathy.Sortings
                 "3. Для двух получившихся блоков массива (меньше опорного, и больше либо равны опорному) производится точно такая же операция — " +
                 "выделяется опорный элемент и всё идёт точно так же, пока в блоке не останется один элемент.";
         }
+        private void QuickSort(ObservableCollection<int> elements, int firstMark, int lastMark)
+        {
+            if(firstMark < lastMark)
+            {
+                int pivot = Partition(elements, firstMark, lastMark);
+                if (CancelToken.Instance.cancellationTokenSource.IsCancellationRequested)
+                {
+                    return;
+                }
+                QuickSort(elements, firstMark, pivot);
+                QuickSort(elements, pivot + 1, lastMark);
+            }
+        }
+
+        private int Partition(ObservableCollection<int> elements, int firstMark, int lastMark)
+        {
+            int pivot = elements[Random.Shared.Next(lastMark)];
+            int ascIndex = firstMark;
+            int descIndex = lastMark;
+
+            while (true)
+            {                
+                while (elements[ascIndex] < pivot)
+                {
+                    ++ascIndex;
+                }
+                while (elements[descIndex] > pivot)
+                {
+                    --descIndex;
+                }
+
+                if(ascIndex >= descIndex)
+                {
+                    return descIndex;
+                }
+                else
+                {
+                    int temp = elements[ascIndex];
+                    elements[ascIndex] = elements[descIndex];
+                    elements[descIndex] = temp;
+                    ++ascIndex;
+                    --descIndex;
+                }
+            }          
+        }
+
         public override ObservableCollection<int> Sort(ObservableCollection<int> elements)
         {
-            throw new NotImplementedException();
+            QuickSort(elements, 0, elements.Count - 1);            
+
+            return elements;
         }
     }
 
