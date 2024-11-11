@@ -63,23 +63,12 @@ namespace PalMathy.Sortings
                 "перетряхиваем список случайным образом до тех пор, пока он внезапно не отсортируется.";
         }
 
-        private bool IsSorted(ObservableCollection<int> elements)
-        {
-            for (int i = 0; i < elements.Count - 1; ++i)
-            {
-                if (elements[i] > elements[i + 1])
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
+        
 
         public override SortingResult Sort(ObservableCollection<int> elements)
         {
             int iters = 0;
-            while (!IsSorted(elements))
+            while (elements.IsSorted())
             {
                 if (CancelToken.Instance.cancellationTokenSource.IsCancellationRequested)
                 {
@@ -131,12 +120,17 @@ namespace PalMathy.Sortings
 
             int pivot = Partition(array, start, end);
             ++_iters;
+            if (array.IsSorted())
+            {
+                return;
+            }
             QuickSort(array, start, pivot - 1);
             QuickSort(array, pivot + 1, end);
         }
 
         public override SortingResult Sort(ObservableCollection<int> elements)
         {
+            _iters = 0;
             QuickSort(elements, 0, elements.Count - 1);
 
             return new SortingResult(elements, _iters);

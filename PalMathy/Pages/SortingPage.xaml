@@ -114,7 +114,7 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" TextWrapping="Wrap" Text="Имя метода"></TextBlock>
                 <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="Отсортированный список"></TextBlock>
-                <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="Скорость выполения в ms" />
+                <TextBlock Margin="20 0 0 0" Grid.Column="2" TextWrapping="Wrap" Text="Скорость выполения в ms" />
                 <TextBlock Grid.Column="3" TextWrapping="Wrap" Text="Кол-во итераций" />
             </Grid>
             <materialDesign:Card Grid.Row="2">
@@ -143,7 +143,7 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                                                     </Grid.ColumnDefinitions>
                                                     <TextBlock Grid.Column="0" Text="{Binding Sorting.Name}"></TextBlock>
                                                     <TextBlock Grid.Column="1" Text="{Binding Elements, Converter={StaticResource ListConv}}" TextWrapping="WrapWithOverflow"></TextBlock>
-                                                    <TextBlock Grid.Column="2" Text="{Binding ExecutingTime, StringFormat={}{0} ms}">
+                                                    <TextBlock Margin="20 0 0 0" Grid.Column="2" Text="{Binding ExecutingTime, StringFormat={}{0} ms}">
                                                         <TextBlock.Style>
                                                             <Style TargetType="TextBlock">
                                                                 <Style.Triggers>

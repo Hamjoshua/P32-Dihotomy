@@ -36,5 +36,18 @@ namespace PalMathy.Extensions
                 }                
             }            
         }
+
+        public static bool IsSorted(this ObservableCollection<int> elements)
+        {
+            for (int i = 0; i < elements.Count - 1; ++i)
+            {
+                if (elements[i] > elements[i + 1])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }
