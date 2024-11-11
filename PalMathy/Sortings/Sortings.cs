@@ -1,11 +1,5 @@
 ﻿using PalMathy.Extensions;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
 
 // TODO Запихать все текста в xaml файлы или что-нибудь такое. Код бухнет от текста
 
@@ -62,7 +56,7 @@ namespace PalMathy.Sortings
         {
             Name = "Болотная (Bogosort)";
             Description = "Неэффективный алгоритм сортировки, используемый только в образовательных целях и " +
-                "противопоставляемый другим, более реалистичным алгоритмам. Принцип работы алгоритма прост:. " +
+                "противопоставляемый другим, более реалистичным алгоритмам. Принцип работы алгоритма прост: " +
                 "перетряхиваем список случайным образом до тех пор, пока он внезапно не отсортируется.";
         }
 
@@ -116,14 +110,49 @@ namespace PalMathy.Sortings
         public ShakeSorting() : base()
         {
             Name = "Шейкерная";
-            Description = "Этот алгоритм сортировки – развитие пузырьковой сортировки. " +
-                "Отличия от нее заключаются в том, что при прохождении части массива, происходит проверка, были ли перестановки. " +
-                "Если их не было, значит, эта часть массива уже упорядочена и она исключается из дальнейшей обработки. Кроме того, " +
-                "при прохождении массива от начала к концу, минимальные элементы перемещаются в самое начало, а максимальный элемент сдвигается к концу массива.";
+            Description = "Этот алгоритм сортировки – развитие пузырьковой сортировки. Его еще называют двусторонним пузырчатым методом сортировки. " +
+                "В ней пределы той части массива, в которой есть перестановки, сужаются. Также внутренние циклы проходят по массиву то в одну, " +
+                "то в другую сторону, поднимая самый легкий элемент вверх и опуская самый тяжелый элемент в самый низ за одну итерацию внешнего цикла. ";
         }
+
+        private void SwapElements(ObservableCollection<int> elements, int index)
+        {
+            int tempElement = elements[index];
+            elements[index] = elements[index - 1];
+            elements[index - 1] = tempElement;
+        }
+
         public override ObservableCollection<int> Sort(ObservableCollection<int> elements)
         {
-            throw new NotImplementedException();
+            int firstMark = 1;
+            int lastMark = elements.Count - 1;
+
+            while (firstMark <= lastMark) {
+                if (CancelToken.Instance.cancellationTokenSource.IsCancellationRequested)
+                {
+                    return elements;
+                }
+
+                for(int descIndex = lastMark; descIndex >= firstMark; --descIndex)
+                {
+                    if (elements[descIndex] < elements[descIndex - 1])
+                    {
+                        SwapElements(elements, descIndex);  
+                    }
+                }
+
+                for (int ascIndex = firstMark; ascIndex <= lastMark; ++ascIndex)
+                {
+                    if (elements[ascIndex] < elements[ascIndex - 1])
+                    {
+                        SwapElements(elements, ascIndex);
+                    }
+                }
+
+                --lastMark;
+            }
+
+            return elements;
         }
     }
 
@@ -141,6 +170,11 @@ namespace PalMathy.Sortings
         {
             for(int unsortedIndex = 1; unsortedIndex < elements.Count; ++unsortedIndex)
             {
+                if (CancelToken.Instance.cancellationTokenSource.IsCancellationRequested)
+                {
+                    return elements;
+                }
+
                 int currentElem = elements[unsortedIndex];                
                 int sortedIndex = unsortedIndex;
 
