@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic;
+using PalMathy.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace PalMathy.Converters
@@ -19,18 +21,16 @@ namespace PalMathy.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string[] myStrings = ((string) value).Split(", ");
             ObservableCollection<int> list = new ObservableCollection<int>();
-            foreach (string str in myStrings) {
-                try
-                {
-                    list.Add(int.Parse(str));
-                }
-                catch
-                {
 
-                }
+            try
+            {
+                list.FromString<int>((string)value);
             }
+            catch (NotSupportedException)
+            {
+                MessageBox.Show("Неверный формат списка! Нужно перечисление целых чисел через запятую");
+            }          
 
             return list;
         }

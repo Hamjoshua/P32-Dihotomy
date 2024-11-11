@@ -1,6 +1,7 @@
 ﻿using PalMathy.Extensions;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
+using System.Windows.Media.Media3D;
 
 // TODO Запихать все текста в xaml файлы или что-нибудь такое. Код бухнет от текста
 
@@ -99,51 +100,32 @@ namespace PalMathy.Sortings
                 "2. Все остальные элементы массива сравниваются с опорным и те, которые меньше него, ставятся слева от него, а которые больше или равны — справа.\r\n" +
                 "3. Для двух получившихся блоков массива (меньше опорного, и больше либо равны опорному) производится точно такая же операция — " +
                 "выделяется опорный элемент и всё идёт точно так же, пока в блоке не останется один элемент.";
-        }
-        private void QuickSort(ObservableCollection<int> elements, int firstMark, int lastMark)
+        }            
+
+        int Partition(ObservableCollection<int> array, int start, int end)
         {
-            if(firstMark < lastMark)
+            int marker = start; // divides left and right subarrays
+            for (int i = start; i < end; i++)
             {
-                int pivot = Partition(elements, firstMark, lastMark);
-                if (CancelToken.Instance.cancellationTokenSource.IsCancellationRequested)
+                if (array[i] < array[end]) // array[end] is pivot
                 {
-                    return;
+                    (array[marker], array[i]) = (array[i], array[marker]);
+                    marker += 1;
                 }
-                QuickSort(elements, firstMark, pivot);
-                QuickSort(elements, pivot + 1, lastMark);
             }
+            // put pivot(array[end]) between left and right subarrays            
+            (array[marker], array[end]) = (array[end], array[marker]);
+            return marker;
         }
 
-        private int Partition(ObservableCollection<int> elements, int firstMark, int lastMark)
+        void QuickSort(ObservableCollection<int> array, int start, int end)
         {
-            int pivot = elements[Random.Shared.Next(lastMark)];
-            int ascIndex = firstMark;
-            int descIndex = lastMark;
+            if (start >= end)
+                return;
 
-            while (true)
-            {                
-                while (elements[ascIndex] < pivot)
-                {
-                    ++ascIndex;
-                }
-                while (elements[descIndex] > pivot)
-                {
-                    --descIndex;
-                }
-
-                if(ascIndex >= descIndex)
-                {
-                    return descIndex;
-                }
-                else
-                {
-                    int temp = elements[ascIndex];
-                    elements[ascIndex] = elements[descIndex];
-                    elements[descIndex] = temp;
-                    ++ascIndex;
-                    --descIndex;
-                }
-            }          
+            int pivot = Partition(array, start, end);
+            QuickSort(array, start, pivot - 1);
+            QuickSort(array, pivot + 1, end);
         }
 
         public override ObservableCollection<int> Sort(ObservableCollection<int> elements)

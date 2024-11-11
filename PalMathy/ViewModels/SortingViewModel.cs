@@ -1,6 +1,8 @@
-﻿using PalMathy.Extensions;
+﻿using Microsoft.Win32;
+using PalMathy.Extensions;
 using PalMathy.Sortings;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
@@ -8,7 +10,7 @@ namespace PalMathy.ViewModels
 {
     public class SortingViewModel : BaseViewModel
     {
-        
+
         private ObservableCollection<WholeReport> _wholeReports = new ObservableCollection<WholeReport>();
         private List<BaseSorting> _allSortings = new List<BaseSorting>
         {
@@ -34,9 +36,10 @@ namespace PalMathy.ViewModels
         public List<BaseSorting> AllSortings
         {
             get { return _allSortings; }
-        } 
+        }
 
-        public ObservableCollection<WholeReport> WholeReports { 
+        public ObservableCollection<WholeReport> WholeReports
+        {
             get { return _wholeReports; }
             set
             {
@@ -63,8 +66,8 @@ namespace PalMathy.ViewModels
                     WholeReport newWholeReport = new WholeReport(elems, _allSortings);
                     WholeReports.Insert(0, newWholeReport);
                     await newWholeReport.MakeReports();
-                    
-                    OnPropertyChanged(nameof(WholeReports));                    
+
+                    OnPropertyChanged(nameof(WholeReports));
                 });
             }
         }
@@ -87,7 +90,7 @@ namespace PalMathy.ViewModels
             {
                 return new Commands((obj) =>
                 {
-                    CancelToken.Instance.Cancel();                    
+                    CancelToken.Instance.Cancel();
                 });
             }
         }
@@ -98,6 +101,34 @@ namespace PalMathy.ViewModels
             {
                 return new Commands((obj) =>
                 {
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    openFileDialog.Filter = "Текстовый файл (*.txt)|*.txt";
+
+                    if (openFileDialog.ShowDialog() == true)
+                    {
+                        if (!String.IsNullOrEmpty(openFileDialog.FileName))
+                        {
+                            using(StreamReader reader = new StreamReader(openFileDialog.FileName))
+                            {
+                                string text = reader.ReadToEnd();
+                                text.Replace("[", "");
+                                text.Replace("[", "");
+                                text.Replace("}", "");
+                                text.Replace("{", "");
+
+                                try
+                                {
+                                    Elements.FromString<int>(text);
+                                }
+                                catch (NotSupportedException)
+                                {
+                                    MessageBox.Show("Неверный формат списка! Нужно перечисление целых чисел через запятую");
+                                }
+                                OnPropertyChanged(nameof(Elements));
+                            }
+                        }
+                        
+                    }
 
                 });
             }
