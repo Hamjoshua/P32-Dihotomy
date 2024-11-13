@@ -68,7 +68,7 @@ namespace PalMathy.Sortings
         public override SortingResult Sort(ObservableCollection<int> elements)
         {
             int iters = 0;
-            while (elements.IsSorted())
+            while (!elements.IsSorted())
             {
                 if (CancelToken.Instance.cancellationTokenSource.IsCancellationRequested)
                 {

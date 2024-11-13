@@ -25,6 +25,10 @@ namespace PalMathy.Extensions
 
         public static void FromString<T>(this ObservableCollection<T> elements, string value)
         {
+            if (String.IsNullOrEmpty(value))
+            {
+                return;
+            }
             string[] myStrings = value.Split(", ");
             elements.Clear();
             foreach (string str in myStrings)

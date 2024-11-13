@@ -87,13 +87,21 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                             Style="{StaticResource MaterialDesignRaisedSecondaryButton}">
 
                     </Button>
+                    <Button Command="{Binding GenerateList}"
+Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
+ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
+                        <materialDesign:PackIcon
+        Width="16"
+        Height="16"
+        Kind="DiceMultiple"/>
+                    </Button>
                     <Button Command="{Binding ShuffleElements}"
     Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
     ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
                         <materialDesign:PackIcon
             Width="16"
             Height="16"
-            Kind="DiceMultiple"/>
+            Kind="ShuffleVariant"/>
                     </Button>
                     <Button Command="{Binding ParseElementsFromFile}"
     Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
@@ -114,7 +122,7 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" TextWrapping="Wrap" Text="Имя метода"></TextBlock>
                 <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="Отсортированный список"></TextBlock>
-                <TextBlock Margin="20 0 0 0" Grid.Column="2" TextWrapping="Wrap" Text="Скорость выполения в ms" />
+                <TextBlock Margin="20 0 50 0" Grid.Column="2" TextWrapping="Wrap" Text="Скорость выполения в ms" />
                 <TextBlock Grid.Column="3" TextWrapping="Wrap" Text="Кол-во итераций" />
             </Grid>
             <materialDesign:Card Grid.Row="2">
@@ -157,7 +165,8 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                                                             </Style>
                                                         </TextBlock.Style>
                                                     </TextBlock>
-                                                    <ProgressBar Grid.Column="2" IsIndeterminate="True" Value="35">
+                                                    <ProgressBar Margin="20 0 0 0" HorizontalAlignment="Left" 
+                                                                 VerticalAlignment="Top" Grid.Column="2" IsIndeterminate="True" Value="35">
                                                         <ProgressBar.Style>
                                                             <Style TargetType="ProgressBar" BasedOn="{StaticResource MaterialDesignCircularProgressBar}">
                                                                 <Style.Triggers>

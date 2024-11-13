@@ -72,6 +72,23 @@ namespace PalMathy.ViewModels
             }
         }
 
+        public ICommand GenerateList
+        {
+            get
+            {
+                return new Commands((obj) =>
+                {
+                    int length = Random.Shared.Next(100);
+                    ObservableCollection<int> list = new ObservableCollection<int>();
+                    for(int i = 0; i < length; ++i)
+                    {
+                        list.Add(i);
+                    }
+                    list.Shuffle();
+                    Elements = list;
+                });
+            }
+        }
         public ICommand ShuffleElements
         {
             get
