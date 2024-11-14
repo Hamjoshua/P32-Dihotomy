@@ -19,6 +19,7 @@
                 <Setter Property="MaxWidth" Value="300" ></Setter>
                 <Setter Property="TextWrapping" Value="Wrap"></Setter>
             </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -37,8 +37,10 @@
                                 </Grid.ColumnDefinitions>
 
                                 <ToggleButton Grid.Column="0" Grid.Row="0" Margin="10"
-   Content="Х" IsChecked="{Binding IsActivated}" Style="{StaticResource MaterialDesignActionSecondaryToggleButton}"
-   ToolTip="Активировать\Дезактивировать метод" />
+                                      IsChecked="{Binding IsActivated}"
+                                      Style="{StaticResource MaterialDesignSwitchLightToggleButton}"
+                                      ToolTip="Активировать\Дезактивировать метод"/>
+
                                 <TextBlock Grid.Column="1" Grid.Row="0" TextWrapping="Wrap"
 Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" VerticalAlignment="Center" FontWeight="Bold" FontFamily="Arial"/>
 
@@ -54,7 +56,7 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                                     </StackPanel>
                                 </Expander>
 
-                                
+
 
                             </Grid>
                         </materialDesign:Card>
@@ -62,11 +64,12 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        
+
         <Grid Grid.Column="1" Margin="0 4 0 0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>                
-                <RowDefinition Height="Auto"></RowDefinition>                
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="7*"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
@@ -75,9 +78,66 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <TextBox Grid.Row="0" Text="{Binding Elements, Converter={StaticResource ListConv}}"
+                <StackPanel Grid.Row="0" Orientation="Horizontal" RenderTransformOrigin="50,0" HorizontalAlignment="Right">
+                    <materialDesign:PopupBox StaysOpen="True">
+                        <Grid Width="300" Margin="8,8,8,8">
+                            <Grid.Resources>
+                                <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+                                    <Setter Property="Margin" Value="8,8,8,8" />
+                                    <Setter Property="materialDesign:HintAssist.IsFloating" Value="True" />
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="8,8,8,16"
+                Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                Text="Настройка рандома" />
+                            <TextBox
+                Grid.Row="1"
+                Grid.Column="0"
+                materialDesign:HintAssist.Hint="Setting 1"
+                Text="200" />
+                            <TextBox
+                Grid.Row="2"
+                Grid.Column="0"
+                materialDesign:HintAssist.Hint="Setting 2"
+                Text="400" />
+                            <TextBox
+                Grid.Row="3"
+                Grid.Column="0"
+                materialDesign:HintAssist.Hint="Setting 3"
+                Text="600" />
+                            <StackPanel
+                Grid.Row="5"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                                <Button
+                    Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}"
+                    Content="_Закрыть">
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </materialDesign:PopupBox>
+                </StackPanel>
+
+                <TextBox Grid.Row="1" Text="{Binding Elements, Converter={StaticResource ListConv}}"
                              Style="{StaticResource MaterialDesignOutlinedTextBox}"                             
                             TextWrapping="Wrap"
                             VerticalScrollBarVisibility="Auto" VerticalAlignment="Center" Background="White"/>
@@ -87,14 +147,16 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                             Style="{StaticResource MaterialDesignRaisedSecondaryButton}">
 
                     </Button>
+
                     <Button Command="{Binding GenerateList}"
 Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
 ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
                         <materialDesign:PackIcon
-        Width="16"
-        Height="16"
-        Kind="DiceMultiple"/>
+                                Width="16"
+                                Height="16"
+                                Kind="DiceMultiple"/>
                     </Button>
+
                     <Button Command="{Binding ShuffleElements}"
     Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
     ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
@@ -113,7 +175,7 @@ ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" Ver
                     </Button>
                 </StackPanel>
             </Grid>
-            <Grid Grid.Row="1" VerticalAlignment="Bottom" Margin="15,0,15,3">
+            <Grid Grid.Row="2" VerticalAlignment="Bottom" Margin="15,0,15,3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                     <ColumnDefinition Width="5*"></ColumnDefinition>
@@ -125,7 +187,7 @@ ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" Ver
                 <TextBlock Grid.Column="2" Margin="10 0 15 0" TextWrapping="Wrap" Text="Скорость выполения в ms" />
                 <TextBlock Grid.Column="3" TextWrapping="Wrap" Text="Кол-во итераций" />
             </Grid>
-            <materialDesign:Card Grid.Row="2">
+            <materialDesign:Card Grid.Row="3">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" >
                     <ItemsControl ItemsSource="{Binding WholeReports}">
                         <ItemsControl.ItemTemplate>
@@ -134,8 +196,8 @@ ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" Ver
                                     <GroupBox.Header>
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding BeginTime}" Foreground="White" />
-                                            <TextBlock Text="   " Foreground="White" />
-                                            <TextBlock Text="{Binding Elements, Converter={StaticResource ListConv}}" Foreground="White" />
+                                            <!--<TextBlock Text="   " Foreground="White" />
+                                            <TextBlock Text="{Binding Elements, Converter={StaticResource ListConv}}" Foreground="White" />-->
                                         </StackPanel>
                                     </GroupBox.Header>
                                     <ItemsControl ItemsSource="{Binding OutReports, NotifyOnSourceUpdated=True}">
@@ -150,7 +212,12 @@ ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" Ver
                                                         <ColumnDefinition Width="1*"></ColumnDefinition>
                                                     </Grid.ColumnDefinitions>
                                                     <TextBlock Grid.Column="0" Text="{Binding Sorting.Name}"></TextBlock>
-                                                    <TextBlock Grid.Column="1" Text="{Binding Elements, Converter={StaticResource ListConv}}" TextWrapping="WrapWithOverflow"></TextBlock>
+                                                    <ScrollViewer Height="50" Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                                                        <TextBlock Text="{Binding Elements, Converter={StaticResource ListConv}}" TextWrapping="WrapWithOverflow">
+                                                        </TextBlock>
+                                                    </ScrollViewer>
+
+
                                                     <TextBlock Margin="20 0 0 0" Grid.Column="2" Text="{Binding ExecutingTime, StringFormat={}{0} ms}">
                                                         <TextBlock.Style>
                                                             <Style TargetType="TextBlock">
@@ -193,13 +260,13 @@ ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" Ver
                     </ItemsControl>
                 </ScrollViewer>
             </materialDesign:Card>
-            <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right">
+            <StackPanel Orientation="Horizontal" Grid.Row="4" HorizontalAlignment="Right">
                 <Button Height="24" Content="ОТМЕНИТЬ ВСЕ СОРТИРОВКИ" FontSize="12" materialDesign:ButtonAssist.CornerRadius="10"
                     Command="{Binding CancelSortings}"
                     Style="{StaticResource MaterialDesignRaisedSecondaryButton}" Background="#FFCC0E4B" BorderBrush="#FFCC0E4B">
                 </Button>
             </StackPanel>
-            
+
 
         </Grid>
     </Grid>
