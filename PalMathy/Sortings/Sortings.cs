@@ -4,8 +4,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Media.Media3D;
 
 // TODO Запихать все текста в xaml файлы или что-нибудь такое. Код бухнет от текста
-// TODO менять по возрастанию \ по убыванию
-// TODO сгенерируй N элементов от MIN до MAX
+// TODO вставить подсказку - как набирать элементы
 // TODO подумать над дизайном
 
 
@@ -20,9 +19,9 @@ namespace PalMathy.Sortings
                 "проходов по массиву — начиная от начала массива, перебираются пары соседних элементов " +
                 "массива. Если 1-й элемент пары больше 2-го, элементы переставляются (выполняется обмен)." +
                 "\n\nАлгоритм пузырьковой сортировки считается учебным и практически не применяется вне учебной литературы, а на практике применяются более эффективные.";
-        }
+        }        
 
-        public override SortingResult Sort(ObservableCollection<int> elements)
+        public override SortingResult Sort(ObservableCollection<int> elements, bool isBiggerMode)
         {
             int length = elements.Count;
             int iters = 0;
@@ -38,7 +37,7 @@ namespace PalMathy.Sortings
                         return new SortingResult(elements, iters);
                     }
 
-                    if (elements[i] > elements[i + 1])
+                    if (MakeComparsion(elements[i], elements[i + 1], isBiggerMode))
                     {
                         int prevElem = elements[i];
                         elements[i] = elements[i + 1];
@@ -69,10 +68,10 @@ namespace PalMathy.Sortings
 
         
 
-        public override SortingResult Sort(ObservableCollection<int> elements)
+        public override SortingResult Sort(ObservableCollection<int> elements, bool isBiggerMode)
         {
             int iters = 0;
-            while (!elements.IsSorted())
+            while (!elements.IsSorted(isBiggerMode))
             {
                 if (CancelToken.Instance.cancellationTokenSource.IsCancellationRequested)
                 {
@@ -104,7 +103,8 @@ namespace PalMathy.Sortings
             int marker = start; // divides left and right subarrays
             for (int i = start; i < end; i++)
             {
-                if (array[i] < array[end]) // array[end] is pivot
+                
+                if (MakeComparsion(array[end], array[i], _isBiggerMode)) // array[end] is pivot
                 {
                     (array[marker], array[i]) = (array[i], array[marker]);
                     marker += 1;
@@ -116,6 +116,7 @@ namespace PalMathy.Sortings
         }
 
         private int _iters;
+        private bool _isBiggerMode;
 
         void QuickSort(ObservableCollection<int> array, int start, int end)
         {
@@ -124,7 +125,7 @@ namespace PalMathy.Sortings
 
             int pivot = Partition(array, start, end);
             ++_iters;
-            if (array.IsSorted())
+            if (array.IsSorted(_isBiggerMode))
             {
                 return;
             }
@@ -132,9 +133,10 @@ namespace PalMathy.Sortings
             QuickSort(array, pivot + 1, end);
         }
 
-        public override SortingResult Sort(ObservableCollection<int> elements)
+        public override SortingResult Sort(ObservableCollection<int> elements, bool isBiggerMode)
         {
             _iters = 0;
+            _isBiggerMode = isBiggerMode;
             QuickSort(elements, 0, elements.Count - 1);
 
             return new SortingResult(elements, _iters);
@@ -158,7 +160,7 @@ namespace PalMathy.Sortings
             elements[index - 1] = tempElement;
         }
 
-        public override SortingResult Sort(ObservableCollection<int> elements)
+        public override SortingResult Sort(ObservableCollection<int> elements, bool isBiggerMode)
         {
             int firstMark = 1;
             int lastMark = elements.Count - 1;
@@ -173,7 +175,8 @@ namespace PalMathy.Sortings
 
                 for (int descIndex = lastMark; descIndex >= firstMark; --descIndex)
                 {
-                    if (elements[descIndex] < elements[descIndex - 1])
+                    
+                    if (MakeComparsion(elements[descIndex - 1], elements[descIndex], isBiggerMode))
                     {
                         SwapElements(elements, descIndex);
                     }
@@ -181,14 +184,19 @@ namespace PalMathy.Sortings
 
                 for (int ascIndex = firstMark; ascIndex <= lastMark; ++ascIndex)
                 {
-                    if (elements[ascIndex] < elements[ascIndex - 1])
+                    if (MakeComparsion(elements[ascIndex - 1], elements[ascIndex], isBiggerMode))
                     {
                         SwapElements(elements, ascIndex);
                     }
-                }
+                }                
 
                 ++iters;
                 --lastMark;
+
+                if (elements.IsSorted(isBiggerMode))
+                {
+                    break;
+                }
             }
 
             return new SortingResult(elements, iters);
@@ -205,7 +213,7 @@ namespace PalMathy.Sortings
                 "\n\nСортировка простыми вставками наиболее эффективна, " +
                 "когда список уже частично отсортирован и элементов массива немного. Если элементов в списке меньше 10, то этот алгоритм — один из самых быстрых.";
         }
-        public override SortingResult Sort(ObservableCollection<int> elements)
+        public override SortingResult Sort(ObservableCollection<int> elements, bool isBiggerMode)
         {
             int iters = 0;
             for (int unsortedIndex = 1; unsortedIndex < elements.Count; ++unsortedIndex)
@@ -218,7 +226,7 @@ namespace PalMathy.Sortings
                 int currentElem = elements[unsortedIndex];
                 int sortedIndex = unsortedIndex;
 
-                while (sortedIndex >= 1 && elements[sortedIndex - 1] > currentElem)
+                while (sortedIndex >= 1 && MakeComparsion(elements[sortedIndex - 1], currentElem, isBiggerMode))
                 {
                     elements[sortedIndex] = elements[sortedIndex - 1];
                     --sortedIndex;
@@ -226,6 +234,10 @@ namespace PalMathy.Sortings
                 elements[sortedIndex] = currentElem;
 
                 ++iters;
+                if (elements.IsSorted(isBiggerMode))
+                {
+                    break;
+                }
             }
 
             return new SortingResult(elements, iters);

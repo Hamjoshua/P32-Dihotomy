@@ -17,10 +17,19 @@ namespace PalMathy.Sortings
         {
             IsActivated = false;
         }
+        protected bool MakeComparsion(int elem1, int elem2, bool isBiggerMode)
+        {
+            if (isBiggerMode)
+            {
+                return elem1 > elem2;
+            }
+            return elem1 < elem2;
+        }
 
-        public abstract SortingResult Sort(ObservableCollection<int> elements);
+        public abstract SortingResult Sort(ObservableCollection<int> elements, bool isBiggerMode);
     }
 
+    
     public struct SortingResult
     {
         public ObservableCollection<int> Elements { get; set; }

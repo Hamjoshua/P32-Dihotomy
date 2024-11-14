@@ -23,7 +23,7 @@ namespace PalMathy.Sortings
             OutReports = new ObservableCollection<SingleReport>();
         }
         
-        public async Task MakeReports()
+        public async Task MakeReports(bool isBiggerMode)
         {
             Task[] sortTasks = new Task[Sortings.Count];
 
@@ -35,7 +35,7 @@ namespace PalMathy.Sortings
                 OutReports.Add(report);
 
                 
-                sortTasks[sortingIndex] = Task.Run(() => report.BeginSort(), 
+                sortTasks[sortingIndex] = Task.Run(() => report.BeginSort(isBiggerMode), 
                     CancelToken.Instance.cancellationTokenSource.Token);                
             }
 

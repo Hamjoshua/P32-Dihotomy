@@ -41,14 +41,25 @@ namespace PalMathy.Extensions
             }            
         }
 
-        public static bool IsSorted(this ObservableCollection<int> elements)
+        public static bool IsSorted(this ObservableCollection<int> elements, bool isBiggerMode)
         {
             for (int i = 0; i < elements.Count - 1; ++i)
             {
-                if (elements[i] > elements[i + 1])
+                if (isBiggerMode)
                 {
-                    return false;
+                    if (elements[i] > elements[i + 1])
+                    {
+                        return false;
+                    }
                 }
+                else
+                {
+                    if (elements[i] < elements[i + 1])
+                    {
+                        return false;
+                    }
+                }
+                
             }
 
             return true;

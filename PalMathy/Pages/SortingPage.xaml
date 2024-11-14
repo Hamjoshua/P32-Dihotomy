@@ -83,14 +83,14 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
 
                 <StackPanel Grid.Row="0" Orientation="Horizontal" RenderTransformOrigin="50,0" HorizontalAlignment="Right">
                     <materialDesign:PopupBox StaysOpen="True">
-                        <Grid Width="300" Margin="8,8,8,8">
-                            <Grid.Resources>
+                        <StackPanel Width="300" Margin="8,8,8,8" Orientation="Vertical">
+                            <StackPanel.Resources>
                                 <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
                                     <Setter Property="Margin" Value="8,8,8,8" />
                                     <Setter Property="materialDesign:HintAssist.IsFloating" Value="True" />
                                 </Style>
-                            </Grid.Resources>
-                            <Grid.ColumnDefinitions>
+                            </StackPanel.Resources>
+                            <!--<Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
@@ -101,7 +101,7 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
+                            </Grid.RowDefinitions>-->
                             <TextBlock
                 Grid.Row="0"
                 Grid.Column="0"
@@ -123,6 +123,16 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                 Grid.Column="0"
                 materialDesign:HintAssist.Hint="Кол-во элементов"
                 Text="{Binding LengthOfRandomArray, NotifyOnSourceUpdated=True}" />
+                            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="8,8,8,16"
+                Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                Text="Сортировка по возрастанию" />
+                            <ToggleButton Grid.Column="0" Grid.Row="0" Margin="10" HorizontalAlignment="Left"
+      IsChecked="{Binding IsBiggerMode}"
+      Style="{StaticResource MaterialDesignSwitchLightToggleButton}"/>
+                            
                             <StackPanel
                 Grid.Row="5"
                 Grid.ColumnSpan="2"
@@ -133,7 +143,7 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                     Content="_Закрыть">
                                 </Button>
                             </StackPanel>
-                        </Grid>
+                        </StackPanel>
                     </materialDesign:PopupBox>
                 </StackPanel>
 

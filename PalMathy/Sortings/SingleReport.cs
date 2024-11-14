@@ -24,13 +24,13 @@ namespace PalMathy.Sortings
             Elements = elements;
         }
 
-        public async Task BeginSort()
+        public async Task BeginSort(bool isBiggerMode)
         {
             var elems = new ObservableCollection<int>(Elements.ToList());
 
             Begin = DateTime.Now;
             var watch = Stopwatch.StartNew();
-            SortingResult result = Sorting.Sort(elems);
+            SortingResult result = Sorting.Sort(elems, isBiggerMode);
             Elements = result.Elements;
             IterationsCount = result.IterationsCount;
             watch.Stop();

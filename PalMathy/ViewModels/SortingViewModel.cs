@@ -10,7 +10,7 @@ namespace PalMathy.ViewModels
 {
     public class SortingViewModel : BaseViewModel
     {
-
+        private bool _isBiggerMode = true;
         private ObservableCollection<WholeReport> _wholeReports = new ObservableCollection<WholeReport>();
         private RandomExpert _randomExpert = new RandomExpert();
         private List<BaseSorting> _allSortings = new List<BaseSorting>
@@ -26,13 +26,23 @@ namespace PalMathy.ViewModels
             111, 2, 3, 4, 0, -1, -2, 8, -14, 1, -63, 32, -52, 321, 32, -9, 21, -6
         };
 
+        public bool IsBiggerMode
+        {
+            get { return _isBiggerMode; }
+            set
+            {
+                _isBiggerMode = value;
+                OnPropertyChanged(nameof(IsBiggerMode));
+            }
+        }
+
         public int MinRandomBound
         {
             get { return _randomExpert.MinBound; }
             set
             {
                 _randomExpert.MinBound = value;
-                OnPropertyChanged(nameof(MinRandomBound));                
+                OnPropertyChanged(nameof(MinRandomBound));
                 OnPropertyChanged(nameof(LengthOfRandomArray));
             }
         }
@@ -43,7 +53,7 @@ namespace PalMathy.ViewModels
             set
             {
                 _randomExpert.MaxBound = value;
-                OnPropertyChanged(nameof(MaxRandomBound));                
+                OnPropertyChanged(nameof(MaxRandomBound));
                 OnPropertyChanged(nameof(LengthOfRandomArray));
             }
         }
@@ -98,7 +108,7 @@ namespace PalMathy.ViewModels
                     var elems = new ObservableCollection<int>(Elements.ToList());
                     WholeReport newWholeReport = new WholeReport(elems, _allSortings);
                     WholeReports.Insert(0, newWholeReport);
-                    await newWholeReport.MakeReports();
+                    await newWholeReport.MakeReports(IsBiggerMode);
 
                     OnPropertyChanged(nameof(WholeReports));
                 });
