@@ -4,6 +4,10 @@ using System.Collections.ObjectModel;
 using System.Windows.Media.Media3D;
 
 // TODO Запихать все текста в xaml файлы или что-нибудь такое. Код бухнет от текста
+// TODO менять по возрастанию \ по убыванию
+// TODO сгенерируй N элементов от MIN до MAX
+// TODO подумать над дизайном
+
 
 namespace PalMathy.Sortings
 {

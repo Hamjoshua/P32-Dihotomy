@@ -38,7 +38,7 @@
 
                                 <ToggleButton Grid.Column="0" Grid.Row="0" Margin="10"
    Content="Х" IsChecked="{Binding IsActivated}" Style="{StaticResource MaterialDesignActionSecondaryToggleButton}"
-   ToolTip="MaterialDesignActionSecondaryToggleButton" />
+   ToolTip="Активировать\Дезактивировать метод" />
                                 <TextBlock Grid.Column="1" Grid.Row="0" TextWrapping="Wrap"
 Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" VerticalAlignment="Center" FontWeight="Bold" FontFamily="Arial"/>
 
@@ -122,7 +122,7 @@ ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" Ver
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" TextWrapping="Wrap" Text="Имя метода"></TextBlock>
                 <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="Отсортированный список"></TextBlock>
-                <TextBlock Margin="20 0 50 0" Grid.Column="2" TextWrapping="Wrap" Text="Скорость выполения в ms" />
+                <TextBlock Grid.Column="2" Margin="10 0 15 0" TextWrapping="Wrap" Text="Скорость выполения в ms" />
                 <TextBlock Grid.Column="3" TextWrapping="Wrap" Text="Кол-во итераций" />
             </Grid>
             <materialDesign:Card Grid.Row="2">
