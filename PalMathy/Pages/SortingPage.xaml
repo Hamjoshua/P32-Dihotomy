@@ -111,18 +111,18 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                             <TextBox
                 Grid.Row="1"
                 Grid.Column="0"
-                materialDesign:HintAssist.Hint="Setting 1"
-                Text="200" />
+                materialDesign:HintAssist.Hint="Минимальное число"
+                Text="{Binding MinRandomBound}" />
                             <TextBox
                 Grid.Row="2"
                 Grid.Column="0"
-                materialDesign:HintAssist.Hint="Setting 2"
-                Text="400" />
+                materialDesign:HintAssist.Hint="Максимальное число"
+                Text="{Binding MaxRandomBound}" />
                             <TextBox
                 Grid.Row="3"
                 Grid.Column="0"
-                materialDesign:HintAssist.Hint="Setting 3"
-                Text="600" />
+                materialDesign:HintAssist.Hint="Кол-во элементов"
+                Text="{Binding LengthOfRandomArray, NotifyOnSourceUpdated=True}" />
                             <StackPanel
                 Grid.Row="5"
                 Grid.ColumnSpan="2"

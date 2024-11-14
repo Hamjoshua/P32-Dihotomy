@@ -12,6 +12,7 @@ namespace PalMathy.ViewModels
     {
 
         private ObservableCollection<WholeReport> _wholeReports = new ObservableCollection<WholeReport>();
+        private RandomExpert _randomExpert = new RandomExpert();
         private List<BaseSorting> _allSortings = new List<BaseSorting>
         {
             new BubbleSorting(),
@@ -24,6 +25,38 @@ namespace PalMathy.ViewModels
         {
             111, 2, 3, 4, 0, -1, -2, 8, -14, 1, -63, 32, -52, 321, 32, -9, 21, -6
         };
+
+        public int MinRandomBound
+        {
+            get { return _randomExpert.MinBound; }
+            set
+            {
+                _randomExpert.MinBound = value;
+                OnPropertyChanged(nameof(MinRandomBound));                
+                OnPropertyChanged(nameof(LengthOfRandomArray));
+            }
+        }
+
+        public int MaxRandomBound
+        {
+            get { return _randomExpert.MaxBound; }
+            set
+            {
+                _randomExpert.MaxBound = value;
+                OnPropertyChanged(nameof(MaxRandomBound));                
+                OnPropertyChanged(nameof(LengthOfRandomArray));
+            }
+        }
+
+        public int LengthOfRandomArray
+        {
+            get { return _randomExpert.LengthOfArray; }
+            set
+            {
+                _randomExpert.LengthOfArray = value;
+                OnPropertyChanged(nameof(LengthOfRandomArray));
+            }
+        }
 
         public ObservableCollection<int> Elements
         {
@@ -78,14 +111,7 @@ namespace PalMathy.ViewModels
             {
                 return new Commands((obj) =>
                 {
-                    int length = Random.Shared.Next(100);
-                    ObservableCollection<int> list = new ObservableCollection<int>();
-                    for(int i = 0; i < length; ++i)
-                    {
-                        list.Add(i);
-                    }
-                    list.Shuffle();
-                    Elements = list;
+                    Elements = _randomExpert.GetRandomArray();
                 });
             }
         }
@@ -125,7 +151,7 @@ namespace PalMathy.ViewModels
                     {
                         if (!String.IsNullOrEmpty(openFileDialog.FileName))
                         {
-                            using(StreamReader reader = new StreamReader(openFileDialog.FileName))
+                            using (StreamReader reader = new StreamReader(openFileDialog.FileName))
                             {
                                 string text = reader.ReadToEnd();
                                 text.Replace("[", "");
@@ -144,7 +170,7 @@ namespace PalMathy.ViewModels
                                 OnPropertyChanged(nameof(Elements));
                             }
                         }
-                        
+
                     }
 
                 });
