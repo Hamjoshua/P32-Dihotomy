@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PalMathy.Sortings
 {
-    class Singletone<T> where T: new()
+    class Singletone<T> where T : new()
     {
         static private T _instance;
         private static object syncRoot = new Object();
@@ -16,10 +16,11 @@ namespace PalMathy.Sortings
         {
             get
             {
-                lock (syncRoot)
+                if (_instance == null)
                 {
-                    if (_instance == null)
+                    lock (syncRoot)
                     {
+
                         _instance = new T();
                     }
                 }
@@ -35,12 +36,14 @@ namespace PalMathy.Sortings
 
     class CancelToken : Singletone<CancelToken>
     {
-        public void Cancel()
+        async public Task Cancel()
         {
             cancellationTokenSource.Cancel();
+            // Задержка для того, чтобы токен успел отмениться на множестве активных сортировок
+            await Task.Delay(300);
             cancellationTokenSource.Dispose();
             cancellationTokenSource = new CancellationTokenSource();
         }
-        public CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();        
+        public CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
     }
 }

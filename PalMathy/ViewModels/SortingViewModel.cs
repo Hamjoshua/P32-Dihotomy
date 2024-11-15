@@ -137,13 +137,13 @@ namespace PalMathy.ViewModels
             }
         }
 
-        public ICommand CancelSortings
+        public IAsyncCommand CancelSortings
         {
             get
             {
-                return new Commands((obj) =>
+                return new AsyncCommand(async () =>
                 {
-                    CancelToken.Instance.Cancel();
+                    await CancelToken.Instance.Cancel();
                 });
             }
         }

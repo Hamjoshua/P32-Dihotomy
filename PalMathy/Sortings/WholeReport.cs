@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,7 +23,7 @@ namespace PalMathy.Sortings
             Sortings = sortings.Where(d => d.IsActivated == true).ToList();
             OutReports = new ObservableCollection<SingleReport>();
         }
-        
+
         public async Task MakeReports(bool isBiggerMode)
         {
             Task[] sortTasks = new Task[Sortings.Count];
@@ -32,14 +33,13 @@ namespace PalMathy.Sortings
                 BaseSorting sorting = Sortings[sortingIndex];
                 var elems = new ObservableCollection<int>(Elements.ToList());
                 SingleReport report = new SingleReport(sorting, elems);
-                OutReports.Add(report);
-
-                
-                sortTasks[sortingIndex] = Task.Run(() => report.BeginSort(isBiggerMode), 
-                    CancelToken.Instance.cancellationTokenSource.Token);                
+                OutReports.Add(report);                
             }
-
-            await Task.WhenAll(sortTasks);
+            
+            foreach(var report in OutReports)
+            {
+                await Task.Run(() => report.BeginSort(isBiggerMode));
+            }
         }
     }
 }

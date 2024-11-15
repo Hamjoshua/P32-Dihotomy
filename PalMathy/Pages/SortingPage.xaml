@@ -132,7 +132,7 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                             <ToggleButton Grid.Column="0" Grid.Row="0" Margin="10" HorizontalAlignment="Left"
       IsChecked="{Binding IsBiggerMode}"
       Style="{StaticResource MaterialDesignSwitchLightToggleButton}"/>
-                            
+
                             <StackPanel
                 Grid.Row="5"
                 Grid.ColumnSpan="2"
@@ -148,8 +148,10 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                 </StackPanel>
 
                 <TextBox Grid.Row="1" Text="{Binding Elements, Converter={StaticResource ListConv}}"
-                             Style="{StaticResource MaterialDesignOutlinedTextBox}"                             
-                            TextWrapping="Wrap"
+                            Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                            MaxHeight="250px"
+                            TextWrapping="Wrap" 
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"
                             VerticalScrollBarVisibility="Auto" VerticalAlignment="Center" Background="White"/>
                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button Height="24" Content="СОРТИРОВАТЬ" FontSize="12"  materialDesign:ButtonAssist.CornerRadius="10"

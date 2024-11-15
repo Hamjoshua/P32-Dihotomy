@@ -27,9 +27,10 @@ namespace PalMathy.Converters
             {
                 list.FromString<int>((string)value);
             }
-            catch (NotSupportedException)
+            catch (Exception)
             {
-                MessageBox.Show("Неверный формат списка! Нужно перечисление целых чисел через запятую");
+                MessageBox.Show("Неверный формат списка! Нужно перечисление целых чисел через запятую", "Внимание", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }          
 
             return list;

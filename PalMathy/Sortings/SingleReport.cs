@@ -33,8 +33,7 @@ namespace PalMathy.Sortings
             SortingResult result = Sorting.Sort(elems, isBiggerMode);
             Elements = result.Elements;
             IterationsCount = result.IterationsCount;
-            watch.Stop();
-            await Task.Delay(10);
+            watch.Stop();            
             ExecutingTime = watch.ElapsedMilliseconds;
             SortingIsOver = true;
 

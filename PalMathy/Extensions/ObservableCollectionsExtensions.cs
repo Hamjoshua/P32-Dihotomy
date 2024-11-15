@@ -29,14 +29,15 @@ namespace PalMathy.Extensions
             {
                 return;
             }
-            string[] myStrings = value.Split(", ");
+            value = value.Replace(" ", "");
+            string[] myStrings = value.Split(",");
             elements.Clear();
             foreach (string str in myStrings)
             {
                 var converter = TypeDescriptor.GetConverter(typeof(T));
                 if (converter != null)
                 {                    
-                    elements.Add((T)converter.ConvertFromString(str));
+                    elements.Add((T) converter.ConvertFromString(str));
                 }                
             }            
         }
