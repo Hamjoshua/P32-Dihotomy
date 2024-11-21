@@ -34,11 +34,18 @@ namespace PalMathy.Extensions
             elements.Clear();
             foreach (string str in myStrings)
             {
-                var converter = TypeDescriptor.GetConverter(typeof(T));
-                if (converter != null)
-                {                    
-                    elements.Add((T) converter.ConvertFromString(str));
-                }                
+                try
+                {
+                    var converter = TypeDescriptor.GetConverter(typeof(T));
+                    if (converter != null)
+                    {
+                        elements.Add((T)converter.ConvertFromString(str));
+                    }
+                }
+                catch
+                {
+                    continue;
+                }           
             }            
         }
 

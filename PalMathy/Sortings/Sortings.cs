@@ -28,7 +28,10 @@ namespace PalMathy.Sortings
 
             for (int j = 1; j < length; ++j)
             {
-                bool isSorted = true;
+                if (elements.IsSorted(isBiggerMode))
+                {
+                    break;
+                }
 
                 for (int i = 0; i < length - j; ++i)
                 {
@@ -42,14 +45,9 @@ namespace PalMathy.Sortings
                         int prevElem = elements[i];
                         elements[i] = elements[i + 1];
                         elements[i + 1] = prevElem;
-                        isSorted = false;
                     }
                 }
-                ++iters;
-                if (isSorted)
-                {
-                    break;
-                }
+                ++iters;                
             }
 
             return new SortingResult(elements, iters);
