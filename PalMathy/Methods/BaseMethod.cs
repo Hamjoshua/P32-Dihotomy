@@ -11,8 +11,10 @@ using OxyPlot.Series;
 
 namespace PalMathy.Methods
 {
-    public class BindedValue<T> {
-        public BindedValue(T value, string hint, bool isVisible) {
+    public class BindedValue<T>
+    {
+        public BindedValue(T value, string hint, bool isVisible)
+        {
             Value = value;
             Hint = hint;
             IsVisible = isVisible;
@@ -25,14 +27,14 @@ namespace PalMathy.Methods
     abstract class BaseNumericalMethod
     {
         protected const string NO_ZEROS = "Пересечений с осью Х нет\n";
-            
+
         public PlotModel Graph = new PlotModel { Title = "График" };
         public List<DataPoint> Points = new List<DataPoint>();
         public string FunctionString = "log(2,x)-3";
 
         public BindedValue<double> A;
         public BindedValue<double> B;
-        public BindedValue<double> C;        
+        public BindedValue<double> C;
         public double Epsilon = 0.5;
 
         public double BeginInterval = -10;
@@ -60,22 +62,22 @@ namespace PalMathy.Methods
             C = method.C;
             C.Hint = "C";
             C.IsVisible = false;
-               
+
             Epsilon = method.Epsilon;
             BeginInterval = method.BeginInterval;
             EndInterval = method.EndInterval;
-            FunctionString = method.FunctionString;            
-    }
+            FunctionString = method.FunctionString;
+        }
 
         public virtual string CalculateResult()
         {
             ParseFunction(A.Value, B.Value);
             string result = "";
-            if(_countOfZeros == 0)
+            if (_countOfZeros == 0)
             {
                 result += NO_ZEROS;
             }
-            if(_countOfZeros > 1)
+            if (_countOfZeros > 1)
             {
                 result += "Внимание! Функция содержит больше одного корня. Расчет может быть некорректен.\n";
             }
@@ -183,13 +185,13 @@ namespace PalMathy.Methods
                 }
                 else if (prevY != 0)
                 {
-                    if(prevY * newY < 0)
+                    if (prevY * newY < 0)
                     {
                         _countOfZeros += 1;
                     }
                 }
                 prevY = newY;
             }
-        }        
+        }
     }
 }
