@@ -137,25 +137,25 @@ namespace PalMathy.Methods
         public PlotModel CalculateGraph()
         {
             ParseFunction(BeginInterval, EndInterval);
-            PlotModel newGraph = new PlotModel { Title = $"График {FunctionString}" };
+            Graph = new PlotModel { Title = $"График {FunctionString}" };
 
             // Создаем серию точек графика
             var lineSeries = new LineSeries
             {
                 Title = "f(x)",
                 Color = OxyColor.FromRgb(0, 0, 255), // Синий цвет линии
-                LineStyle = LineStyle.Dot
+                LineStyle = LineStyle.Solid
             };
 
             // Добавляем все точки в серию
             lineSeries.Points.AddRange(Points);
 
             // Добавляем серию точек к модели графика
-            newGraph.Series.Add(lineSeries);
-            newGraph.Series.Add(MakeXLine());
-            newGraph.Series.Add(MakeYLine());
+            Graph.Series.Add(lineSeries);
+            Graph.Series.Add(MakeXLine());
+            Graph.Series.Add(MakeYLine());
 
-            return newGraph;
+            return Graph;
         }
         protected Function GetFunction(bool withMinus = false)
         {
