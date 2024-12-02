@@ -8,6 +8,7 @@ namespace PalMathy.Integrals
     // TODO интегральные методы содержат ненужные функциональности, нужен полный рефакторинг
     public abstract class BaseIntegralClass
     {
+        public bool IsEnabled { get; set; }
         protected int GetEpsilonZeroCount(double epsilon)
         {
 
@@ -24,7 +25,7 @@ namespace PalMathy.Integrals
             _subdivisionPoints.Add(new DataPoint(x, y));
         }
 
-        protected LineSeries GetSubdivision()
+        public LineSeries GetSubdivision()
         {
             var subdivisionSeries = new LineSeries()
             {
@@ -37,6 +38,6 @@ namespace PalMathy.Integrals
             return subdivisionSeries;
         }
 
-        public abstract double CalculateResult(string functionString, double b, double a, double subdivisionLength, double epsilon);        
-    }    
+        public abstract double CalculateResult(string functionString, double b, double a, double subdivisionLength, double epsilon);
+    }
 }

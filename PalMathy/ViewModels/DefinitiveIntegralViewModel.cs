@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
+using OxyPlot;
 using PalMathy.Integrals;
 using PalMathy.Methods;
 
@@ -6,8 +8,15 @@ namespace PalMathy.ViewModels
 {
     public struct HideableString
     {
-        string Result;
-        bool Visibility;
+        public HideableString(string title, string result, bool flag)
+        {
+            Title = title;
+            Result = result;
+            IsVisible = flag;
+        }
+        public string Title;
+        public string Result;
+        public bool IsVisible;
     }
 
     public class DefinitiveIntegralViewModel : BaseViewModel
@@ -18,9 +27,9 @@ namespace PalMathy.ViewModels
         {
             new SquaresIntegralClass()
         };
-        public List<HideableString> stringResults = new List<HideableString>();
-        
-        private double _result;        
+        public List<HideableString> IntegralResults { get; set; } = new List<HideableString>();
+
+        private double _result;
 
         public double AMin
         {
@@ -45,6 +54,19 @@ namespace PalMathy.ViewModels
             {
                 _graphContainer.B.Value = value;
                 OnPropertyChanged(nameof(BMax));
+            }
+        }
+
+        public PlotModel PageGraph
+        {
+            get
+            {
+                return _graphContainer.Graph;
+            }
+            set
+            {
+                _graphContainer.Graph = value;
+                OnPropertyChanged(nameof(PageGraph));
             }
         }
 
@@ -74,26 +96,71 @@ namespace PalMathy.ViewModels
             }
         }
 
+        public ICommand BuildGraph
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    PageGraph = _graphContainer.CalculateGraph();
+                });
+            }
+        }
+
+        public ICommand ShowOrHideSubdivideSeries
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    foreach (var result in IntegralResults)
+                    {
+                        var subdivide = PageGraph.Series.First(d => d.Title == result.Title);
+                        subdivide.IsVisible = result.IsVisible;
+                    }
+                });
+            }
+        }
+
         public ICommand CalculateResult
         {
             get
             {
                 return new DelegateCommand((obj) =>
                 {
-                    string commonResult = "";
-                    foreach(var integralMethod in IntegralMethods)
+                    if (!PageGraph.Title.Contains(FunctionString))
                     {
-                        double result = integralMethod.CalculateResult(
+                        var question = MessageBox.Show("График текущей функции еще не построен. Построить?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                        if (question == MessageBoxResult.Yes)
+                        {
+                            PageGraph = _graphContainer.CalculateGraph();
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+
+                    IntegralResults.Clear();
+
+                    foreach (var integralMethod in IntegralMethods)
+                    {
+                        if (integralMethod.IsEnabled)
+                        {
+                            double result = integralMethod.CalculateResult(
                             _graphContainer.FunctionString,
                             _graphContainer.B.Value,
                             _graphContainer.A.Value,
                             _graphContainer.C.Value,
                             _graphContainer.Epsilon
                         );
+                            // Добавляем сделанные разделения в существующий график
+                            PageGraph.Series.Add(integralMethod.GetSubdivision());
 
-                        HideableString
+                            HideableString hideableString = new HideableString(integralMethod.Title, result.ToString(), true);
+                            IntegralResults.Add(hideableString);
+                        }                        
                     }
-                    
                 });
             }
         }
