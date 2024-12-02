@@ -13,6 +13,8 @@ namespace PalMathy.Integrals
     {
         public SquaresIntegralClass() : base()
         {
+            Title = "Метод средних прямоугольников";
+            Description = "Простейший из методов и наиболее точный";
             GraphColor = Color.RebeccaPurple;
         }
 

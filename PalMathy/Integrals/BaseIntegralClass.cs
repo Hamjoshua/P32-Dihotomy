@@ -17,6 +17,7 @@ namespace PalMathy.Integrals
         }
         public Color GraphColor { get; set; }
         public string Title { get; set; }
+        public string Description { get; set; }
 
         protected List<DataPoint> _subdivisionPoints = new List<DataPoint>();
 

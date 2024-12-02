@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PalMathy.Pages"
       mc:Ignorable="d" 
+      xmlns:oxy="http://oxyplot.org/wpf"       
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:viewmodels="clr-namespace:PalMathy.ViewModels"  
       d:DesignHeight="450" d:DesignWidth="800"
@@ -13,32 +14,98 @@
         <viewmodels:DefinitiveIntegralViewModel />
     </Page.DataContext>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+            <ColumnDefinition Width="6*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="7*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+        </Grid.RowDefinitions>
 
-        <TextBlock Text="∫" Grid.Column="0" Grid.RowSpan="3" Style="{StaticResource MaterialDesignHeadline1TextBlock}" FontSize="228" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.RowSpan="2" Grid.Column="0" >
+            <ItemsControl ItemsSource="{Binding IntegralMethods}" Margin="5 5 5 5">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <materialDesign:Card Height="Auto" VerticalAlignment="Top" Margin="0 0 0 10">
+                            <Grid Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
 
-        <TextBox materialDesign:HintAssist.Hint="B" Width="150" Grid.Row="0" Grid.Column="1"
-                 Text="{Binding BMax}"
-            Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <ToggleButton Grid.Column="0" Grid.Row="0" Margin="10"
+                                      IsChecked="{Binding IsEnabled}"
+                                      Style="{StaticResource MaterialDesignSwitchLightToggleButton}"
+                                      ToolTip="Активировать\Дезактивировать метод"/>
 
-        <TextBox materialDesign:HintAssist.Hint="F(x)="  Grid.Row="1" Grid.Column="1"
-                 Text="{Binding FunctionString}"
-            Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" FontSize="24"/>
+                                <TextBlock Grid.Column="1" Grid.Row="0" TextWrapping="Wrap"
+                                    Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Title}" VerticalAlignment="Center" FontWeight="Bold" FontFamily="Arial"/>
 
-        <TextBox materialDesign:HintAssist.Hint="A" Width="150" Grid.Row="2" Grid.Column="1"
-                 Text="{Binding AMin}"
-            Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <Expander Grid.ColumnSpan="2" Grid.Row="1"
+                                    HorizontalAlignment="Stretch"
+                                    Header="Описание" Background="White">
+                                    <StackPanel
+                                      Margin="24,8,24,16"
+                                      Orientation="Vertical"
+                                      TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+                                        <TextBlock Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Description}">
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Expander>
+                            </Grid>
+                        </materialDesign:Card>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        <StackPanel Grid.Row="2" Grid.Column="0">
+            <Button Content="Построить график" Command="{Binding BuildGraph}"/>
+            <Button Content="Посчитать интеграл" Command="{Binding CalculateResult}"/>
+            <TextBox materialDesign:HintAssist.HelperText="{Binding SubdivCount.Hint}"
+                     Text="{Binding SubdivCount.Value}"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"></TextBox>
 
-        <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal" VerticalAlignment="Center">
+
+        </StackPanel>
+        <oxy:PlotView Grid.Row="0" Grid.Column="1" x:Name="pvGraph" Model="{Binding BuildGraph}"/>
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="∫" Grid.Column="0" Grid.RowSpan="3" Style="{StaticResource MaterialDesignHeadline1TextBlock}" 
+                       FontSize="72" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            <TextBox materialDesign:HintAssist.Hint="{Binding BMax.Hint}" Grid.Row="0" Grid.Column="1"
+                Text="{Binding BMax.Value}"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"/>
+
+            <TextBox materialDesign:HintAssist.Hint="F(x)="  Grid.Row="1" Grid.Column="1"
+                Text="{Binding FunctionString}"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"/>
+
+            <TextBox materialDesign:HintAssist.Hint="{Binding AMin.Hint}" Grid.Row="2" Grid.Column="1"
+                Text="{Binding AMin}"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"/>
+
+            
+            <TextBlock Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding Description}" TextWrapping="Wrap"/>
+            
+
+            <!--<StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal" VerticalAlignment="Center">
             <Button  HorizontalAlignment="Left" VerticalAlignment="Center"
                 Content="Посчитать" Command="{Binding CalculateResult}" />
             <materialDesign:Card Grid.Row="2" Grid.Column="2" Margin="0, 10" Padding="10" Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}"
@@ -46,6 +113,8 @@
                 <TextBlock Text="{Binding Result}" TextWrapping="Wrap"/>
             </materialDesign:Card>
 
-        </StackPanel>    
+        </StackPanel>-->
+        </Grid>
+
     </Grid>
 </Page>

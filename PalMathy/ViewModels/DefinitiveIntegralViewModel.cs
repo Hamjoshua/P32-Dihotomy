@@ -31,29 +31,50 @@ namespace PalMathy.ViewModels
 
         private double _result;
 
-        public double AMin
+        public BindedValue<double> AMin
         {
             get
             {
-                return _graphContainer.A.Value;
+                return _graphContainer.A;
             }
             set
             {
-                _graphContainer.A.Value = value;
+                _graphContainer.A.Value = Convert.ToDouble(value);
                 OnPropertyChanged(nameof(AMin));
             }
         }
 
-        public double BMax
+        public BindedValue<double> BMax
         {
             get
             {
-                return _graphContainer.B.Value;
+                return _graphContainer.B;
             }
             set
             {
-                _graphContainer.B.Value = value;
+                _graphContainer.B.Value = Convert.ToDouble(value); ;
                 OnPropertyChanged(nameof(BMax));
+            }
+        }
+
+        public BindedValue<double> SubdivCount
+        {
+            get
+            {
+                return _graphContainer.C;
+            }
+            set
+            {
+                _graphContainer.C.Value = Convert.ToDouble(value); ;
+                OnPropertyChanged(nameof(SubdivCount));
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return _graphContainer.Description;
             }
         }
 
