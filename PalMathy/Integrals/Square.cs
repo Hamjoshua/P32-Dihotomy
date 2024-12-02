@@ -18,12 +18,12 @@ namespace PalMathy.Integrals
             GraphColor = Color.RebeccaPurple;
         }
 
-        private void AddRectangle(double x1, double y1, double x2)
+        protected override void AddSubdivision(double x1, double y1, double x2, double y2)
         {
-            _subdivisionPoints.Add(new DataPoint(x1, 0));
             _subdivisionPoints.Add(new DataPoint(x1, y1));
+            _subdivisionPoints.Add(new DataPoint(x1, y2));
+            _subdivisionPoints.Add(new DataPoint(x2, y2));
             _subdivisionPoints.Add(new DataPoint(x2, y1));
-            _subdivisionPoints.Add(new DataPoint(x2, 0));
         }
 
         public override double CalculateResult(string functionString, double b, double a, double subdivisionLength, double epsilon)
@@ -36,12 +36,11 @@ namespace PalMathy.Integrals
             {
                 double newX = x + (step / 2);
                 double y = OxyHelper.GetResultFromFunction(functionString, newX);
-                AddRectangle(x, y, x + step);
+                AddSubdivision(x, 0, x + step, y);
 
                 sum += y;
             }
             sum *= step;
-            sum = Math.Round(sum, GetEpsilonZeroCount(epsilon));
 
             return sum;
         }

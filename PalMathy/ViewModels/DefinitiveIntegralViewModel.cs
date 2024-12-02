@@ -27,7 +27,8 @@ namespace PalMathy.ViewModels
         InputForIntegral _graphContainer = new InputForIntegral();
         public List<BaseIntegralClass> IntegralMethods { get; set; } = new List<BaseIntegralClass>()
         {
-            new SquaresIntegralClass()
+            new SquaresIntegralClass(),
+            new TrapezoidIntegralClass()
         };
         public ObservableCollection<HideableString> _integralResults = new ObservableCollection<HideableString>();
 
@@ -185,23 +186,45 @@ namespace PalMathy.ViewModels
             return _graphContainer.Graph;
         }
 
+        private bool IsGraphBuilded()
+        {
+            if (!PageGraph.Title.Contains(FunctionString))
+            {
+                var question = MessageBox.Show("График текущей функции еще не построен. Построить?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (question == MessageBoxResult.Yes)
+                {
+                    PageGraph = _graphContainer.CalculateGraph();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private bool IsIntegralMethodSelected()
+        {
+            bool result = IntegralMethods.Any(d => d.IsEnabled);
+
+            if (!result)
+            {
+                MessageBox.Show("Не выбран ни один метод рассчета определенного интеграла", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
+            return result;
+        }
+
         public ICommand CalculateResult
         {
             get
             {
                 return new DelegateCommand((obj) =>
                 {
-                    if (!PageGraph.Title.Contains(FunctionString))
+                    if (!IsGraphBuilded() || !IsIntegralMethodSelected())
                     {
-                        var question = MessageBox.Show("График текущей функции еще не построен. Построить?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                        if (question == MessageBoxResult.Yes)
-                        {
-                            PageGraph = _graphContainer.CalculateGraph();
-                        }
-                        else
-                        {
-                            return;
-                        }
+                        return;
                     }
 
                     IntegralResults.Clear();

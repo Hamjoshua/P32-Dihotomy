@@ -29,10 +29,7 @@ namespace PalMathy.Integrals
 
         protected List<DataPoint> _subdivisionPoints = new List<DataPoint>();
 
-        protected void AddSubdivisionPoint(double x, double y)
-        {
-            _subdivisionPoints.Add(new DataPoint(x, y));
-        }
+        protected abstract void AddSubdivision(double x1, double y1, double x2, double y2);
 
         public LineSeries GetSubdivision()
         {

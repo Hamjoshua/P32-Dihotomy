@@ -45,7 +45,7 @@
                                       ToolTip="Активировать\Дезактивировать метод"/>
 
                                 <TextBlock Grid.Column="1" Grid.Row="0" TextWrapping="Wrap"
-                                    Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Title}" VerticalAlignment="Center" FontWeight="Bold" FontFamily="Arial"/>
+                                    Style="{StaticResource MaterialDesignHeadline6TextBlock}" Text="{Binding Title}" VerticalAlignment="Center" FontWeight="Bold" FontFamily="Arial"/>
 
                                 <Expander Grid.ColumnSpan="2" Grid.Row="1"
                                     HorizontalAlignment="Stretch"
@@ -68,10 +68,10 @@
             <Button Content="Построить график" Command="{Binding BuildGraph}"/>
             <Button Content="Посчитать интеграл" Command="{Binding CalculateResult}"/>
             <Button Content="Обновить график" Command="{Binding ShowOrHideSubdivideSeries}"/>
-            <TextBox materialDesign:HintAssist.HelperText="{Binding SubdivCount.Hint}"
+            <TextBox materialDesign:HintAssist.Hint="{Binding SubdivCount.Hint}"
                     Text="{Binding SubdivCount.Value}"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"></TextBox>
-            <TextBox materialDesign:HintAssist.HelperText="Точность Epsilon"
+            <TextBox materialDesign:HintAssist.Hint="Точность Epsilon"
                     Text="{Binding Epsilon}"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"></TextBox>
 
@@ -85,7 +85,8 @@
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
                             <CheckBox IsChecked="{Binding IsVisible}"></CheckBox>
                             <Label Content="{Binding Title}" />
-                            <TextBlock Text="{Binding Result}" />
+                            <Label Content="-" />
+                            <TextBox IsReadOnly="True" Text="{Binding Result}" />
                         </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
