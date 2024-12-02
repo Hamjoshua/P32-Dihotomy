@@ -38,7 +38,7 @@
                  Text="{Binding AMin}"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-        <StackPanel Grid.Column="1" Grid.Row="4">
+        <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal" VerticalAlignment="Center">
             <Button  HorizontalAlignment="Left" VerticalAlignment="Center"
                 Content="Посчитать" Command="{Binding CalculateResult}" />
             <materialDesign:Card Grid.Row="2" Grid.Column="2" Margin="0, 10" Padding="10" Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}"

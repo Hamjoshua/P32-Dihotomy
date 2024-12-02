@@ -1,27 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using PalMathy.Integrals;
+using PalMathy.Methods;
 
 namespace PalMathy.ViewModels
 {
+    public struct HideableString
+    {
+        string Result;
+        bool Visibility;
+    }
+
     public class DefinitiveIntegralViewModel : BaseViewModel
     {
-        private DefinitiveIntegral _definitiveIntegral = new DefinitiveIntegral();
-        private double _result;
+        // TODO сделать отдельный базовый метод
+        InputForIntegral _graphContainer = new InputForIntegral();
+        public List<BaseIntegralClass> IntegralMethods = new List<BaseIntegralClass>()
+        {
+            new SquaresIntegralClass()
+        };
+        public List<HideableString> stringResults = new List<HideableString>();
+        
+        private double _result;        
 
         public double AMin
         {
             get
             {
-                return _definitiveIntegral.AMin;
+                return _graphContainer.A.Value;
             }
             set
             {
-                _definitiveIntegral.AMin = value;
+                _graphContainer.A.Value = value;
                 OnPropertyChanged(nameof(AMin));
             }
         }
@@ -30,11 +39,11 @@ namespace PalMathy.ViewModels
         {
             get
             {
-                return _definitiveIntegral.BMax;
+                return _graphContainer.B.Value;
             }
             set
             {
-                _definitiveIntegral.BMax = value;
+                _graphContainer.B.Value = value;
                 OnPropertyChanged(nameof(BMax));
             }
         }
@@ -43,11 +52,11 @@ namespace PalMathy.ViewModels
         {
             get
             {
-                return _definitiveIntegral.FunctionString;
+                return _graphContainer.FunctionString;
             }
             set
             {
-                _definitiveIntegral.FunctionString = value;
+                _graphContainer.FunctionString = value;
                 OnPropertyChanged(nameof(FunctionString));
             }
         }
@@ -71,7 +80,20 @@ namespace PalMathy.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    Result = _definitiveIntegral.GetResult();
+                    string commonResult = "";
+                    foreach(var integralMethod in IntegralMethods)
+                    {
+                        double result = integralMethod.CalculateResult(
+                            _graphContainer.FunctionString,
+                            _graphContainer.B.Value,
+                            _graphContainer.A.Value,
+                            _graphContainer.C.Value,
+                            _graphContainer.Epsilon
+                        );
+
+                        HideableString
+                    }
+                    
                 });
             }
         }

@@ -1,24 +1,21 @@
 ﻿using OxyPlot;
 using OxyPlot.Series;
-using PalMathy.Methods;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace PalMathy.Integrals
 {
-    class BaseIntegralClass : BaseNumericalMethod
+    // TODO интегральные методы содержат ненужные функциональности, нужен полный рефакторинг
+    public abstract class BaseIntegralClass
     {
+        protected int GetEpsilonZeroCount(double epsilon)
+        {
+
+            int countOfZeros = ",".Split(epsilon.ToString())[1].Count();
+            return countOfZeros;
+        }
         public Color GraphColor { get; set; }
         public string Title { get; set; }
-        public BaseIntegralClass()
-        {
-            A = new BindedValue<double>(-1, "А (нижний предел)", true);
-            B = new BindedValue<double>(1, "B (верхний предел)", true);
-        }
 
         protected List<DataPoint> _subdivisionPoints = new List<DataPoint>();
 
@@ -39,5 +36,7 @@ namespace PalMathy.Integrals
 
             return subdivisionSeries;
         }
-    }
+
+        public abstract double CalculateResult(string functionString, double b, double a, double subdivisionLength, double epsilon);        
+    }    
 }

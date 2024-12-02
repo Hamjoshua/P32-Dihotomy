@@ -24,6 +24,39 @@ namespace PalMathy.Methods
         public bool IsVisible { get; set; }
     }
 
+    static class OxyHelper
+    {
+        // TODO сделать в виде синглтона
+        static string FormatDouble(double value)
+        {
+            return value.ToString().Replace(",", ".");
+        }
+
+        static public Function GetFunctionFrom(string functionString, bool withMinus = false)
+        {
+            string function = functionString;
+            if (withMinus)
+            {
+                function = $"-({function})";
+            }
+            return new Function($"f(x) = {function}");
+        }
+
+        static public double GetResultFromFunction(string functionString, double value, bool derivative = false)
+        {
+            if (derivative)
+            {
+                Expression derivExpression = new Expression($"der({functionString}, x, {FormatDouble(value)})");
+                return derivExpression.calculate();
+            }
+            else
+            {
+                return (new Expression($"f({FormatDouble(value)})", GetFunctionFrom(functionString))).calculate();
+
+            }
+        }
+    }
+
     abstract class BaseNumericalMethod
     {
         protected const string NO_ZEROS = "Пересечений с осью Х нет\n";
