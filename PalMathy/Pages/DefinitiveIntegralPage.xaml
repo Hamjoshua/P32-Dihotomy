@@ -86,7 +86,7 @@
                             <CheckBox IsChecked="{Binding IsVisible}"></CheckBox>
                             <Label Content="{Binding Title}" />
                             <Label Content="-" />
-                            <TextBox IsReadOnly="True" Text="{Binding Result}" />
+                            <TextBox IsReadOnly="True" Text="{Binding FormattedResult}" />
                         </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

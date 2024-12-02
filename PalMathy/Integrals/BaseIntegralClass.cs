@@ -9,20 +9,7 @@ namespace PalMathy.Integrals
     // TODO интегральные методы содержат ненужные функциональности, нужен полный рефакторинг
     public abstract class BaseIntegralClass
     {
-        public bool IsEnabled { get; set; }
-        protected int GetEpsilonZeroCount(double epsilon)
-        {
-            if(epsilon > 0 && epsilon < 1)
-            {                
-                int countOfZeros = BitConverter.GetBytes(decimal.GetBits((decimal)epsilon)[3])[2];
-                if(countOfZeros > 15)
-                {
-                    countOfZeros = 15;
-                }
-                return countOfZeros;
-            }
-            return 0;
-        }
+        public bool IsEnabled { get; set; }        
         public Color GraphColor { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

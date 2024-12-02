@@ -10,14 +10,15 @@ namespace PalMathy.ViewModels
 {
     public class HideableString
     {
-        public HideableString(string title, string result, bool flag)
+        public HideableString(string title, double result, bool flag)
         {
             Title = title;
             Result = result;
             IsVisible = flag;
         }
         public string Title { get; set; }
-        public string Result { get; set; }
+        public double Result { get; set; }
+        public string FormattedResult { get; set; }
         public bool IsVisible { get; set; }
     }
 
@@ -82,6 +83,33 @@ namespace PalMathy.ViewModels
             {
                 _graphContainer.Epsilon = Convert.ToDouble(value); ;
                 OnPropertyChanged(nameof(Epsilon));
+
+                SetResultsToFormat();
+            }
+        }
+
+        public void SetResultsToFormat()
+        {
+            var results = IntegralResults;
+            foreach (var result in results)
+            {
+                result.FormattedResult = result.Result.ToString($"N{EpsilonFormat}");
+                OnPropertyChanged(nameof(result.FormattedResult));
+            }
+
+            IntegralResults = results;
+        }
+
+        public int EpsilonFormat
+        {
+            get
+            {
+                int countOfZeros = BitConverter.GetBytes(decimal.GetBits((decimal)Epsilon)[3])[2];
+                if (countOfZeros > 15)
+                {
+                    countOfZeros = 15;
+                }
+                return countOfZeros;
             }
         }
 
@@ -244,10 +272,12 @@ namespace PalMathy.ViewModels
                             PageGraph = SetSubdivisionToGraph(integralMethod.GetSubdivision());
 
                             // Добавляем результат интегралов на "доску"
-                            HideableString hideableString = new HideableString(integralMethod.Title, result.ToString(), true);
+                            HideableString hideableString = new HideableString(integralMethod.Title, result, true);
                             IntegralResults.Add(hideableString);
                         }
                     }
+
+                    SetResultsToFormat();
 
                     OnPropertyChanged(nameof(PageGraph));
                     OnPropertyChanged(nameof(IntegralResults));
