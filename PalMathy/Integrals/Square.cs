@@ -24,7 +24,7 @@ namespace PalMathy.Integrals
             _subdivisionPoints.Add(new DataPoint(x2, 0));
         }
 
-        public string CalculateResult(string functionString, double b, double a, double subdivisionLength, double epsilon)
+        public override double CalculateResult(string functionString, double b, double a, double subdivisionLength, double epsilon)
         {
             double sum = 0;
 
@@ -40,7 +40,7 @@ namespace PalMathy.Integrals
             sum *= step;
             sum = Math.Round(sum, GetEpsilonZeroCount(epsilon));
 
-            return $"Результат от {Title}: {sum}";
+            return sum;
         }
     }
 }
