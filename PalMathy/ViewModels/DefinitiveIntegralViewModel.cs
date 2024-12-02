@@ -1,12 +1,14 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using OxyPlot;
+using OxyPlot.Series;
 using PalMathy.Integrals;
 using PalMathy.Methods;
 
 namespace PalMathy.ViewModels
 {
-    public struct HideableString
+    public class HideableString
     {
         public HideableString(string title, string result, bool flag)
         {
@@ -14,22 +16,34 @@ namespace PalMathy.ViewModels
             Result = result;
             IsVisible = flag;
         }
-        public string Title;
-        public string Result;
-        public bool IsVisible;
+        public string Title { get; set; }
+        public string Result { get; set; }
+        public bool IsVisible { get; set; }
     }
 
     public class DefinitiveIntegralViewModel : BaseViewModel
     {
         // TODO сделать отдельный базовый метод
         InputForIntegral _graphContainer = new InputForIntegral();
-        public List<BaseIntegralClass> IntegralMethods = new List<BaseIntegralClass>()
+        public List<BaseIntegralClass> IntegralMethods { get; set; } = new List<BaseIntegralClass>()
         {
             new SquaresIntegralClass()
         };
-        public List<HideableString> IntegralResults { get; set; } = new List<HideableString>();
+        public ObservableCollection<HideableString> _integralResults = new ObservableCollection<HideableString>();
 
         private double _result;
+
+        public ObservableCollection<HideableString> IntegralResults
+        {
+            get
+            {
+                return _integralResults;
+            }
+            set
+            {
+                Set<ObservableCollection<HideableString>>(ref _integralResults, value);
+            }
+        }
 
         public BindedValue<double> AMin
         {
@@ -54,6 +68,19 @@ namespace PalMathy.ViewModels
             {
                 _graphContainer.B.Value = Convert.ToDouble(value); ;
                 OnPropertyChanged(nameof(BMax));
+            }
+        }
+
+        public double Epsilon
+        {
+            get
+            {
+                return _graphContainer.Epsilon;
+            }
+            set
+            {
+                _graphContainer.Epsilon = Convert.ToDouble(value); ;
+                OnPropertyChanged(nameof(Epsilon));
             }
         }
 
@@ -121,6 +148,7 @@ namespace PalMathy.ViewModels
         {
             get
             {
+                IntegralResults.Clear();
                 return new DelegateCommand((obj) =>
                 {
                     PageGraph = _graphContainer.CalculateGraph();
@@ -136,11 +164,25 @@ namespace PalMathy.ViewModels
                 {
                     foreach (var result in IntegralResults)
                     {
-                        var subdivide = PageGraph.Series.First(d => d.Title == result.Title);
+                        var subdivide = _graphContainer.Graph.Series.First(d => d.Title == result.Title);
                         subdivide.IsVisible = result.IsVisible;
                     }
+                    PageGraph = _graphContainer.Graph;
                 });
             }
+        }
+
+        private PlotModel SetSubdivisionToGraph(LineSeries subdivision)
+        {
+            var existingSubdivision = _graphContainer.Graph.Series.FirstOrDefault(d => d.Title == subdivision.Title);
+            if (existingSubdivision != null)
+            {
+                _graphContainer.Graph.Series.Remove(existingSubdivision);
+            }
+
+            _graphContainer.Graph.Series.Add(subdivision);
+
+            return _graphContainer.Graph;
         }
 
         public ICommand CalculateResult
@@ -176,12 +218,16 @@ namespace PalMathy.ViewModels
                             _graphContainer.Epsilon
                         );
                             // Добавляем сделанные разделения в существующий график
-                            PageGraph.Series.Add(integralMethod.GetSubdivision());
+                            PageGraph = SetSubdivisionToGraph(integralMethod.GetSubdivision());
 
+                            // Добавляем результат интегралов на "доску"
                             HideableString hideableString = new HideableString(integralMethod.Title, result.ToString(), true);
                             IntegralResults.Add(hideableString);
-                        }                        
+                        }
                     }
+
+                    OnPropertyChanged(nameof(PageGraph));
+                    OnPropertyChanged(nameof(IntegralResults));
                 });
             }
         }

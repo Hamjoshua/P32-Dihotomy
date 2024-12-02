@@ -24,7 +24,7 @@
             <RowDefinition Height="3*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.RowSpan="2" Grid.Column="0" >
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0" Grid.Column="0" >
             <ItemsControl ItemsSource="{Binding IntegralMethods}" Margin="5 5 5 5">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -64,16 +64,33 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <StackPanel Grid.Row="2" Grid.Column="0">
+        <StackPanel Grid.Row="1" Grid.RowSpan="2" Grid.Column="0">
             <Button Content="Построить график" Command="{Binding BuildGraph}"/>
             <Button Content="Посчитать интеграл" Command="{Binding CalculateResult}"/>
+            <Button Content="Обновить график" Command="{Binding ShowOrHideSubdivideSeries}"/>
             <TextBox materialDesign:HintAssist.HelperText="{Binding SubdivCount.Hint}"
-                     Text="{Binding SubdivCount.Value}"
-                Style="{StaticResource MaterialDesignFloatingHintTextBox}"></TextBox>
+                    Text="{Binding SubdivCount.Value}"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"></TextBox>
+            <TextBox materialDesign:HintAssist.HelperText="Точность Epsilon"
+                    Text="{Binding Epsilon}"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"></TextBox>
 
 
         </StackPanel>
-        <oxy:PlotView Grid.Row="0" Grid.Column="1" x:Name="pvGraph" Model="{Binding BuildGraph}"/>
+        <oxy:PlotView Grid.Row="0" Grid.Column="1" x:Name="pvGraph" Model="{Binding PageGraph}"/>
+        <ScrollViewer Grid.Row="1" Grid.Column="1">
+            <ItemsControl ItemsSource="{Binding IntegralResults}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+                            <CheckBox IsChecked="{Binding IsVisible}"></CheckBox>
+                            <Label Content="{Binding Title}" />
+                            <TextBlock Text="{Binding Result}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
         <Grid Grid.Row="2" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
@@ -98,7 +115,7 @@
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"/>
 
             <TextBox materialDesign:HintAssist.Hint="{Binding AMin.Hint}" Grid.Row="2" Grid.Column="1"
-                Text="{Binding AMin}"
+                Text="{Binding AMin.Value}"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"/>
 
             
