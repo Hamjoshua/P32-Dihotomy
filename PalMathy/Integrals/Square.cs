@@ -28,7 +28,7 @@ namespace PalMathy.Integrals
 
             double step = (b - a) / subdivisionLength;
             double sum = GetSumFromSquaresLoop(a, b, step, functionString);
-            
+
             sum *= step;
 
             return sum;
@@ -73,8 +73,7 @@ public class LeftSquareIntegralClass : BaseSquaresIntegralClass
         double sum = 0;
         for (double x = a; x < b; x += step)
         {
-            double newX = x + step;
-            double y = OxyHelper.GetResultFromFunction(functionString, newX);
+            double y = OxyHelper.GetResultFromFunction(functionString, x);
             AddSubdivision(x, 0, x + step, y);
 
             sum += y;
@@ -95,7 +94,7 @@ public class RightSquareIntegralClass : BaseSquaresIntegralClass
     public override double GetSumFromSquaresLoop(double a, double b, double step, string functionString)
     {
         double sum = 0;
-        for (double x = a + step; x <= b; x += step)
+        for (double x = a; x < b; x += step)
         {
             double newX = x + step;
             double y = OxyHelper.GetResultFromFunction(functionString, newX);

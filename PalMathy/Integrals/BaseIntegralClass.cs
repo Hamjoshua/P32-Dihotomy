@@ -9,7 +9,7 @@ namespace PalMathy.Integrals
     // TODO интегральные методы содержат ненужные функциональности, нужен полный рефакторинг
     public abstract class BaseIntegralClass
     {
-        public bool IsEnabled { get; set; }        
+        public bool IsEnabled { get; set; }
         public Color GraphColor { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
