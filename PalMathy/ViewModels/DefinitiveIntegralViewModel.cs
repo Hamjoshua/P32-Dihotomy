@@ -28,7 +28,9 @@ namespace PalMathy.ViewModels
         InputForIntegral _graphContainer = new InputForIntegral();
         public List<BaseIntegralClass> IntegralMethods { get; set; } = new List<BaseIntegralClass>()
         {
-            new SquaresIntegralClass(),
+            new MiddleSquareIntegralClass(),
+            new LeftSquareIntegralClass(),
+            new RightSquareIntegralClass(),
             new TrapezoidIntegralClass()
         };
         public ObservableCollection<HideableString> _integralResults = new ObservableCollection<HideableString>();

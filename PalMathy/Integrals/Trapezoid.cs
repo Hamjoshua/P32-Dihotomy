@@ -29,7 +29,7 @@ namespace PalMathy.Integrals
             double yEnd = 0;
 
 
-            for(double x = a; x < b; x += step)
+            for (double x = a; x < b; x += step)
             {
                 double newX = x + step;
                 double y = OxyHelper.GetResultFromFunction(functionString, x);
@@ -39,15 +39,13 @@ namespace PalMathy.Integrals
                 if (x == a)
                 {
                     yBegin = y;
+                    continue;
                 }
                 else if (x == b - step)
                 {
                     yEnd = newY;
                 }
-                else
-                {
-                    result += y;
-                }
+                result += y;
             }
 
             result += (yBegin + yEnd) / 2;
