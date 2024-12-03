@@ -90,7 +90,7 @@ namespace PalMathy.ViewModels
 
         public void SetResultsToFormat()
         {
-            var results = IntegralResults;
+            ObservableCollection<HideableString> results = new ObservableCollection <HideableString> (IntegralResults.ToList());
             foreach (var result in results)
             {
                 result.FormattedResult = result.Result.ToString($"N{EpsilonFormat}");
