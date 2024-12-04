@@ -14,7 +14,7 @@ namespace PalMathy.Integrals
         public string Title { get; set; }
         public string Description { get; set; }
 
-        protected List<DataPoint> _subdivisionPoints = new List<DataPoint>();
+        protected List<DataPoint> _subdivisionPoints = new List<DataPoint>();        
 
         protected abstract void AddSubdivision(double x1, double y1, double x2, double y2);
 

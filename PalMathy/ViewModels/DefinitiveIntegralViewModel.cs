@@ -31,7 +31,8 @@ namespace PalMathy.ViewModels
             new MiddleSquareIntegralClass(),
             new LeftSquareIntegralClass(),
             new RightSquareIntegralClass(),
-            new TrapezoidIntegralClass()
+            new TrapezoidIntegralClass(),
+            new SimpsonIntegralClass()
         };
         public ObservableCollection<HideableString> _integralResults = new ObservableCollection<HideableString>();
 
