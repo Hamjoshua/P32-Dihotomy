@@ -1,9 +1,11 @@
-﻿using OxyPlot;
+﻿using MaterialDesignThemes.Wpf.Converters;
+using OxyPlot;
 using PalMathy.Methods;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,7 +20,7 @@ namespace PalMathy.Integrals
                 "график подынтегральной функции приближается не ломаной линией, а маленькими параболками. " +
                 "Сколько промежуточных отрезков – столько и маленьких парабол.\n\n" +
                 "В большинстве случаев метод Симпсона дает более точное приближение, чем метод прямоугольников или метод трапеций.";
-            GraphColor = Color.CadetBlue;
+            GraphColor = Color.Orange;
         }
 
         public override double CalculateResult(string functionString, double b, double a, double subdivisionLength, double epsilon)
@@ -50,9 +52,10 @@ namespace PalMathy.Integrals
                     y *= 4;
                 }
                 result += y;
-                AddSubdivision(x, y);
                 ++index;
             }
+
+            MakeParabol(a, b, step, functionString);
 
             result *= (step / 3);
 
@@ -64,7 +67,28 @@ namespace PalMathy.Integrals
             return digit % 2 == 0;
         }
 
-        protected override void AddSubdivision(double x1, double y1, double x2 = 0, double y2 = 0)
+        private void MakeParabol(double x0, double xend, double step, string functionString)
+        {
+            double xm = (Math.Abs(x0) + Math.Abs(xend)) / 2 + x0;
+            double y0 = OxyHelper.GetResultFromFunction(functionString, x0);
+            double ym = OxyHelper.GetResultFromFunction(functionString, xm);
+            double yend = OxyHelper.GetResultFromFunction(functionString, xend);
+
+            double b = ((yend - ym) - (y0 - ym) * (xend * xend - xm * xm) / (x0 * x0 - xm * xm)) /
+                   ((xend - xm) * (xend * xend - xm * xm) / (x0 * x0 - xm * xm) - (x0 - xm));
+            double a = ((y0 - ym) - b * (x0 - xm)) / (x0 * x0 - xm * xm);
+            double c = ym - a * xm * xm - b * xm;
+
+            step /= 10;
+
+            for(double x = x0; x <= xend; x += step)
+            {                
+                double y = a * x * x + b * x + c;
+                AddSubdivision(x, y);
+            }        
+        }
+
+        protected override void AddSubdivision(double x1, double y1, double xend = 0, double yend = 0)
         {
             _subdivisionPoints.Add(new DataPoint(x1, y1));
         }
