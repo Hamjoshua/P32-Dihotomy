@@ -8,7 +8,8 @@ namespace PalMathy.Integrals
     {
         public TrapezoidIntegralClass()
         {
-            Description = "Метод трапеций";
+            Description = "Метод численного интегрирования функции одной переменной, заключающийся в замене на каждом элементарном " +
+                "отрезке подынтегральной функции на многочлен первой степени, то есть линейную функцию";
             Title = "Метод трапеций";
             GraphColor = Color.OrangeRed;
         }

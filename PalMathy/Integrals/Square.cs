@@ -12,6 +12,11 @@ namespace PalMathy.Integrals
 {
     abstract public class BaseSquaresIntegralClass : BaseIntegralClass
     {
+        public BaseSquaresIntegralClass()
+        {
+            Description = "Метод численного интегрирования функции одной переменной, заключающийся в замене подынтегральной " +
+                "функции на многочлен нулевой степени, то есть константу, на каждом элементарном отрезке";
+        }
         protected override void AddSubdivision(double x1, double y1, double x2, double y2)
         {
             _subdivisionPoints.Add(new DataPoint(x1, y1));
@@ -37,7 +42,7 @@ public class MiddleSquareIntegralClass : BaseSquaresIntegralClass
     public MiddleSquareIntegralClass() : base()
     {
         Title = "Метод средних прямоугольников";
-        Description = "Простейший из методов и наиболее точный";
+        Description += " Высоты прямоугольников равны значениям функции в серединах промежуточных отрезков. Простейший из методов и наиболее точный";
         GraphColor = Color.RebeccaPurple;
     }    
 
@@ -57,7 +62,7 @@ public class LeftSquareIntegralClass : BaseSquaresIntegralClass
     public LeftSquareIntegralClass() : base()
     {
         Title = "Метод левых прямоугольников";
-        Description = "Простейший из методов и наиболее точный";
+        Description += "Высоты прямоугольников равны значениям функции в левых концах промежуточных отрезков";
         GraphColor = Color.Magenta;
     }
 
@@ -76,7 +81,7 @@ public class RightSquareIntegralClass : BaseSquaresIntegralClass
     public RightSquareIntegralClass() : base()
     {
         Title = "Метод правых прямоугольников";
-        Description = "Простейший из методов и наиболее точный";
+        Description += "Высоты прямоугольников равны значениям функции в правых концах промежуточных отрезков";
         GraphColor = Color.DarkSeaGreen;
     }
 
