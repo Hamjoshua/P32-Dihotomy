@@ -17,10 +17,10 @@ namespace PalMathy.Integrals
         public override double CalculateResult(string functionString, double b, double a, double subdivisionLength, double epsilon)
         {
             double step = GetStep(b, a, subdivisionLength);
-            double sum = SumFromLoop(subdivisionLength, a, step, functionString);
+            double sum = SumFromLoop(subdivisionLength - 1, a + step, step, functionString);
 
             double yBegin = OxyHelper.GetResultFromFunction(functionString, a);
-            double yEnd = OxyHelper.GetResultFromFunction(functionString, b - step);
+            double yEnd = OxyHelper.GetResultFromFunction(functionString, b);
 
             sum += (yBegin + yEnd) / 2;
             sum *= step;
