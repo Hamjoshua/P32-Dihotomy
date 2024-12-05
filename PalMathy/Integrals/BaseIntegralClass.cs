@@ -31,6 +31,33 @@ namespace PalMathy.Integrals
             return subdivisionSeries;
         }
 
-        public abstract double CalculateResult(string functionString, double b, double a, double subdivisionLength, double epsilon);
+        protected double GetStep(double b, double a, double len)
+        {
+            return (b - a) / len;
+        }
+
+        protected double SumFromLoop(double length, double x0, double step, string functionString)
+        {
+            double sum = 0;
+
+            for (int index = 0; index < length; ++index)
+            {
+                double x = x0 + (step * index);
+                sum = BodyOfLoop(x, step, functionString, sum);
+            }
+
+            return sum;
+        }
+
+        protected abstract double BodyOfLoop(double x, double step, string functionString, double sum);
+
+        public virtual double CalculateResult(string functionString, double b, double a, double subdivisionLength, double epsilon)
+        {
+            double step = GetStep(b, a, subdivisionLength);
+
+            double sum = SumFromLoop(subdivisionLength, a, step, functionString);
+
+            return sum;
+        }
     }
 }

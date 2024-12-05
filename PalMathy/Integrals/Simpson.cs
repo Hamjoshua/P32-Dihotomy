@@ -30,7 +30,7 @@ namespace PalMathy.Integrals
             // Четная длина отрезков
             if (!IsEvenDigit((int)subdivisionLength))
             {
-                subdivisionLength -= 1;
+                subdivisionLength += 1;
             }
             double step = (b - a) / subdivisionLength;
             double result = 0;
@@ -39,7 +39,7 @@ namespace PalMathy.Integrals
 
             for (double x = a; x <= b; x += step)
             {
-                double y = OxyHelper.GetResultFromFunction(functionString, x);
+                double y = OxyHelper.GetResultFromFunction(functionString, x);                
 
                 // Сумма четных
                 if (IsEvenDigit(index) && index != 0 && index != subdivisionLength)
@@ -53,9 +53,14 @@ namespace PalMathy.Integrals
                 }
                 result += y;
                 ++index;
+
+                if(x != b)
+                {
+                    MakeParabol(x, x + step, functionString);
+                }                
             }
 
-            MakeParabol(a, b, step, functionString);
+            
 
             result *= (step / 3);
 
@@ -67,9 +72,9 @@ namespace PalMathy.Integrals
             return digit % 2 == 0;
         }
 
-        private void MakeParabol(double x0, double xend, double step, string functionString)
+        private void MakeParabol(double x0, double xend, string functionString)
         {
-            double xm = (Math.Abs(x0) + Math.Abs(xend)) / 2 + x0;
+            double xm = (xend + x0) / 2;
             double y0 = OxyHelper.GetResultFromFunction(functionString, x0);
             double ym = OxyHelper.GetResultFromFunction(functionString, xm);
             double yend = OxyHelper.GetResultFromFunction(functionString, xend);
@@ -77,11 +82,9 @@ namespace PalMathy.Integrals
             double b = ((yend - ym) - (y0 - ym) * (xend * xend - xm * xm) / (x0 * x0 - xm * xm)) /
                    ((xend - xm) * (xend * xend - xm * xm) / (x0 * x0 - xm * xm) - (x0 - xm));
             double a = ((y0 - ym) - b * (x0 - xm)) / (x0 * x0 - xm * xm);
-            double c = ym - a * xm * xm - b * xm;
+            double c = ym - a * xm * xm - b * xm;            
 
-            step /= 10;
-
-            for(double x = x0; x <= xend; x += step)
+            for(double x = x0; x <= xend; x += 0.25)
             {                
                 double y = a * x * x + b * x + c;
                 AddSubdivision(x, y);
