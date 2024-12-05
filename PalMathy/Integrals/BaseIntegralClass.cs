@@ -28,6 +28,8 @@ namespace PalMathy.Integrals
             };
             subdivisionSeries.Points.AddRange(_subdivisionPoints);
 
+            ClearPastSubdivisions();
+
             return subdivisionSeries;
         }
 
@@ -57,8 +59,6 @@ namespace PalMathy.Integrals
 
         public virtual double CalculateResult(string functionString, double b, double a, double subdivisionLength, double epsilon)
         {
-            ClearPastSubdivisions();
-
             double step = GetStep(b, a, subdivisionLength);
 
             double sum = SumFromLoop(subdivisionLength, a, step, functionString);

@@ -8,7 +8,7 @@
         xmlns:viewmodels="clr-namespace:PalMathy.ViewModels"
         mc:Ignorable="d"
         Icon="Materials/palmathy-icon.ico"
-        Title="PalMathy" Height="450" Width="800"
+        Title="PalMathy" Height="600" Width="800"
         Style="{StaticResource MaterialDesignWindow}">
     <Window.DataContext>
         <viewmodels:NavigatorViewModel />

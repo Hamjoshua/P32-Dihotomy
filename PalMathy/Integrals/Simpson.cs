@@ -26,8 +26,6 @@ namespace PalMathy.Integrals
 
         public override double CalculateResult(string functionString, double b, double a, double subdivisionLength, double epsilon)
         {
-            ClearPastSubdivisions();
-
             // Четная длина отрезков
             if (!IsEvenDigit((int)subdivisionLength))
             {

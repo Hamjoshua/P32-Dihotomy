@@ -219,7 +219,9 @@ namespace PalMathy.ViewModels
 
         private bool IsGraphBuilded()
         {
-            if (!PageGraph.Title.Contains(FunctionString))
+            string oldFunctionName = PageGraph.Title.Replace("График ", "");
+
+            if (oldFunctionName != FunctionString)
             {
                 var question = MessageBox.Show("График текущей функции еще не построен. Построить?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (question == MessageBoxResult.Yes)
