@@ -20,6 +20,9 @@ namespace PalMathy.Integrals
             double sum = SumFromLoop(subdivisionLength - 1, a + step, step, functionString);
 
             double yBegin = OxyHelper.GetResultFromFunction(functionString, a);
+
+            AddSubdivision(a, yBegin, _subdivisionPoints[1].X, _subdivisionPoints[1].Y);
+
             double yEnd = OxyHelper.GetResultFromFunction(functionString, b);
 
             sum += (yBegin + yEnd) / 2;

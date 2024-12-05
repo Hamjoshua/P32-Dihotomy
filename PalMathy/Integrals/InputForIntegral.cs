@@ -11,7 +11,7 @@ namespace PalMathy.Integrals
     {
         public InputForIntegral() {
             A = new BindedValue<double>(2, "Нижний предел А", true);
-            B = new BindedValue<double>(5, "Вернхий предел B", true);
+            B = new BindedValue<double>(5, "Верхний предел B", true);
             C = new BindedValue<double>(3, "Кол-во разбиений", true);
             FunctionString = "1/ln(x)";
             Epsilon = 0.001;

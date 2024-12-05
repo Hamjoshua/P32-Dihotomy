@@ -85,7 +85,7 @@
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
                             <CheckBox IsChecked="{Binding IsVisible}"></CheckBox>
                             <Label Content="{Binding Title}" />
-                            <Label Content="-" />
+                            <Label Content="=" />
                             <TextBox IsReadOnly="True" Text="{Binding FormattedResult}" />
                         </StackPanel>
                     </DataTemplate>
