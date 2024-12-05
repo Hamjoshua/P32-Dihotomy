@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,8 +25,7 @@ namespace PalMathy.Integrals
         }
 
         public override double CalculateResult(string functionString, double b, double a, double subdivisionLength, double epsilon)
-        {
-            _subdivisionPoints.Clear();
+        {           
 
             // Четная длина отрезков
             if (!IsEvenDigit((int)subdivisionLength))
@@ -33,38 +33,12 @@ namespace PalMathy.Integrals
                 subdivisionLength += 1;
             }
             double step = (b - a) / subdivisionLength;
-            double result = 0;
-            //List<double> functionResults = new List<double>();            
-            int index = 0;
 
-            for (double x = a; x <= b; x += step)
-            {
-                double y = OxyHelper.GetResultFromFunction(functionString, x);                
+            double sum = SumFromLoop(subdivisionLength, a, step, functionString);           
 
-                // Сумма четных
-                if (IsEvenDigit(index) && index != 0 && index != subdivisionLength)
-                {
-                    y *= 2;
-                }
-                // Сумма нечетных
-                else if (!IsEvenDigit(index))
-                {
-                    y *= 4;
-                }
-                result += y;
-                ++index;
+            sum *= (step / 3);
 
-                if(x != b)
-                {
-                    MakeParabol(x, x + step, functionString);
-                }                
-            }
-
-            
-
-            result *= (step / 3);
-
-            return result;
+            return sum;
         }
 
         bool IsEvenDigit(int digit)
@@ -94,6 +68,44 @@ namespace PalMathy.Integrals
         protected override void AddSubdivision(double x1, double y1, double xend = 0, double yend = 0)
         {
             _subdivisionPoints.Add(new DataPoint(x1, y1));
+        }
+
+        protected override double SumFromLoop(double length, double x0, double step, string functionString)
+        {
+            double sum = 0;
+
+            for (int index = 0; index <= length; ++index)
+            {
+                double x = x0 + (step * index);
+                double y = OxyHelper.GetResultFromFunction(functionString, x);
+
+                // Сумма четных
+                if (IsEvenDigit(index) && index != 0 && index != length)
+                {
+                    y *= 2;
+                }
+                // Сумма нечетных
+                else if (!IsEvenDigit(index))
+                {
+                    y *= 4;
+                }
+
+                ++index;
+
+                if (index < length)
+                {
+                    MakeParabol(x, x + step, functionString);
+                }
+
+                sum += y;                
+            }
+
+            return sum;            
+        }
+
+        protected override double BodyOfLoop(double x, double step, string functionString, double sum)
+        {
+            throw new NotImplementedException();
         }
     }
 }

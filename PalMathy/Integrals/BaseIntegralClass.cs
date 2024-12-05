@@ -36,7 +36,7 @@ namespace PalMathy.Integrals
             return (b - a) / len;
         }
 
-        protected double SumFromLoop(double length, double x0, double step, string functionString)
+        protected virtual double SumFromLoop(double length, double x0, double step, string functionString)
         {
             double sum = 0;
 
@@ -50,14 +50,20 @@ namespace PalMathy.Integrals
         }
 
         protected abstract double BodyOfLoop(double x, double step, string functionString, double sum);
+        protected void ClearPastSubdivisions()
+        {
+            _subdivisionPoints.Clear();
+        }
 
         public virtual double CalculateResult(string functionString, double b, double a, double subdivisionLength, double epsilon)
         {
+            ClearPastSubdivisions();
+
             double step = GetStep(b, a, subdivisionLength);
 
             double sum = SumFromLoop(subdivisionLength, a, step, functionString);
 
             return sum;
-        }
+        }        
     }
 }

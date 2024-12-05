@@ -21,9 +21,7 @@ namespace PalMathy.Integrals
         }        
 
         public override double CalculateResult(string functionString, double b, double a, double subdivisionLength, double epsilon)
-        {
-            _subdivisionPoints.Clear();
-
+        {           
             double step = (b - a) / subdivisionLength;
             double sum = SumFromLoop(subdivisionLength, a, step, functionString);                
 
