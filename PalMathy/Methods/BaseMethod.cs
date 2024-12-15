@@ -11,8 +11,10 @@ using OxyPlot.Series;
 
 namespace PalMathy.Methods
 {
-    public class BindedValue<T> {
-        public BindedValue(T value, string hint, bool isVisible) {
+    public class BindedValue<T>
+    {
+        public BindedValue(T value, string hint, bool isVisible)
+        {
             Value = value;
             Hint = hint;
             IsVisible = isVisible;
@@ -22,17 +24,50 @@ namespace PalMathy.Methods
         public bool IsVisible { get; set; }
     }
 
+    static class OxyHelper
+    {
+        // TODO сделать в виде синглтона
+        static string FormatDouble(double value)
+        {
+            return value.ToString().Replace(",", ".");
+        }
+
+        static public Function GetFunctionFrom(string functionString, bool withMinus = false)
+        {
+            string function = functionString;
+            if (withMinus)
+            {
+                function = $"-({function})";
+            }
+            return new Function($"f(x) = {function}");
+        }
+
+        static public double GetResultFromFunction(string functionString, double value, bool derivative = false)
+        {
+            if (derivative)
+            {
+                Expression derivExpression = new Expression($"der({functionString}, x, {FormatDouble(value)})");
+                return derivExpression.calculate();
+            }
+            else
+            {
+                return (new Expression($"f({FormatDouble(value)})", GetFunctionFrom(functionString))).calculate();
+
+            }
+        }
+    }
+
     abstract class BaseNumericalMethod
     {
         protected const string NO_ZEROS = "Пересечений с осью Х нет\n";
-            
+
         public PlotModel Graph = new PlotModel { Title = "График" };
         public List<DataPoint> Points = new List<DataPoint>();
         public string FunctionString = "log(2,x)-3";
 
         public BindedValue<double> A;
         public BindedValue<double> B;
-        public BindedValue<double> C;        
+        public BindedValue<double> C;
         public double Epsilon = 0.5;
 
         public double BeginInterval = -10;
@@ -60,22 +95,22 @@ namespace PalMathy.Methods
             C = method.C;
             C.Hint = "C";
             C.IsVisible = false;
-               
+
             Epsilon = method.Epsilon;
             BeginInterval = method.BeginInterval;
             EndInterval = method.EndInterval;
-            FunctionString = method.FunctionString;            
-    }
+            FunctionString = method.FunctionString;
+        }
 
         public virtual string CalculateResult()
         {
             ParseFunction(A.Value, B.Value);
             string result = "";
-            if(_countOfZeros == 0)
+            if (_countOfZeros == 0)
             {
                 result += NO_ZEROS;
             }
-            if(_countOfZeros > 1)
+            if (_countOfZeros > 1)
             {
                 result += "Внимание! Функция содержит больше одного корня. Расчет может быть некорректен.\n";
             }
@@ -135,25 +170,25 @@ namespace PalMathy.Methods
         public PlotModel CalculateGraph()
         {
             ParseFunction(BeginInterval, EndInterval);
-            PlotModel newGraph = new PlotModel { Title = $"График {FunctionString}" };
+            Graph = new PlotModel { Title = $"График {FunctionString}" };
 
             // Создаем серию точек графика
             var lineSeries = new LineSeries
             {
                 Title = "f(x)",
                 Color = OxyColor.FromRgb(0, 0, 255), // Синий цвет линии
-                LineStyle = LineStyle.Dot
+                LineStyle = LineStyle.Solid
             };
 
             // Добавляем все точки в серию
             lineSeries.Points.AddRange(Points);
 
             // Добавляем серию точек к модели графика
-            newGraph.Series.Add(lineSeries);
-            newGraph.Series.Add(MakeXLine());
-            newGraph.Series.Add(MakeYLine());
+            Graph.Series.Add(lineSeries);
+            Graph.Series.Add(MakeXLine());
+            Graph.Series.Add(MakeYLine());
 
-            return newGraph;
+            return Graph;
         }
         protected Function GetFunction(bool withMinus = false)
         {
@@ -183,13 +218,13 @@ namespace PalMathy.Methods
                 }
                 else if (prevY != 0)
                 {
-                    if(prevY * newY < 0)
+                    if (prevY * newY < 0)
                     {
                         _countOfZeros += 1;
                     }
                 }
                 prevY = newY;
             }
-        }        
+        }
     }
 }

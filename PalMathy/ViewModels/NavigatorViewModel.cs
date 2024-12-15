@@ -46,6 +46,18 @@ namespace PalMathy.ViewModels
             }
         }
 
+
+        public ICommand GoToDefinitiveIntegral
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    CurrentPage = new DefinitiveIntegralPage();
+                }
+            }
+        }
+
         public ICommand GoToSortingsModule
         {
             get

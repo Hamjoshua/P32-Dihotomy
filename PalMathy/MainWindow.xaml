@@ -8,7 +8,7 @@
         xmlns:viewmodels="clr-namespace:PalMathy.ViewModels"
         mc:Ignorable="d"
         Icon="Materials/palmathy-icon.ico"
-        Title="PalMathy" Height="450" Width="800"
+        Title="PalMathy" Height="600" Width="800"
         Style="{StaticResource MaterialDesignWindow}">
     <Window.DataContext>
         <viewmodels:NavigatorViewModel />
@@ -41,8 +41,8 @@
                         Content="Нахождение точек" Background="#7FFFFFFF"></Button>
                 <Button Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" Command="{Binding GoToSortingsModule}"
                         Content="Сортировка" Background="#7FFFFFFF"></Button>
-                <Button Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
-                        Content="..." Background="#7FFFFFFF"></Button>
+                <Button Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" Command="{Binding GoToDefinitiveIntegral}"
+                        Content="Определенный интеграл" Background="#7FFFFFFF"></Button>
             </StackPanel>
         </Expander>
         <Frame Content="{Binding CurrentPage}" Margin="50,0,0,0" NavigationUIVisibility="Hidden"/>
