@@ -39,7 +39,7 @@
                         Content="Домой" Background="#7FFFFFFF"></Button>
                 <Button Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" Command="{Binding GoToFunctionModule}"
                         Content="Нахождение точек" Background="#7FFFFFFF"></Button>
-                <Button Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
+                <Button Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" Command="{Binding GoToSortingsModule}"
                         Content="Сортировка" Background="#7FFFFFFF"></Button>
                 <Button Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
                         Content="..." Background="#7FFFFFFF"></Button>

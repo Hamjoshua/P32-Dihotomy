@@ -7,7 +7,7 @@
     <Application.Resources>       
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Indigo" />                
+                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="Indigo" SecondaryColor="LightBlue" />                
                 
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />                                 
             </ResourceDictionary.MergedDictionaries>
@@ -19,6 +19,7 @@
                 <Setter Property="MaxWidth" Value="300" ></Setter>
                 <Setter Property="TextWrapping" Value="Wrap"></Setter>
             </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>
