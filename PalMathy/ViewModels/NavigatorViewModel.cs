@@ -29,7 +29,7 @@ namespace PalMathy.ViewModels
         {
             get
             {
-                return new Commands((obj) => {
+                return new DelegateCommand((obj) => {
                     CurrentPage = new MainPage();                    
                 });
             }
@@ -39,7 +39,7 @@ namespace PalMathy.ViewModels
         {
             get
             {
-                return new Commands((obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     CurrentPage = new DihotomyPage();
                 });
@@ -54,7 +54,7 @@ namespace PalMathy.ViewModels
                 return new DelegateCommand((obj) =>
                 {
                     CurrentPage = new DefinitiveIntegralPage();
-                }
+                });
             }
         }
 
@@ -62,7 +62,7 @@ namespace PalMathy.ViewModels
         {
             get
             {
-                return new Commands((obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     CurrentPage = new SortingPage();
                 });

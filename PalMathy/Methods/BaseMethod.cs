@@ -202,6 +202,7 @@ namespace PalMathy.Methods
 
         void ParseFunction(double start, double end)
         {
+            _countOfZeros = 0;
             Points = new List<DataPoint>();
             Function parsedFunction = GetFunction();
             double prevY = 0;

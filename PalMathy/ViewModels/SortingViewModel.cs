@@ -119,7 +119,7 @@ namespace PalMathy.ViewModels
         {
             get
             {
-                return new Commands((obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     Elements = _randomExpert.GetRandomArray();
                 });
@@ -129,7 +129,7 @@ namespace PalMathy.ViewModels
         {
             get
             {
-                return new Commands((obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     Elements.Shuffle();
                     OnPropertyChanged(nameof(Elements));
@@ -152,7 +152,7 @@ namespace PalMathy.ViewModels
         {
             get
             {
-                return new Commands((obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     OpenFileDialog openFileDialog = new OpenFileDialog();
                     openFileDialog.Filter = "Текстовый файл (*.txt)|*.txt";

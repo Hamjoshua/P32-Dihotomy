@@ -9,7 +9,6 @@ namespace PalMathy.ViewModels
     public class MathViewModel : BaseViewModel
     {
         BaseNumericalMethod method = new DihotomyMethod();
-
         private string _chosenMethod = "D";
         public string ChosenMethod
         {
@@ -36,7 +35,7 @@ namespace PalMathy.ViewModels
                 OnPropertyChanged(nameof(method.A));
                 OnPropertyChanged(nameof(method.B));
                 OnPropertyChanged(nameof(method.C));
-                Set(ref _chosenMethod, value);                
+                Set(ref _chosenMethod, value);
             }
         }
 
@@ -73,7 +72,7 @@ namespace PalMathy.ViewModels
                 method.A.Value = Convert.ToDouble(value);
                 OnPropertyChanged(nameof(method.A));
             }
-        }        
+        }
 
         public BindedValue<double> B
         {
@@ -120,7 +119,7 @@ namespace PalMathy.ViewModels
         {
             get { return _result; }
             set
-            {                
+            {
                 Set(ref _result, value);
             }
         }
@@ -129,18 +128,8 @@ namespace PalMathy.ViewModels
             get { return method.Graph; }
             set
             {
-                Set(ref method.Graph, value);
-            }
-        }
-
-        public ICommand CalculateResult
-        {
-            get
-            {
-                return new Commands((obj) =>
-                {
-                    Result = method.CalculateResult();
-                });
+                method.Graph = value;
+                OnPropertyChanged(nameof(Plot));
             }
         }
 
@@ -148,9 +137,10 @@ namespace PalMathy.ViewModels
         {
             get
             {
-                return new Commands((obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     Plot = method.CalculateGraph();
+                    Result = method.CalculateResult();
                 });
             }
         }
@@ -159,7 +149,7 @@ namespace PalMathy.ViewModels
         {
             get
             {
-                return new Commands((obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     FunctionString = "";
                     A.Value = 0;

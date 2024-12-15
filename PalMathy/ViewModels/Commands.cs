@@ -2,7 +2,7 @@
 
 namespace PalMathy.ViewModels
 {
-    class Commands : ICommand
+    class DelegateCommand : ICommand
     {
         private Action<object> execute;
         private Func<object, bool> canExecute;
@@ -12,7 +12,7 @@ namespace PalMathy.ViewModels
             remove { CommandManager.RequerySuggested -= value; }
         }
 
-        public Commands(Action<object> execute, Func<object, bool> canExecute = null)
+        public DelegateCommand(Action<object> execute, Func<object, bool> canExecute = null)
         {
             this.execute = execute;
             this.canExecute = canExecute;

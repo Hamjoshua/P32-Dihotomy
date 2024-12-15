@@ -46,8 +46,7 @@
         <materialDesign:Card VerticalAlignment="Top" Grid.Row="0" Grid.ColumnSpan="3">
             <Menu>
                 <MenuItem Header="Очистка полей" Command="{Binding ClearFields}" />
-                <MenuItem Header="График" Command="{Binding CalculateFunction}" />
-                <MenuItem Header="Решение" Command="{Binding CalculateResult}" />
+                <MenuItem Header="Посчитать результат" Command="{Binding CalculateFunction}" />
             </Menu>
         </materialDesign:Card>
 
