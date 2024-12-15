@@ -137,7 +137,7 @@ namespace PalMathy.ViewModels
         {
             get
             {
-                return new DelegateCommand((obj) =>
+                return new Commands((obj) =>
                 {
                     Result = method.CalculateResult();
                 });
@@ -148,7 +148,7 @@ namespace PalMathy.ViewModels
         {
             get
             {
-                return new DelegateCommand((obj) =>
+                return new Commands((obj) =>
                 {
                     Plot = method.CalculateGraph();
                 });
@@ -159,7 +159,7 @@ namespace PalMathy.ViewModels
         {
             get
             {
-                return new DelegateCommand((obj) =>
+                return new Commands((obj) =>
                 {
                     FunctionString = "";
                     A.Value = 0;
