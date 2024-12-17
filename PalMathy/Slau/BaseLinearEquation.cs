@@ -8,7 +8,6 @@ namespace PalMathy.Slau
 {
     abstract class BaseLinearEquation
     {
-        public int Size;
         abstract public List<int> GetNumbers(List<List<int>> matrix);
     }
 

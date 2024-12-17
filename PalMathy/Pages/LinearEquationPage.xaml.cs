@@ -23,6 +23,7 @@ namespace PalMathy.Pages
         public LinearEquationPage()
         {
             InitializeComponent();
-        }        
+        }
+
     }
 }
