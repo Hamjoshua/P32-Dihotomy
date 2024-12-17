@@ -8,7 +8,8 @@ namespace PalMathy.Slau
 {
     abstract class BaseLinearEquation
     {
-        abstract public List<int> GetNumbers(List<List<int>> matrix);
+        public abstract async Task GetNumbers(List<List<int>> matrix);
+        public bool IsActivated { get; set; } = false;
     }
 
     class GaussEquation : BaseLinearEquation

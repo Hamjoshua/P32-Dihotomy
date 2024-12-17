@@ -57,7 +57,7 @@ namespace PalMathy.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    _method.GetNumbers(Matrix);
+                    // _method.GetNumbers(Matrix);
                 });
             }
         }
