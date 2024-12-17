@@ -5,14 +5,43 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PalMathy.Pages"
       mc:Ignorable="d" 
+      xmlns:rbc="clr-namespace:PalMathy.Converters"
       xmlns:viewmodels="clr-namespace:PalMathy.ViewModels"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="LinearEquationPage">
     <Page.DataContext>
         <viewmodels:SlauViewModel />
     </Page.DataContext>
+    <Page.Resources>
+        <rbc:PercentageConverter x:Key="PercentConverter"></rbc:PercentageConverter>
+        <DataTemplate x:Key="DataTemplate_Level2">
+            <TextBox Text="{Binding Mode=OneWay}" HorizontalContentAlignment="Center" Margin="4,4,4,4"
+                     Height="{Binding Path=ActualHeight, ElementName=MatrixUI, Converter={StaticResource ResourceKey=PercentConverter}, ConverterParameter='0,3'}"
+                     Width="{Binding Path=ActualWidth, ElementName=MatrixUI, Converter={StaticResource ResourceKey=PercentConverter}, ConverterParameter='0,2'}" VerticalAlignment="Stretch"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="DataTemplate_Level1">
+            <ItemsControl ItemsSource="{Binding}" ItemTemplate="{DynamicResource DataTemplate_Level2}" HorizontalAlignment="Center">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </DataTemplate>
+    </Page.Resources>
     <Grid>
-        <Button Command="{Binding GetNumbers}">            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <ItemsControl x:Name="MatrixUI" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Matrix}"
+            ItemTemplate="{DynamicResource DataTemplate_Level1}"/>
+        <Button Grid.Row="1" Grid.Column="1" Command="{Binding GetNumbers}">
         </Button>
     </Grid>
 </Page>
