@@ -15,17 +15,17 @@ namespace PalMathy.ViewModels
         private string _sizeOfMatrix = "3x3";
 
         BaseLinearEquation _method = new GaussEquation();
-        private List<List<int>> _matrix = new List<List<int>>() {
-                        new List<int> { 3, 2, -5, -1 },
-                        new List<int> { 2, -1, 3, 13 },
-                        new List<int> { 1, 2, -1, 9 }};
+        private ObservableCollection<ObservableCollection<int>> _matrix = new ObservableCollection<ObservableCollection<int>>() {
+                        new ObservableCollection<int> { 3, 2, -5, -1 },
+                        new ObservableCollection<int> { 2, -1, 3, 13 },
+                        new ObservableCollection<int> { 1, 2, -1, 9 }};
 
-        //private List<List<int>> GetMatrixFromUI
+        //private ObservableCollection<ObservableCollection<int>> GetMatrixFromUI
         //{
         //    throw NotImplementedException;
         //}
         public ObservableCollection<int> Ints { get; set; } = new ObservableCollection<int> { 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4 };
-        public List<List<int>> Matrix
+        public ObservableCollection<ObservableCollection<int>> Matrix
         {
             get
             {
