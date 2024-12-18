@@ -223,7 +223,7 @@ ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" Ver
                                                         <ColumnDefinition Width="2*"></ColumnDefinition>
                                                         <ColumnDefinition Width="1*"></ColumnDefinition>
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Text="{Binding Sorting.Name}"></TextBlock>
+                                                    <TextBlock Grid.Column="0" Text="{Binding Method.Name}"></TextBlock>
                                                     <ScrollViewer Height="50" Grid.Column="1" VerticalScrollBarVisibility="Auto">
                                                         <TextBlock Text="{Binding Elements, Converter={StaticResource ListConv}}" TextWrapping="WrapWithOverflow">
                                                         </TextBlock>
@@ -234,10 +234,10 @@ ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" Ver
                                                         <TextBlock.Style>
                                                             <Style TargetType="TextBlock">
                                                                 <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding Path=SortingIsOver}" Value="False">
+                                                                    <DataTrigger Binding="{Binding Path=IsOver}" Value="False">
                                                                         <Setter Property="Visibility" Value="Hidden"></Setter>
                                                                     </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding Path=SortingIsOver}" Value="True">
+                                                                    <DataTrigger Binding="{Binding Path=IsOver}" Value="True">
                                                                         <Setter Property="Visibility" Value="Visible"></Setter>
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
@@ -249,10 +249,10 @@ ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" Ver
                                                         <ProgressBar.Style>
                                                             <Style TargetType="ProgressBar" BasedOn="{StaticResource MaterialDesignCircularProgressBar}">
                                                                 <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding Path=SortingIsOver}" Value="True">
+                                                                    <DataTrigger Binding="{Binding Path=IsOver}" Value="True">
                                                                         <Setter Property="Visibility" Value="Hidden"></Setter>
                                                                     </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding Path=SortingIsOver}" Value="False">
+                                                                    <DataTrigger Binding="{Binding Path=IsOver}" Value="False">
                                                                         <Setter Property="Visibility" Value="Visible"></Setter>
                                                                     </DataTrigger>
                                                                 </Style.Triggers>

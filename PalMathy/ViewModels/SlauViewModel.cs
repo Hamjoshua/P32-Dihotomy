@@ -26,10 +26,6 @@ namespace PalMathy.ViewModels
                         new ObservableCollection<int> { 2, -1, 3, 13 },
                         new ObservableCollection<int> { 1, 2, -1, 9 }};
 
-        //private ObservableCollection<ObservableCollection<int>> GetMatrixFromUI
-        //{
-        //    throw NotImplementedException;
-        //}
         public ObservableCollection<int> Ints { get; set; } = new ObservableCollection<int> { 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4 };
         public ObservableCollection<ObservableCollection<int>> Matrix
         {

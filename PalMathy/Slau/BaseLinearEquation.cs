@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PalMathy.Slau
 {
-    abstract class BaseLinearEquation
+    public abstract class BaseLinearEquation
     {
         public abstract List<int> GetNumbers(List<List<int>> matrix);
         public bool IsActivated { get; set; } = false;

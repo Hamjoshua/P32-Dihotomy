@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using PalMathy.Async;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PalMathy.Sortings
 {
@@ -38,7 +32,7 @@ namespace PalMathy.Sortings
             
             foreach(var report in OutReports)
             {
-                await Task.Run(() => report.BeginSort(isBiggerMode));
+                await Task.Run(() => report.MakeAction(isBiggerMode));
             }
         }
     }
