@@ -5,7 +5,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PalMathy.Pages"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
+      xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
       xmlns:rbc="clr-namespace:PalMathy.Converters"
       xmlns:viewmodels="clr-namespace:PalMathy.ViewModels"
       d:DesignHeight="450" d:DesignWidth="800"
@@ -41,8 +42,11 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <ItemsControl x:Name="MatrixUI" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Matrix}"
-            ItemTemplate="{DynamicResource DataTemplate_Level1}"/>
+
+        <dg2d:DataGrid2D Grid.Row="0" Grid.Column="1"                         
+                         ItemsSource2D="{Binding Matrix}">            
+        </dg2d:DataGrid2D>
+        
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
             <ComboBox materialDesign:HintAssist.Hint="Размерность" Width="100" Margin="5 0 30 0">
                 <ComboBoxItem Content="2x2" Tag="2" />

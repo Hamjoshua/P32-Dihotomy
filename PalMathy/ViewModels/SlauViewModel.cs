@@ -37,7 +37,7 @@ namespace PalMathy.ViewModels
                 OnPropertyChanged(nameof(Matrix));
             }
         }
-
+        
         public string SizeOfMatrix
         {
             get

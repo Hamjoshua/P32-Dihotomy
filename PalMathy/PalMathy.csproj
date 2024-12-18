@@ -25,4 +25,14 @@
     <Resource Include="Materials\palmathy-icon.ico" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DLL\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DataGrid2DLibrary">
+      <HintPath>DLL\DataGrid2DLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
