@@ -16,21 +16,7 @@
     </Page.DataContext>
     <Page.Resources>
         <rbc:PercentageConverter x:Key="PercentConverter"></rbc:PercentageConverter>
-        <DataTemplate x:Key="DataTemplate_Level2">
-            <TextBox Text="{Binding Mode=OneWay}" HorizontalContentAlignment="Center" Margin="4,4,4,4"
-                     Height="{Binding Path=ActualHeight, ElementName=MatrixUI, Converter={StaticResource ResourceKey=PercentConverter}, ConverterParameter='0,3'}"
-                     Width="{Binding Path=ActualWidth, ElementName=MatrixUI, Converter={StaticResource ResourceKey=PercentConverter}, ConverterParameter='0,2'}" VerticalAlignment="Stretch"/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="DataTemplate_Level1">
-            <ItemsControl ItemsSource="{Binding}" ItemTemplate="{DynamicResource DataTemplate_Level2}" HorizontalAlignment="Center">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-        </DataTemplate>
+        <rbc:ListIntConverter x:Key="ListConv"></rbc:ListIntConverter>
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -38,16 +24,58 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="5*"></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <dg2d:DataGrid2D Grid.Row="0" Grid.Column="1" Name="d2dGrid"                  
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.RowSpan="4" >
+            <ItemsControl ItemsSource="{Binding Slaus}" Margin="5 5 5 5">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <materialDesign:Card Height="Auto" VerticalAlignment="Top" Margin="0 0 0 10">
+                            <Grid Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <ToggleButton Grid.Column="0" Grid.Row="0" Margin="10"
+                                      IsChecked="{Binding IsActivated}"
+                                      Style="{StaticResource MaterialDesignSwitchLightToggleButton}"
+                                      ToolTip="Активировать\Дезактивировать метод"/>
+
+                                <TextBlock Grid.Column="1" Grid.Row="0" TextWrapping="Wrap"
+Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" VerticalAlignment="Center" FontWeight="Bold" FontFamily="Arial"/>
+
+                                <Expander Grid.ColumnSpan="2" Grid.Row="1"
+    HorizontalAlignment="Stretch"
+    Header="Описание" Background="White">
+                                    <StackPanel
+      Margin="24,8,24,16"
+      Orientation="Vertical"
+      TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+                                        <TextBlock Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Description}">
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Expander>
+                            </Grid>
+                        </materialDesign:Card>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <dg2d:DataGrid2D Grid.Row="1" Grid.Column="1" Name="d2dGrid"                  
                          ItemsSource2D="{Binding Matrix, NotifyOnSourceUpdated=True}">            
         </dg2d:DataGrid2D>
         
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
             <ComboBox materialDesign:HintAssist.Hint="Размерность"
                       MouseLeave="ComboBox_MouseLeave"
                       IsSynchronizedWithCurrentItem="True"
@@ -56,7 +84,95 @@
             </ComboBox>
             <Button Content="Посчитать" Command="{Binding GetNumbers}">
             </Button>
+            <Button Content="Остановить" Background="Red" Command="{Binding CancelMethods}">
+            </Button>
+            
         </StackPanel>
-        
+
+        <Grid Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" Margin="15,0,15,3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="4*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" TextWrapping="Wrap" Text="Имя метода"></TextBlock>
+            <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="Иксы (с x1 по xn)"></TextBlock>
+            <TextBlock Grid.Column="2" Margin="10 0 15 0" TextWrapping="Wrap" Text="Скорость выполения в ms" />
+        </Grid>
+        <materialDesign:Card Grid.Row="3" Grid.Column="1">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" >
+                <ItemsControl ItemsSource="{Binding WholeReports}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <GroupBox Grid.Row="1">
+                                <GroupBox.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding BeginTime}" Foreground="White" />
+                                        <!--<TextBlock Text="   " Foreground="White" />
+                                <TextBlock Text="{Binding Elements, Converter={StaticResource ListConv}}" Foreground="White" />-->
+                                    </StackPanel>
+                                </GroupBox.Header>
+                                <ItemsControl ItemsSource="{Binding OutReports, NotifyOnSourceUpdated=True}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+
+                                            <Grid VerticalAlignment="Bottom" Margin="5,0,5,3">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding Method.Name}"></TextBlock>
+                                                <ScrollViewer Height="50" Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                                                    <TextBlock Text="{Binding Elements, Converter={StaticResource ListConv}}" TextWrapping="WrapWithOverflow">
+                                                    </TextBlock>
+                                                </ScrollViewer>
+
+
+                                                <TextBlock Margin="20 0 0 0" Grid.Column="2" Text="{Binding ExecutingTime, StringFormat={}{0} ms}">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Path=IsOver}" Value="False">
+                                                                    <Setter Property="Visibility" Value="Hidden"></Setter>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Path=IsOver}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                                <ProgressBar Margin="20 0 0 0" HorizontalAlignment="Left" 
+                                                     VerticalAlignment="Top" Grid.Column="2" IsIndeterminate="True" Value="35">
+                                                    <ProgressBar.Style>
+                                                        <Style TargetType="ProgressBar" BasedOn="{StaticResource MaterialDesignCircularProgressBar}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Path=IsOver}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Hidden"></Setter>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Path=IsOver}" Value="False">
+                                                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ProgressBar.Style>
+                                                </ProgressBar>
+                                                <TextBlock Grid.Column="3" Text="{Binding IterationsCount}" />
+                                            </Grid>
+
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+
+                                </ItemsControl>
+                            </GroupBox>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </materialDesign:Card>
+
     </Grid>
 </Page>

@@ -1,4 +1,6 @@
-﻿using PalMathy.Slau;
+﻿using PalMathy.Async;
+using PalMathy.Slau;
+using PalMathy.Sortings;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,19 +16,32 @@ namespace PalMathy.ViewModels
     public class SlauViewModel : BaseViewModel
     {
         private string _sizeOfMatrix = "3x3";
-
-        public List<string> Sizes { get; set; } = new List<string>()
-        {
-            "2x2", "3x3", "4x4", "5x5"
-        };
-
-        BaseLinearEquation _method = new GaussEquation();
+        private ObservableCollection<SlauWholeReport> _wholeReports = new ObservableCollection<SlauWholeReport>();
         private ObservableCollection<ObservableCollection<int>> _matrix = new ObservableCollection<ObservableCollection<int>>() {
                         new ObservableCollection<int> { 3, 2, -5, -1 },
                         new ObservableCollection<int> { 2, -1, 3, 13 },
                         new ObservableCollection<int> { 1, 2, -1, 9 }};
 
+        public List<BaseLinearEquation> Slaus { get; set; } = new List<BaseLinearEquation>()
+        {
+            new GaussEquation()
+        };
+        public List<string> Sizes { get; set; } = new List<string>()
+        {
+            "2x2", "3x3", "4x4", "5x5"
+        };
+
         public ObservableCollection<int> Ints { get; set; } = new ObservableCollection<int> { 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4 };
+
+        public ObservableCollection<SlauWholeReport> WholeReports
+        {
+            get { return _wholeReports; }
+            set
+            {
+                // OnPropertyChanged(nameof(WholeReports));
+                Set(ref _wholeReports, value);
+            }
+        }
         public ObservableCollection<ObservableCollection<int>> Matrix
         {
             get
@@ -105,13 +120,28 @@ namespace PalMathy.ViewModels
             }
         }
 
-        public ICommand GetNumbers
+        public IAsyncCommand CancelMethods
         {
             get
             {
-                return new DelegateCommand((obj) =>
+                return new AsyncCommand(async () =>
                 {
-                    // _method.GetNumbers(Matrix);
+                    await CancelToken.Instance.Cancel();
+                });
+            }
+        }
+
+        public IAsyncCommand GetNumbers
+        {
+            get
+            {
+                return new AsyncCommand(async () =>
+                {
+                    SlauWholeReport newWholeReport = new SlauWholeReport(Slaus);
+                    WholeReports.Insert(0, newWholeReport);
+                    await newWholeReport.MakeReports(Matrix);
+
+                    OnPropertyChanged(nameof(WholeReports));
                 });
             }
         }

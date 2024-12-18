@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,23 +9,30 @@ namespace PalMathy.Slau
 {
     public abstract class BaseLinearEquation
     {
-        public abstract List<int> GetNumbers(List<List<int>> matrix);
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public abstract ObservableCollection<int> GetNumbers(ObservableCollection<ObservableCollection<int>> matrix);
         public bool IsActivated { get; set; } = false;
     }
 
     class GaussEquation : BaseLinearEquation
     {
-        public override List<int> GetNumbers(List<List<int>> matrix)
+        public GaussEquation()
+        {
+            Name = "Метод Гаусса";
+            Description = "Простой метод, в котором матрица приобретает нули по ступенькам";
+        }
+        public override ObservableCollection<int> GetNumbers(ObservableCollection<ObservableCollection<int>> matrix)
         {           
             // Базовые операции с матрицей
             for (int columnIndex = 0; columnIndex < matrix.Count; ++columnIndex)
             {
-                List<int> zeroRow = matrix[columnIndex];
+                ObservableCollection<int> zeroRow = matrix[columnIndex];
                 int rowIndex = columnIndex + 1;
 
                 while (rowIndex < matrix.Count)
                 {
-                    List<int> row = matrix[rowIndex];
+                    ObservableCollection<int> row = matrix[rowIndex];
 
                     int zeroCoeff = zeroRow[columnIndex];
                     int secondCoeff = row[columnIndex];
@@ -39,7 +47,7 @@ namespace PalMathy.Slau
             }
 
             // Нахождение ответов
-            List<int> decisions = new List<int>();            
+            ObservableCollection<int> decisions = new ObservableCollection<int>();            
             for (int rowIndex = matrix.Count - 1; rowIndex >= 0; --rowIndex)
             {
                 int sum = 0;

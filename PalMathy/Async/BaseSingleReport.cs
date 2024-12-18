@@ -85,7 +85,7 @@ namespace PalMathy.Async
             ObservableCollection<ObservableCollection<int>> matrix = (ObservableCollection<ObservableCollection<int>>) objMatrix;
             Begin = DateTime.Now;
             var watch = Stopwatch.StartNew();
-            // ObservableCollection<int> elems = Method.GetNumbers(matrix);
+            Elements = Method.GetNumbers(matrix);
             watch.Stop();
             ExecutingTime = watch.ElapsedMilliseconds;
             IsOver = true; 
