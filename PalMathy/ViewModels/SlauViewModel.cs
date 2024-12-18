@@ -24,7 +24,8 @@ namespace PalMathy.ViewModels
 
         public List<BaseLinearEquation> Slaus { get; set; } = new List<BaseLinearEquation>()
         {
-            new GaussEquation()
+            new GaussEquation(),
+            new GaussJordanaEquation()
         };
         public List<string> Sizes { get; set; } = new List<string>()
         {

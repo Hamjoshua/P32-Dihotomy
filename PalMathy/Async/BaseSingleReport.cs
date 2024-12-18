@@ -82,7 +82,9 @@ namespace PalMathy.Async
 
         public override async Task MakeAction(object objMatrix)
         {
-            ObservableCollection<ObservableCollection<int>> matrix = (ObservableCollection<ObservableCollection<int>>) objMatrix;
+            // Боже мой
+            ObservableCollection<ObservableCollection<int>> matrix = new ObservableCollection<ObservableCollection<int>>(
+                ((ObservableCollection<ObservableCollection<int>>) objMatrix).ToList());
             Begin = DateTime.Now;
             var watch = Stopwatch.StartNew();
             Elements = Method.GetNumbers(matrix);
