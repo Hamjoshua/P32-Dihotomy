@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataGrid2DLibrary;
+using PalMathy.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,5 +27,13 @@ namespace PalMathy.Pages
             InitializeComponent();
         }
 
+        private void ComboBox_MouseLeave(object sender, MouseEventArgs e)
+        {
+            d2dGrid.ItemsSource2D = null;
+            d2dGrid.Items.Refresh();
+            SlauViewModel dataContext = (SlauViewModel)this.DataContext;
+            d2dGrid.ItemsSource2D = dataContext.Matrix;
+            d2dGrid.Items.Refresh();
+        }
     }
 }

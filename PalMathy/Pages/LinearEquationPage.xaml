@@ -43,16 +43,16 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <dg2d:DataGrid2D Grid.Row="0" Grid.Column="1"                         
-                         ItemsSource2D="{Binding Matrix}">            
+        <dg2d:DataGrid2D Grid.Row="0" Grid.Column="1" Name="d2dGrid"                  
+                         ItemsSource2D="{Binding Matrix, NotifyOnSourceUpdated=True}">            
         </dg2d:DataGrid2D>
         
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
-            <ComboBox materialDesign:HintAssist.Hint="Размерность" Width="100" Margin="5 0 30 0">
-                <ComboBoxItem Content="2x2" Tag="2" />
-                <ComboBoxItem Content="3x3" Tag="3" />
-                <ComboBoxItem Content="4x4" Tag="4" />
-                <ComboBoxItem Content="5x5" Tag="5" />
+            <ComboBox materialDesign:HintAssist.Hint="Размерность"
+                      MouseLeave="ComboBox_MouseLeave"
+                      IsSynchronizedWithCurrentItem="True"
+                      ItemsSource="{Binding Sizes}"
+                      SelectedItem="{Binding SizeOfMatrix}" Width="100" Margin="5 0 30 0">
             </ComboBox>
             <Button Content="Посчитать" Command="{Binding GetNumbers}">
             </Button>

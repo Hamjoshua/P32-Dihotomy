@@ -8,7 +8,7 @@ namespace PalMathy.Slau
 {
     abstract class BaseLinearEquation
     {
-        public abstract async Task GetNumbers(List<List<int>> matrix);
+        public abstract List<int> GetNumbers(List<List<int>> matrix);
         public bool IsActivated { get; set; } = false;
     }
 
