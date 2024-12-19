@@ -10,6 +10,20 @@ namespace PalMathy.Extensions
 {
     public static class ObservableCollectionsExtensions
     {
+        public static ObservableCollection<T> DeepCopy<T>(this ObservableCollection<T> elements)
+        {
+            return new ObservableCollection<T>(elements.ToList());
+        }
+
+        public static ObservableCollection<ObservableCollection<T>> DeepCopy<T>(this ObservableCollection<ObservableCollection<T>> elements)
+        {
+            for(int index  = 0; index < elements.Count; ++index)
+            {
+                elements[index] = elements[index].DeepCopy();
+            }
+            return new ObservableCollection<ObservableCollection<T>>(elements.ToList());
+        }
+
         public static void Shuffle<T>(this ObservableCollection<T> elements)
         {
             var count = elements.Count;

@@ -1,4 +1,5 @@
-﻿using PalMathy.Slau;
+﻿using PalMathy.Extensions;
+using PalMathy.Slau;
 using PalMathy.Sortings;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PalMathy.Async
@@ -81,13 +83,26 @@ namespace PalMathy.Async
         }
 
         public override async Task MakeAction(object objMatrix)
-        {
-            // Боже мой
-            ObservableCollection<ObservableCollection<int>> matrix = new ObservableCollection<ObservableCollection<int>>(
-                ((ObservableCollection<ObservableCollection<int>>) objMatrix).ToList());
+        {            
+            ObservableCollection<ObservableCollection<int>> matrix = ((ObservableCollection<ObservableCollection<int>>) objMatrix).DeepCopy();
+
+            List<List<int>> listMatrix = new List<List<int>>();
+            foreach(var element in matrix)
+            {
+                listMatrix.Add(element.ToList());
+            }
+
             Begin = DateTime.Now;
             var watch = Stopwatch.StartNew();
-            Elements = Method.GetNumbers(matrix);
+            try
+            {
+                Elements = Method.GetNumbers(listMatrix);
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
             watch.Stop();
             ExecutingTime = watch.ElapsedMilliseconds;
             IsOver = true; 

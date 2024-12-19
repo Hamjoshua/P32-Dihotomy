@@ -1,14 +1,7 @@
 ﻿using PalMathy.Async;
 using PalMathy.Slau;
 using PalMathy.Sortings;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace PalMathy.ViewModels
 {
@@ -25,14 +18,13 @@ namespace PalMathy.ViewModels
         public List<BaseLinearEquation> Slaus { get; set; } = new List<BaseLinearEquation>()
         {
             new GaussEquation(),
-            new GaussJordanaEquation()
+            new GaussJordanaEquation(),
+            new KramerEquation()
         };
         public List<string> Sizes { get; set; } = new List<string>()
         {
             "2x2", "3x3", "4x4", "5x5"
         };
-
-        public ObservableCollection<int> Ints { get; set; } = new ObservableCollection<int> { 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4 };
 
         public ObservableCollection<SlauWholeReport> WholeReports
         {
