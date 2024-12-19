@@ -46,7 +46,7 @@ namespace PalMathy.ViewModels
         };
         public List<string> Sizes { get; set; } = new List<string>()
         {
-            "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10"
+            "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9"
         };
 
         public ObservableCollection<SlauWholeReport> WholeReports
@@ -99,7 +99,7 @@ namespace PalMathy.ViewModels
                     {
                         Matrix.RemoveAt(index);
                     }
-                    else
+                    else if (Matrix.Count < size)
                     {
                         ObservableCollection<double> row = new ObservableCollection<double>();
                         for (int _ = 0; _ < size + 1; ++_)
@@ -108,27 +108,32 @@ namespace PalMathy.ViewModels
                         }
                         Matrix.Add(row);
                     }
+                    else
+                    {
+                        continue;
+                    }
                 }
 
                 // Регулируем отделньные ячейки
                 foreach (var row in Matrix)
                 {
-                    if(row.Count != size + 1)
+                    int rowCount = row.Count;
+                    if(rowCount != size + 1)
                     {
-                        if (row.Count > size)
+                        if (rowCount > size)
                         {
-                            for(int _ = size; _ < row.Count; ++_)
+                            for(int _ = size; _ < rowCount - 1; ++_)
                             {
                                 row.RemoveAt(0);
                             }
                         }
-                        else
+                        else if (rowCount < size)
                         {
-                            for (int _ = row.Count; _ < size + 1; ++_)
+                            for (int _ = rowCount; _ < size + 1; ++_)
                             {
                                 row.Insert(0, 0);
                             }
-                        }
+                        }                        
                     }                    
                 }
 
@@ -143,7 +148,7 @@ namespace PalMathy.ViewModels
                 return new DelegateCommand((obj) =>
                 {
                     // TODO
-                    MessageBox.Show("Функциональности нет! Но держите анекдот: Если у вас нет проблем, проверьте еще пульс. s" +
+                    MessageBox.Show("Функциональности нет! Но держите анекдот: Если у вас нет проблем, проверьте еще пульс. " +
                         "Может, его тоже нет");
                 });
             }
