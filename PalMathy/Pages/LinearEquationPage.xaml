@@ -16,7 +16,7 @@
     </Page.DataContext>
     <Page.Resources>
         <rbc:PercentageConverter x:Key="PercentConverter"></rbc:PercentageConverter>
-        <rbc:ListIntConverter x:Key="ListConv"></rbc:ListIntConverter>
+        <rbc:ListDoubleConverter x:Key="ListConv"></rbc:ListDoubleConverter>
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -28,9 +28,10 @@
             <RowDefinition Height="3*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.RowSpan="4" >
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.RowSpan="5" >
             <ItemsControl ItemsSource="{Binding Slaus}" Margin="5 5 5 5">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -71,21 +72,60 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
             </ItemsControl>
         </ScrollViewer>
 
-        <dg2d:DataGrid2D Grid.Row="1" Grid.Column="1" Name="d2dGrid"                  
-                         ItemsSource2D="{Binding Matrix, NotifyOnSourceUpdated=True}">            
-        </dg2d:DataGrid2D>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <dg2d:DataGrid2D Grid.Row="0" Grid.Column="1" Name="d2dGrid"                  
+                 ItemsSource2D="{Binding Matrix, NotifyOnSourceUpdated=True}">
+            </dg2d:DataGrid2D>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0, 0, 0, 25">
+                <ComboBox materialDesign:HintAssist.Hint="Размерность"
+          MouseLeave="ComboBox_MouseLeave"
+          IsSynchronizedWithCurrentItem="True"
+          ItemsSource="{Binding Sizes}"
+          SelectedItem="{Binding SizeOfMatrix}" Width="100" Margin="0 0 10 0">
+                </ComboBox>
+                <Button Height="24" Content="ПОСЧИТАТЬ" FontSize="12"  materialDesign:ButtonAssist.CornerRadius="10"
+                            Command="{Binding GetNumbers}"
+                            Style="{StaticResource MaterialDesignRaisedSecondaryButton}">
+
+                </Button>
+
+                <Button Command="{Binding RandomMatrix}"
+Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
+ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <materialDesign:PackIcon
+                                Width="16"
+                                Height="16"
+                                Kind="DiceMultiple"/>
+                </Button>
+
+                <Button Click="Button_Click"
+    Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
+    ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <materialDesign:PackIcon
+            Width="16"
+            Height="16"
+            Kind="Refresh"/>
+                </Button>
+                <Button Command="{Binding ParseElementsFromFile}"
+    Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
+    ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top">
+                    <materialDesign:PackIcon
+        Width="16"
+        Height="16"
+        Kind="File"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+                  
+        
         
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
-            <ComboBox materialDesign:HintAssist.Hint="Размерность"
-                      MouseLeave="ComboBox_MouseLeave"
-                      IsSynchronizedWithCurrentItem="True"
-                      ItemsSource="{Binding Sizes}"
-                      SelectedItem="{Binding SizeOfMatrix}" Width="100" Margin="5 0 5 0">
-            </ComboBox>
-            <Button Content="Посчитать" Command="{Binding GetNumbers}">
-            </Button>
-            <Button Content="Остановить" Background="Red" Command="{Binding CancelMethods}">
-            </Button>
             <StackPanel Grid.Row="0" Orientation="Horizontal" RenderTransformOrigin="50,0" HorizontalAlignment="Right">
                 <materialDesign:PopupBox StaysOpen="True">
                     <StackPanel Width="300" Margin="8,8,8,8" Orientation="Vertical">
@@ -119,14 +159,6 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                             <Button
               Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}"
               Content="_Закрыть">
-                            </Button>
-                            <Button
-              Command="{Binding RandomMatrix}"
-              Content="Сгенерировать">
-                            </Button>
-                            <Button
-              Click="Button_Click"
-              Content="Обновить">
                             </Button>
                         </StackPanel>
                     </StackPanel>
@@ -218,6 +250,11 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                 </ItemsControl>
             </ScrollViewer>
         </materialDesign:Card>
-
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right">
+            <Button Height="24" Content="ОТМЕНИТЬ ВСЕ СОРТИРОВКИ" FontSize="12" materialDesign:ButtonAssist.CornerRadius="10"
+        Command="{Binding CancelMethods}"
+        Style="{StaticResource MaterialDesignRaisedSecondaryButton}" Background="#FFCC0E4B" BorderBrush="#FFCC0E4B">
+            </Button>
+        </StackPanel>
     </Grid>
 </Page>

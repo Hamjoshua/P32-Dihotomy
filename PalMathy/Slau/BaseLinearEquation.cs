@@ -16,7 +16,7 @@ namespace PalMathy.Slau
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public abstract ObservableCollection<int> GetNumbers(List<List<int>> matrix);
+        public abstract ObservableCollection<double> GetNumbers(List<List<double>> matrix);
         public bool IsActivated { get; set; } = false;
     }
 
@@ -30,20 +30,20 @@ namespace PalMathy.Slau
                 "Гаусса-Жордана эффективен для систем среднего и большого размера. Он немного быстрее, чем метод Гаусса," +
                 " и часто предпочтительнее для решения систем на компьютере.";
         }
-        public List<List<int>> MakeForwardGaussOperation(List<List<int>> matrix)
+        public List<List<double>> MakeForwardGaussOperation(List<List<double>> matrix)
         {
             // Базовые операции с матрицей
             for (int columnIndex = 0; columnIndex < matrix.Count; ++columnIndex)
             {
-                List<int> zeroRow = matrix[columnIndex];
+                List<double> zeroRow = matrix[columnIndex];
                 int rowIndex = columnIndex + 1;
 
                 while (rowIndex < matrix.Count)
                 {
-                    List<int> row = matrix[rowIndex];
+                    List<double> row = matrix[rowIndex];
 
-                    int zeroCoeff = zeroRow[columnIndex];
-                    int secondCoeff = row[columnIndex];
+                    double zeroCoeff = zeroRow[columnIndex];
+                    double secondCoeff = row[columnIndex];
 
                     for (int index = 0; index < row.Count; ++index)
                     {
@@ -56,16 +56,16 @@ namespace PalMathy.Slau
 
             return matrix;
         }
-        public override ObservableCollection<int> GetNumbers(List<List<int>> matrix)
+        public override ObservableCollection<double> GetNumbers(List<List<double>> matrix)
         {
             matrix = MakeForwardGaussOperation(matrix);
 
             // Нахождение ответов
-            ObservableCollection<int> decisions = new ObservableCollection<int>();            
+            ObservableCollection<double> decisions = new ObservableCollection<double>();            
             for (int rowIndex = matrix.Count - 1; rowIndex >= 0; --rowIndex)
             {
-                int sum = 0;
-                int lastElement = matrix[rowIndex][matrix.Count];
+                double sum = 0;
+                double lastElement = matrix[rowIndex][matrix.Count];
                 int indexx = decisions.Count;
 
                 while (indexx > 0)
@@ -82,7 +82,7 @@ namespace PalMathy.Slau
                 {
                     throw new ArgumentException("В матрице не должны быть нули");
                 }
-                int x = (lastElement - sum) / matrix[rowIndex][rowIndex];
+                double x = (lastElement - sum) / matrix[rowIndex][rowIndex];
                 decisions.Insert(0, x);
             }
 
@@ -101,7 +101,7 @@ namespace PalMathy.Slau
                 " заданном базисе или отыскания ранга матрицы. Метод является модификацией метода Гаусса.";
         }
 
-        public override ObservableCollection<int> GetNumbers(List<List<int>> matrix)
+        public override ObservableCollection<double> GetNumbers(List<List<double>> matrix)
         {
             int n = matrix.Count();
             int m = matrix[0].Count();
@@ -114,7 +114,7 @@ namespace PalMathy.Slau
             //Обратный ход            
             for (int columnIndex = n - 1; columnIndex > 0; --columnIndex)
             {
-                List<int> zeroRow = matrix[columnIndex];
+                List<double> zeroRow = matrix[columnIndex];
                 int rowIndex = columnIndex - 1;
 
                 while (rowIndex >= 0)
@@ -124,10 +124,10 @@ namespace PalMathy.Slau
                         return null;
                     }
 
-                    List<int> row = matrix[rowIndex];
+                    List<double> row = matrix[rowIndex];
 
-                    int zeroCoeff = zeroRow[columnIndex];
-                    int secondCoeff = row[columnIndex];
+                    double zeroCoeff = zeroRow[columnIndex];
+                    double secondCoeff = row[columnIndex];
 
                     for (int index = 0; index < row.Count; ++index)
                     {
@@ -139,7 +139,7 @@ namespace PalMathy.Slau
             }
 
             //Извлечение решений
-            ObservableCollection<int> solutions = new ObservableCollection<int>();
+            ObservableCollection<double> solutions = new ObservableCollection<double>();
             for (int i = 0; i < n; i++)
             {
                 if (matrix[i][i] == 0)
@@ -175,10 +175,10 @@ namespace PalMathy.Slau
                 "Его преимущество — простота и наглядность для маленьких систем.";
 
         }
-        public override ObservableCollection<int> GetNumbers(List<List<int>> matrix)
+        public override ObservableCollection<double> GetNumbers(List<List<double>> matrix)
         {
             int n = matrix.Count;
-            if (n == 0) return new ObservableCollection<int>(); //Обработка пустой матрицы
+            if (n == 0) return new ObservableCollection<double>(); //Обработка пустой матрицы
 
             // Проверка на квадратность матрицы
             if (!matrix.All(row => row.Count == n + 1))
@@ -194,10 +194,10 @@ namespace PalMathy.Slau
                 throw new Exception("Определитель главной матрицы равен нулю. Метод Крамера неприменим.");
             }
 
-            ObservableCollection<int> solutions = new ObservableCollection<int>();
+            ObservableCollection<double> solutions = new ObservableCollection<double>();
             for (int i = 0; i < n; i++)
             {
-                List<List<int>> tempMatrix = new List<List<int>>();
+                List<List<double>> tempMatrix = new List<List<double>>();
                 for (int j = 0; j < n; j++)
                 {
                     tempMatrix.Add(matrix[j].ToList());
@@ -211,13 +211,13 @@ namespace PalMathy.Slau
 
                 tempMatrix = ReplaceColumnWithConstants(tempMatrix, matrix, i);
                 double det = Determinant(tempMatrix.Select(row => row.ToArray()).ToArray());
-                solutions.Add((int)(det / detMain)); //Приведение к int; возможна потеря точности
+                solutions.Add(det / detMain); //Приведение к int; возможна потеря точности
             }
 
             return solutions;
         }
 
-        private static double Determinant(int[][] matrix)
+        private static double Determinant(double[][] matrix)
         {
             int n = matrix.Length;
             if (n == 1) return matrix[0][0];
@@ -226,7 +226,7 @@ namespace PalMathy.Slau
             double det = 0;
             for (int i = 0; i < n; i++)
             {
-                int[][] submatrix = new int[n - 1][];
+                double[][] submatrix = new double[n - 1][];
                 for (int j = 1; j < n; j++)
                 {
                     submatrix[j - 1] = matrix[j].Where((x, index) => index != i).ToArray();
@@ -236,7 +236,7 @@ namespace PalMathy.Slau
             return det;
         }
 
-        private static List<List<int>> ReplaceColumnWithConstants(List<List<int>> matrix, List<List<int>> originalMatrix, int columnIndex)
+        private static List<List<double>> ReplaceColumnWithConstants(List<List<double>> matrix, List<List<double>> originalMatrix, int columnIndex)
         {
             for (int i = 0; i < matrix.Count; i++)
             {

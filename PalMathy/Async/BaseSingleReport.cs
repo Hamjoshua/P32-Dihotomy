@@ -15,15 +15,15 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PalMathy.Async
 {
-    abstract public class BaseSingleReport<T> : INotifyPropertyChanged where T : class
+    abstract public class BaseSingleReport<T, D> : INotifyPropertyChanged where T : class where D : notnull
     {
         public T Method { get; set; }
         public long ExecutingTime { get; set; } = -1;
         public DateTime Begin { get; set; }
         public bool IsOver { get; set; } = false;
         public int IterationsCount { get; set; } = 0;
-        public ObservableCollection<int> Elements { get; set; }
-        public BaseSingleReport(T method, ObservableCollection<int> elements)
+        public ObservableCollection<D> Elements { get; set; }
+        public BaseSingleReport(T method, ObservableCollection<D> elements)
         {
             Method = method;
             Elements = elements;
@@ -50,7 +50,7 @@ namespace PalMathy.Async
         }
     }
 
-    public class SingleReport : BaseSingleReport<BaseSorting>
+    public class SingleReport : BaseSingleReport<BaseSorting, int>
     {
         public SingleReport(BaseSorting method, ObservableCollection<int> elements) : base(method, elements)
         {
@@ -76,17 +76,18 @@ namespace PalMathy.Async
         }
     }
 
-    public class SlauReport : BaseSingleReport<BaseLinearEquation>
+    public class SlauReport : BaseSingleReport<BaseLinearEquation, double>
     {
-        public SlauReport(BaseLinearEquation method, ObservableCollection<int> elements) : base(method, elements)
+        public SlauReport(BaseLinearEquation method, ObservableCollection<double> elements) : base(method, elements)
         {
+
         }
 
         public override async Task MakeAction(object objMatrix)
         {            
-            ObservableCollection<ObservableCollection<int>> matrix = ((ObservableCollection<ObservableCollection<int>>) objMatrix).DeepCopy();
+            ObservableCollection<ObservableCollection<double>> matrix = ((ObservableCollection<ObservableCollection<double>>) objMatrix).DeepCopy();
 
-            List<List<int>> listMatrix = new List<List<int>>();
+            List<List<double>> listMatrix = new List<List<double>>();
             foreach(var element in matrix)
             {
                 listMatrix.Add(element.ToList());

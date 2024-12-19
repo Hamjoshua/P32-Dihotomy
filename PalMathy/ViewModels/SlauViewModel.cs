@@ -2,6 +2,7 @@
 using PalMathy.Slau;
 using PalMathy.Sortings;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace PalMathy.ViewModels
@@ -12,10 +13,10 @@ namespace PalMathy.ViewModels
         private string _sizeOfMatrix = "3x3";
         private RandomExpert _randomExpert = new RandomExpert();
         private ObservableCollection<SlauWholeReport> _wholeReports = new ObservableCollection<SlauWholeReport>();
-        private ObservableCollection<ObservableCollection<int>> _matrix = new ObservableCollection<ObservableCollection<int>>() {
-                        new ObservableCollection<int> { 3, 2, -5, -1 },
-                        new ObservableCollection<int> { 2, -1, 3, 13 },
-                        new ObservableCollection<int> { 1, 2, -1, 9 }};
+        private ObservableCollection<ObservableCollection<double>> _matrix = new ObservableCollection<ObservableCollection<double>>() {
+                        new ObservableCollection<double> { 3, 2, -5, -1 },
+                        new ObservableCollection<double> { 2, -1, 3, 13 },
+                        new ObservableCollection<double> { 1, 2, -1, 9 }};
 
         public int MinRandomBound
         {
@@ -45,7 +46,7 @@ namespace PalMathy.ViewModels
         };
         public List<string> Sizes { get; set; } = new List<string>()
         {
-            "2x2", "3x3", "4x4", "5x5"
+            "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10"
         };
 
         public ObservableCollection<SlauWholeReport> WholeReports
@@ -57,7 +58,7 @@ namespace PalMathy.ViewModels
                 Set(ref _wholeReports, value);
             }
         }
-        public ObservableCollection<ObservableCollection<int>> Matrix
+        public ObservableCollection<ObservableCollection<double>> Matrix
         {
             get
             {
@@ -100,7 +101,7 @@ namespace PalMathy.ViewModels
                     }
                     else
                     {
-                        ObservableCollection<int> row = new ObservableCollection<int>();
+                        ObservableCollection<double> row = new ObservableCollection<double>();
                         for (int _ = 0; _ < size + 1; ++_)
                         {
                             row.Add(0);
@@ -132,6 +133,19 @@ namespace PalMathy.ViewModels
                 }
 
                 OnPropertyChanged(nameof(Matrix));
+            }
+        }
+
+        public ICommand ParseElementsFromFile
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    // TODO
+                    MessageBox.Show("Функциональности нет! Но держите анекдот: Если у вас нет проблем, проверьте еще пульс. s" +
+                        "Может, его тоже нет");
+                });
             }
         }
 

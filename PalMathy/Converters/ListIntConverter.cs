@@ -36,4 +36,29 @@ namespace PalMathy.Converters
             return list;
         }
     }
+
+    public class ListDoubleConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return String.Join(", ", (ObservableCollection<double>)value);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            ObservableCollection<double> list = new ObservableCollection<double>();
+
+            try
+            {
+                list.FromString<double>((string)value);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Неверный формат списка! Нужно перечисление целых чисел через запятую", "Внимание", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+
+            return list;
+        }
+    }
 }

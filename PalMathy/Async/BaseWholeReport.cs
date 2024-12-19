@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 
 namespace PalMathy.Async
 {
-    abstract public class BaseWholeReport<T, D> where T : class 
-                                                where D : BaseSingleReport<T>
+    abstract public class BaseWholeReport<T, D, Y> where T : class
+                                                where Y : notnull
+                                                where D : BaseSingleReport<T, Y>                                                
     {
-        public ObservableCollection<int> Elements { get; set; } = new ObservableCollection<int>();
+        public ObservableCollection<Y> Elements { get; set; } = new ObservableCollection<Y>();
         public List<T> Methods { get; set; }
         public DateTime BeginTime { get; set; }
         public ObservableCollection<D> OutReports { get; set; }
@@ -36,7 +37,7 @@ namespace PalMathy.Async
         }
     }
 
-    public class WholeReport : BaseWholeReport<BaseSorting, SingleReport>
+    public class WholeReport : BaseWholeReport<BaseSorting, SingleReport, int>
     {
         public WholeReport(ObservableCollection<int> elements, List<BaseSorting> sortings)
         {
@@ -47,7 +48,7 @@ namespace PalMathy.Async
         }
     }
 
-    public class SlauWholeReport : BaseWholeReport<BaseLinearEquation, SlauReport>
+    public class SlauWholeReport : BaseWholeReport<BaseLinearEquation, SlauReport, double>
     {
         public SlauWholeReport(List<BaseLinearEquation> slaus)
         {
