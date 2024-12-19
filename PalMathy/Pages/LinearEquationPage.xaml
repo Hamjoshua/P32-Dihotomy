@@ -96,6 +96,7 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                 </Button>
 
                 <Button Command="{Binding RandomMatrix}"
+                        MouseLeave="ComboBox_MouseLeave"
 Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
 ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
                     <materialDesign:PackIcon
@@ -104,14 +105,7 @@ ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" Ver
                                 Kind="DiceMultiple"/>
                 </Button>
 
-                <Button Click="Button_Click"
-    Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
-    ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
-                    <materialDesign:PackIcon
-            Width="16"
-            Height="16"
-            Kind="Refresh"/>
-                </Button>
+                
                 <Button Command="{Binding ParseElementsFromFile}"
     Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
     ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top">

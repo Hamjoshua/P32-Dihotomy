@@ -25,20 +25,36 @@ namespace PalMathy.Pages
         public LinearEquationPage()
         {
             InitializeComponent();
+            UpdateDataGrid2D();
         }
 
-        private void ComboBox_MouseLeave(object sender, MouseEventArgs e)
+        private void UpdateDataGrid2D()
         {
             d2dGrid.ItemsSource2D = null;
             d2dGrid.Items.Refresh();
             SlauViewModel dataContext = (SlauViewModel)this.DataContext;
             d2dGrid.ItemsSource2D = dataContext.Matrix;
             d2dGrid.Items.Refresh();
+
+            for (int index = 0; index < d2dGrid.Columns.Count - 1; ++index)
+            {
+                var column = d2dGrid.Columns[index];
+                column.Header = $"x{index + 1}";
+            }
+            d2dGrid.Columns.Last().Header = "Ответ";
+
+            // d2dGrid.Columns.Last().HeaderStyle.;
+        }
+
+        private void ComboBox_MouseLeave(object sender, MouseEventArgs e)
+        {
+            UpdateDataGrid2D();
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ComboBox_MouseLeave(sender, null);
+            UpdateDataGrid2D();
         }
     }
 }

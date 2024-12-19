@@ -117,24 +117,21 @@ namespace PalMathy.ViewModels
                 // Регулируем отделньные ячейки
                 foreach (var row in Matrix)
                 {
-                    int rowCount = row.Count;
-                    if(rowCount != size + 1)
+                    while(row.Count != size + 1)
                     {
-                        if (rowCount > size)
+                        if (row.Count > size + 1)
                         {
-                            for(int _ = size; _ < rowCount - 1; ++_)
-                            {
                                 row.RemoveAt(0);
-                            }
                         }
-                        else if (rowCount < size)
+                        else if (row.Count < size + 1)
                         {
-                            for (int _ = rowCount; _ < size + 1; ++_)
-                            {
                                 row.Insert(0, 0);
-                            }
-                        }                        
-                    }                    
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                 }
 
                 OnPropertyChanged(nameof(Matrix));
@@ -189,6 +186,13 @@ namespace PalMathy.ViewModels
             {
                 return new AsyncCommand(async () =>
                 {
+                    bool anyOfMethodsIsActivated = Slaus.Any(x => x.IsActivated);
+
+                    if (!anyOfMethodsIsActivated)
+                    {
+                        MessageBox.Show("Не выбраны методы СЛАУ!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
                     SlauWholeReport newWholeReport = new SlauWholeReport(Slaus);
                     WholeReports.Insert(0, newWholeReport);
                     await newWholeReport.MakeReports(Matrix);
