@@ -35,5 +35,10 @@ namespace PalMathy.Pages
             d2dGrid.ItemsSource2D = dataContext.Matrix;
             d2dGrid.Items.Refresh();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ComboBox_MouseLeave(sender, null);
+        }
     }
 }

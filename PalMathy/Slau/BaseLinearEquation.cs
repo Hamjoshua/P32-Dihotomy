@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PalMathy.Sortings;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 using System.Windows.Media;
+using static MaterialDesignThemes.Wpf.Theme.ToolBar;
 
 namespace PalMathy.Slau
 {
@@ -68,6 +70,10 @@ namespace PalMathy.Slau
 
                 while (indexx > 0)
                 {
+                    if (CancelToken.Instance.cancellationTokenSource.IsCancellationRequested)
+                    {
+                        return null;
+                    }
                     sum += matrix[rowIndex][rowIndex + indexx] * decisions[indexx - 1];
                     --indexx;
                 }
@@ -113,6 +119,11 @@ namespace PalMathy.Slau
 
                 while (rowIndex >= 0)
                 {
+                    if (CancelToken.Instance.cancellationTokenSource.IsCancellationRequested)
+                    {
+                        return null;
+                    }
+
                     List<int> row = matrix[rowIndex];
 
                     int zeroCoeff = zeroRow[columnIndex];
@@ -191,6 +202,11 @@ namespace PalMathy.Slau
                 {
                     tempMatrix.Add(matrix[j].ToList());
                     tempMatrix[j].RemoveAt(n);
+                }
+
+                if (CancelToken.Instance.cancellationTokenSource.IsCancellationRequested)
+                {
+                    return null;
                 }
 
                 tempMatrix = ReplaceColumnWithConstants(tempMatrix, matrix, i);

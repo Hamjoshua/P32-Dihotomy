@@ -75,25 +75,70 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                          ItemsSource2D="{Binding Matrix, NotifyOnSourceUpdated=True}">            
         </dg2d:DataGrid2D>
         
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
             <ComboBox materialDesign:HintAssist.Hint="Размерность"
                       MouseLeave="ComboBox_MouseLeave"
                       IsSynchronizedWithCurrentItem="True"
                       ItemsSource="{Binding Sizes}"
-                      SelectedItem="{Binding SizeOfMatrix}" Width="100" Margin="5 0 30 0">
+                      SelectedItem="{Binding SizeOfMatrix}" Width="100" Margin="5 0 5 0">
             </ComboBox>
             <Button Content="Посчитать" Command="{Binding GetNumbers}">
             </Button>
             <Button Content="Остановить" Background="Red" Command="{Binding CancelMethods}">
             </Button>
-            
+            <StackPanel Grid.Row="0" Orientation="Horizontal" RenderTransformOrigin="50,0" HorizontalAlignment="Right">
+                <materialDesign:PopupBox StaysOpen="True">
+                    <StackPanel Width="300" Margin="8,8,8,8" Orientation="Vertical">
+                        <StackPanel.Resources>
+                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+                                <Setter Property="Margin" Value="8,8,8,8" />
+                                <Setter Property="materialDesign:HintAssist.IsFloating" Value="True" />
+                            </Style>
+                        </StackPanel.Resources>                        
+                        <TextBlock
+          Grid.Row="0"
+          Grid.Column="0"
+          Margin="8,8,8,16"
+          Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+          Text="Настройка рандома" />
+                        <TextBox
+          Grid.Row="1"
+          Grid.Column="0"
+          materialDesign:HintAssist.Hint="Минимальное число"
+          Text="{Binding MinRandomBound}" />
+                        <TextBox
+          Grid.Row="2"
+          Grid.Column="0"
+          materialDesign:HintAssist.Hint="Максимальное число"
+          Text="{Binding MaxRandomBound}" />                       
+                        <StackPanel
+          Grid.Row="5"
+          Grid.ColumnSpan="2"
+          HorizontalAlignment="Right"
+          Orientation="Horizontal">
+                            <Button
+              Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}"
+              Content="_Закрыть">
+                            </Button>
+                            <Button
+              Command="{Binding RandomMatrix}"
+              Content="Сгенерировать">
+                            </Button>
+                            <Button
+              Click="Button_Click"
+              Content="Обновить">
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </materialDesign:PopupBox>
+            </StackPanel>
         </StackPanel>
 
         <Grid Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" Margin="15,0,15,3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition Width="3*"></ColumnDefinition>
-                <ColumnDefinition Width="4*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" TextWrapping="Wrap" Text="Имя метода"></TextBlock>
@@ -119,12 +164,12 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
 
                                             <Grid VerticalAlignment="Bottom" Margin="5,0,5,3">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                                                    <ColumnDefinition Width="5*"></ColumnDefinition>
-                                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                                    <ColumnDefinition Width="3*"></ColumnDefinition>
                                                     <ColumnDefinition Width="1*"></ColumnDefinition>
                                                 </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Text="{Binding Method.Name}"></TextBlock>
+                                                <TextBlock TextWrapping="Wrap" Grid.Column="0" Text="{Binding Method.Name}"></TextBlock>
                                                 <ScrollViewer Height="50" Grid.Column="1" VerticalScrollBarVisibility="Auto">
                                                     <TextBlock Text="{Binding Elements, Converter={StaticResource ListConv}}" TextWrapping="WrapWithOverflow">
                                                     </TextBlock>

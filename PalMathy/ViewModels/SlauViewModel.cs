@@ -2,6 +2,7 @@
 using PalMathy.Slau;
 using PalMathy.Sortings;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace PalMathy.ViewModels
 {
@@ -9,11 +10,32 @@ namespace PalMathy.ViewModels
     public class SlauViewModel : BaseViewModel
     {
         private string _sizeOfMatrix = "3x3";
+        private RandomExpert _randomExpert = new RandomExpert();
         private ObservableCollection<SlauWholeReport> _wholeReports = new ObservableCollection<SlauWholeReport>();
         private ObservableCollection<ObservableCollection<int>> _matrix = new ObservableCollection<ObservableCollection<int>>() {
                         new ObservableCollection<int> { 3, 2, -5, -1 },
                         new ObservableCollection<int> { 2, -1, 3, 13 },
                         new ObservableCollection<int> { 1, 2, -1, 9 }};
+
+        public int MinRandomBound
+        {
+            get { return _randomExpert.MinBound; }
+            set
+            {
+                _randomExpert.MinBound = value;
+                OnPropertyChanged(nameof(MinRandomBound));                
+            }
+        }
+
+        public int MaxRandomBound
+        {
+            get { return _randomExpert.MaxBound; }
+            set
+            {
+                _randomExpert.MaxBound = value;
+                OnPropertyChanged(nameof(MaxRandomBound));                
+            }
+        }
 
         public List<BaseLinearEquation> Slaus { get; set; } = new List<BaseLinearEquation>()
         {
@@ -110,6 +132,24 @@ namespace PalMathy.ViewModels
                 }
 
                 OnPropertyChanged(nameof(Matrix));
+            }
+        }
+
+        public ICommand RandomMatrix
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    foreach(var row in Matrix)
+                    {
+                        for(int valueIndex = 0; valueIndex <= Matrix.Count; ++valueIndex)
+                        {
+                            row[valueIndex] = _randomExpert.GetRandomNumber();
+                        }
+                    }
+                    OnPropertyChanged(nameof(Matrix));
+                });                
             }
         }
 
