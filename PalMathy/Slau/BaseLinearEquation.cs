@@ -189,7 +189,8 @@ namespace PalMathy.Slau
                 List<List<int>> tempMatrix = new List<List<int>>();
                 for (int j = 0; j < n; j++)
                 {
-                    tempMatrix.Add(new List<int>(matrix[j].Take(i).Concat(matrix[j].Skip(i + 1).Take(n - i)).ToList()));
+                    tempMatrix.Add(matrix[j].ToList());
+                    tempMatrix[j].RemoveAt(n);
                 }
 
                 tempMatrix = ReplaceColumnWithConstants(tempMatrix, matrix, i);

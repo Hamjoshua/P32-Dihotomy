@@ -94,7 +94,7 @@ namespace PalMathy.ViewModels
                     {
                         if (row.Count > size)
                         {
-                            for(int _ = size; _ < row.Count + 1; ++_)
+                            for(int _ = size; _ < row.Count; ++_)
                             {
                                 row.RemoveAt(0);
                             }
