@@ -12,27 +12,69 @@
       xmlns:viewmodels="clr-namespace:PalMathy.ViewModels"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="LeastSquaresPage">
-
+    <Page.DataContext>
+        <viewmodels:LeastSquaresViewModel />
+    </Page.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="4*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <dg2d:DataGrid2D>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" RenderTransformOrigin="50,0" HorizontalAlignment="Right">
+                <materialDesign:PopupBox StaysOpen="True">
+                    <StackPanel Width="300" Margin="8,8,8,8" Orientation="Vertical">
+                        <StackPanel.Resources>
+                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+                                <Setter Property="Margin" Value="8,8,8,8" />
+                                <Setter Property="materialDesign:HintAssist.IsFloating" Value="True" />
+                            </Style>
+                        </StackPanel.Resources>
+                        <TextBlock
+Grid.Row="0"
+Grid.Column="0"
+Margin="8,8,8,16"
+Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+Text="Настройка рандома" />
+                        <TextBox
+Grid.Row="1"
+Grid.Column="0"
+materialDesign:HintAssist.Hint="Минимальное число"
+Text="{Binding MinRandomBound}" />
+                        <TextBox
+Grid.Row="2"
+Grid.Column="0"
+materialDesign:HintAssist.Hint="Максимальное число"
+Text="{Binding MaxRandomBound}" />
+                        <StackPanel
+Grid.Row="5"
+Grid.ColumnSpan="2"
+HorizontalAlignment="Right"
+Orientation="Horizontal">
+                            <Button
+    Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}"
+    Content="_Закрыть">
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </materialDesign:PopupBox>
+            </StackPanel>
+
+            <dg2d:DataGrid2D Name="d2dGrid" Grid.Row="1"                 
+                 ItemsSource2D="{Binding Matrix}">
 
             </dg2d:DataGrid2D>
 
-
-            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right">
-                <Button Height="24" Content="ПОСЧИТАТЬ" FontSize="12"  materialDesign:ButtonAssist.CornerRadius="10"
-                    Command="{Binding GetNumbers}"
+            <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right">
+                <Button Height="24" Content="ПОСЧИТАТЬ" FontSize="12" materialDesign:ButtonAssist.CornerRadius="10"
+                    Command="{Binding }"
                     Style="{StaticResource MaterialDesignRaisedSecondaryButton}">
                 </Button>
 

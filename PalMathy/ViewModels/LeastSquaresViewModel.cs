@@ -12,7 +12,7 @@ using System.Windows.Media;
 
 namespace PalMathy.ViewModels
 {
-    class LeastSquaresViewModel : BaseViewModel
+    public class LeastSquaresViewModel : BaseViewModel
     {
         private LeastSquaresMethod _method = new LeastSquaresMethod();
         private ObservableCollection<ObservableCollection<double>> _matrix = new ObservableCollection<ObservableCollection<double>>() {
