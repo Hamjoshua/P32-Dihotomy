@@ -73,6 +73,11 @@ namespace PalMathy.Methods
         public double BeginInterval = -10;
         public double EndInterval = 10;
 
+        public int MaxGraphY = 20;
+        public int MinGraphY = -20;
+        public int MaxGraphX = 20;
+        public int MinGraphX = -20;
+
         public string Description;
 
         protected int _countOfZeros;
@@ -146,8 +151,8 @@ namespace PalMathy.Methods
                 StrokeThickness = 2
             };
 
-            xLine.Points.Add(new DataPoint(10 ^ 5, 0));
-            xLine.Points.Add(new DataPoint(-10 ^ 5, 0));
+            xLine.Points.Add(new DataPoint(MaxGraphX, 0));
+            xLine.Points.Add(new DataPoint(MinGraphX, 0));
 
             return xLine;
         }
@@ -161,8 +166,8 @@ namespace PalMathy.Methods
                 StrokeThickness = 2
             };
 
-            yLine.Points.Add(new DataPoint(0, 10 ^ 5));
-            yLine.Points.Add(new DataPoint(0, -10 ^ 5));
+            yLine.Points.Add(new DataPoint(0, MinGraphY * 2));
+            yLine.Points.Add(new DataPoint(0, MaxGraphY * 2));
 
             return yLine;
         }

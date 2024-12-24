@@ -72,6 +72,12 @@ namespace PalMathy.Sortings
             MinBound = 0; MaxBound = 100; LengthOfArray = 100;
         }
 
+        public RandomExpert(int min, int max)
+        {
+            MinBound = min; MaxBound = max; 
+            LengthOfArray = 100;
+        }
+
         public int GetRandomNumber()
         {
             return Random.Shared.Next(MinBound, MaxBound);

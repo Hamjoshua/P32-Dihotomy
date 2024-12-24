@@ -79,5 +79,16 @@ namespace PalMathy.ViewModels
                 });
             }
         }
+
+        public ICommand GoToLeastSquares
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    CurrentPage = new LeastSquaresPage();
+                });
+            }
+        }
     }
 }

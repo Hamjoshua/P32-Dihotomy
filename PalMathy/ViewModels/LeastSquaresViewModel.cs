@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -19,7 +20,7 @@ namespace PalMathy.ViewModels
                         new ObservableCollection<double> { 3, 2, -5, -1 },
                         new ObservableCollection<double> { 2, -1, 3, 13 }
         };
-        private RandomExpert _randomExpert = new RandomExpert();
+        private RandomExpert _randomExpert = new RandomExpert(-20, 20);
 
         public ObservableCollection<ObservableCollection<double>> Matrix
         {
@@ -52,8 +53,9 @@ namespace PalMathy.ViewModels
             get { return _randomExpert.MinBound; }
             set
             {
-                _randomExpert.MinBound = value;
+                _randomExpert.MinBound = value;                
                 OnPropertyChanged(nameof(MinRandomBound));
+                _method.SetBoundsToGraph(MaxRandomBound, MinRandomBound);
             }
         }
 
@@ -64,8 +66,22 @@ namespace PalMathy.ViewModels
             {
                 _randomExpert.MaxBound = value;
                 OnPropertyChanged(nameof(MaxRandomBound));
+                _method.SetBoundsToGraph(MaxRandomBound, MinRandomBound);
             }
         }
+
+        public ICommand ParseElementsFromFile
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    // TODO
+                    MessageBox.Show("Функциональности нет! Но держите анекдот: Если у вас нет проблем, проверьте еще пульс. " +
+                        "Может, его тоже нет");
+                });
+            }
+        }        
 
         public ICommand Calculate
         {
@@ -73,7 +89,15 @@ namespace PalMathy.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    Graph = _method.CalculateGraph(Matrix);
+                    try
+                    {
+                        Graph = _method.CalculateGraph(Matrix);
+                    }
+                    catch (ArgumentException ex) 
+                    {
+                        MessageBox.Show(ex.Message, "Внимание", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    
                     OnPropertyChanged(nameof(Graph));
                 });
             }
@@ -115,7 +139,7 @@ namespace PalMathy.ViewModels
                 {
                     foreach (var row in Matrix)
                     {
-                        for (int valueIndex = 0; valueIndex <= Matrix.Count; ++valueIndex)
+                        for (int valueIndex = 0; valueIndex < Matrix[0].Count; ++valueIndex)
                         {
                             row[valueIndex] = _randomExpert.GetRandomNumber();
                         }

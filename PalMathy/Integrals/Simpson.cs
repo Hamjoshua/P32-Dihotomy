@@ -55,7 +55,7 @@ namespace PalMathy.Integrals
             double b = ((yend - ym) - (y0 - ym) * (xend * xend - xm * xm) / (x0 * x0 - xm * xm)) /
                    ((xend - xm) * (xend * xend - xm * xm) / (x0 * x0 - xm * xm) - (x0 - xm));
             double a = ((y0 - ym) - b * (x0 - xm)) / (x0 * x0 - xm * xm);
-            double c = ym - a * xm * xm - b * xm;            
+            double c = ym - a * xm * xm - b * xm;
 
             for(double x = x0; x <= xend; x += 0.25)
             {                
