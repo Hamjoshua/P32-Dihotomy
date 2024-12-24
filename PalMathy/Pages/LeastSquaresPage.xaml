@@ -35,7 +35,19 @@
                     Command="{Binding GetNumbers}"
                     Style="{StaticResource MaterialDesignRaisedSecondaryButton}">
                 </Button>
-                <Button Command="{Binding RandomMatrix}"
+
+                <Button Command="{Binding RandomMatrix}"                    
+        MouseLeave="ComboBox_MouseLeave"
+        Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
+        ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" 
+        VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <materialDesign:PackIcon
+                Width="16"
+                Height="16"
+                Kind="DiceMultiple"/>
+                </Button>
+
+                <Button Command="{Binding RandomMatrix}" Margin="5,0,0,0"
                         MouseLeave="ComboBox_MouseLeave"
                     Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
                     ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">   
@@ -44,6 +56,8 @@
                         Height="16"
                         Kind="Plus"/>
                 </Button>
+                
+
 
 
                 <Button Command="{Binding ParseElementsFromFile}"
@@ -54,6 +68,8 @@
                         Height="16"
                         Kind="Minus"/>      
                 </Button>
+
+                
             </StackPanel>
 
         </Grid>
