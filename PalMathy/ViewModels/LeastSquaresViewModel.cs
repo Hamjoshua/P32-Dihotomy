@@ -45,7 +45,16 @@ namespace PalMathy.ViewModels
             {
                 _method.PlotModel = value;
                 OnPropertyChanged(nameof(Graph));
+                OnPropertyChanged(nameof(Result));
             }
+        }
+
+        public string Result
+        {
+            get
+            {
+                return _method.CurrentResult;
+            }            
         }
 
         public int MinRandomBound

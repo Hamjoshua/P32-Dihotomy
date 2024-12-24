@@ -13,6 +13,7 @@ namespace PalMathy.LeastSquares
 {
     public class LeastSquaresMethod
     {
+        public string CurrentResult { get; set; }
         public LeastSquaresMethod()
         {
             _method.FunctionString = "";
@@ -49,6 +50,9 @@ namespace PalMathy.LeastSquares
             PlotModel.Series.Add(AddPoints(points)); ;
             PlotModel.Series.Add(AddLine(coeffLine, data[0].Max(), data[0].Min()));
             PlotModel.Series.Add(AddParabol(coeffParabola, data[0].Max(), data[0].Min()));
+
+            CurrentResult = $"Апроксимация первой степени: \na = {coeffLine.a}\nb = {coeffLine.b}\n\n" +
+                $"Апроксимация второй степени:\na = {coeffParabola.a}\nb = {coeffParabola.b}\nc = {coeffParabola.c}";
 
             return PlotModel;
         }

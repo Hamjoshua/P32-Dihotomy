@@ -12,22 +12,35 @@
       xmlns:viewmodels="clr-namespace:PalMathy.ViewModels"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="LeastSquaresPage">
+    <Page.Resources>
+        <rbc:RowIndexConverter x:Key="rowIndex"></rbc:RowIndexConverter>
+    </Page.Resources>
     <Page.DataContext>
         <viewmodels:LeastSquaresViewModel />
     </Page.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="4*"></RowDefinition>            
+            <RowDefinition Height="4*"></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
         </Grid.RowDefinitions>
+
         <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"></ColumnDefinition>
+                <ColumnDefinition Width="6*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="0" Orientation="Horizontal" RenderTransformOrigin="50,0" HorizontalAlignment="Right">
+            <materialDesign:Card Grid.Row="1" Grid.Column="0" Padding="10" Margin="0,0,10,0" Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}"
+        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" UniformCornerRadius="6">
+                <TextBox IsReadOnly="True" Text="{Binding Result, Mode=OneWay}" TextWrapping="Wrap"/>
+            </materialDesign:Card>
+
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" RenderTransformOrigin="50,0" HorizontalAlignment="Right">
                 <materialDesign:PopupBox StaysOpen="True">
                     <StackPanel Width="300" Margin="8,8,8,8" Orientation="Vertical">
                         <StackPanel.Resources>
@@ -66,12 +79,11 @@ Orientation="Horizontal">
                 </materialDesign:PopupBox>
             </StackPanel>
 
-            <dg2d:DataGrid2D Name="d2dGrid" Grid.Row="1"                 
+            <dg2d:DataGrid2D Name="d2dGrid" Grid.Row="1" Grid.Column="1" LoadingRow="d2dGrid_LoadingRow"
                  ItemsSource2D="{Binding Matrix}">
-
             </dg2d:DataGrid2D>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right">
+            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right">
                 <Button Height="24" Content="ПОСЧИТАТЬ" FontSize="12" materialDesign:ButtonAssist.CornerRadius="10"
                     Command="{Binding Calculate}"
                     Style="{StaticResource MaterialDesignRaisedSecondaryButton}">
@@ -91,12 +103,12 @@ Orientation="Horizontal">
                 <Button Command="{Binding AddColumnToMatrix}" Margin="5,0,0,0"
                         MouseLeave="ComboBox_MouseLeave"
                     Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
-                    ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">   
+                    ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
                     <materialDesign:PackIcon
                         Width="16"
                         Height="16"
                         Kind="Plus"/>
-                </Button>             
+                </Button>
 
                 <Button Command="{Binding RemoveColumnFromMatrix}"
                         MouseLeave="ComboBox_MouseLeave"
@@ -105,13 +117,13 @@ Orientation="Horizontal">
                     <materialDesign:PackIcon
                         Width="16"
                         Height="16"
-                        Kind="Minus"/>      
+                        Kind="Minus"/>
                 </Button>
 
-                
+
             </StackPanel>
 
         </Grid>
-        <oxy:PlotView Grid.Row="1" x:Name="pvGraph" Model="{Binding Graph}"/>
+        <oxy:PlotView Grid.Row="1" Grid.ColumnSpan="2" x:Name="pvGraph" Model="{Binding Graph}"/>
     </Grid>
 </Page>
