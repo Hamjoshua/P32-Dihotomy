@@ -9,9 +9,10 @@ using System.Security.Policy;
 
 namespace PalMathy.LeastSquares
 {
-    class LeastSquares
+    public class LeastSquaresMethod
     {
-        PlotModel PlotModel
+        public LeastSquaresMethod() { }
+        public PlotModel PlotModel
         {
             get
             {
@@ -24,15 +25,17 @@ namespace PalMathy.LeastSquares
         }
 
         InputForIntegral _method = new InputForIntegral();
-        public void CalculateGraph(ObservableCollection<ObservableCollection<int>> data)
+        public PlotModel CalculateGraph(ObservableCollection<ObservableCollection<double>> data)
         {
             List<DataPoint> points = new List<DataPoint>();
 
             (double a, double b) coefficients = GetCoefs(data, points);
             _method.CalculateGraph();
 
-            _method.Graph.Series.Add(AddPoints(points)); ;
-            _method.Graph.Series.Add(AddLine(coefficients, data[0].Max(), data[0].Min()));
+            PlotModel.Series.Add(AddPoints(points)); ;
+            PlotModel.Series.Add(AddLine(coefficients, data[0].Max(), data[0].Min()));
+
+            return PlotModel;
         }
 
         public LineSeries AddPoints(List<DataPoint> points)
@@ -64,7 +67,7 @@ namespace PalMathy.LeastSquares
             return line;
         }
 
-        public (double a, double b) GetCoefs(ObservableCollection<ObservableCollection<int>> data, List<DataPoint> points)
+        public (double a, double b) GetCoefs(ObservableCollection<ObservableCollection<double>> data, List<DataPoint> points)
         {
             int n = data[0].Count;
             if (n < 2) // Нужно хотя бы 2 точки для вычисления прямой
