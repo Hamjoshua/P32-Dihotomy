@@ -41,7 +41,10 @@ namespace PalMathy.Pages
                 var column = d2dGrid.Columns[index];
                 column.Header = $"x{index + 1}";
             }
-            d2dGrid.Columns.Last().Header = "Ответ";
+            if(d2dGrid.Columns.Count() > 0)
+            {
+                d2dGrid.Columns.Last().Header = "Ответ";
+            }            
 
             // d2dGrid.Columns.Last().HeaderStyle.;
         }
