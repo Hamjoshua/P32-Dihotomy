@@ -48,10 +48,25 @@ namespace PalMathy.Helpers
                     var cellValue = worksheet.Cells[row, col].ToString();
 
                     var converter = TypeDescriptor.GetConverter(typeof(T));
-                    if (converter != null && cellValue != null)
+                    try
                     {
-                        rowData.Add((T)converter.ConvertFromString(cellValue));
+                        if (converter != null && cellValue != null)
+                        {
+                            rowData.Add((T)converter.ConvertFromString(cellValue));
+                        }
                     }
+                    catch(Exception ex)
+                    {
+                        if(col != 0 && row != 0)
+                        {
+                            throw ex;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    
                 }
                 // Добавляем только не пустые строки
                 if (rowData.Count > 0)
