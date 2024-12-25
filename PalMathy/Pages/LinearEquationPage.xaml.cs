@@ -35,19 +35,9 @@ namespace PalMathy.Pages
             SlauViewModel dataContext = (SlauViewModel)this.DataContext;
             d2dGrid.ItemsSource2D = dataContext.Matrix;
             d2dGrid.Items.Refresh();
-
-            for (int index = 0; index < d2dGrid.Columns.Count - 1; ++index)
-            {
-                var column = d2dGrid.Columns[index];
-                column.Header = $"x{index + 1}";
-            }
-            if(d2dGrid.Columns.Count() > 0)
-            {
-                d2dGrid.Columns.Last().Header = "Ответ";
-            }            
-
-            // d2dGrid.Columns.Last().HeaderStyle.;
         }
+
+
 
         private void ComboBox_MouseLeave(object sender, MouseEventArgs e)
         {
@@ -58,6 +48,24 @@ namespace PalMathy.Pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             UpdateDataGrid2D();
+        }
+
+        private void d2dGrid_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            if (e.Row is DataGridRow row)
+            {
+                row.Header = $" Уравнение {row.GetIndex() + 1} ";
+            }
+
+            for (int index = 0; index < d2dGrid.Columns.Count - 1; ++index)
+            {
+                var column = d2dGrid.Columns[index];
+                column.Header = $"x{index + 1}";
+            }
+            if (d2dGrid.Columns.Count() > 0)
+            {
+                d2dGrid.Columns.Last().Header = "Ответ";
+            }
         }
     }
 }

@@ -78,8 +78,8 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             
-            <dg2d:DataGrid2D Grid.Row="0" Grid.Column="1" Name="d2dGrid"                  
-                 ItemsSource2D="{Binding Matrix, NotifyOnSourceUpdated=True}">
+            <dg2d:DataGrid2D Grid.Row="0" Grid.Column="1" Name="d2dGrid" LoadingRow="d2dGrid_LoadingRow"                
+                 ItemsSource2D="{Binding Matrix}">
             </dg2d:DataGrid2D>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0, 0, 0, 25">
