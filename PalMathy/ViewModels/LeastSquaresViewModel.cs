@@ -1,4 +1,5 @@
 ﻿using OxyPlot;
+using PalMathy.Helpers;
 using PalMathy.LeastSquares;
 using PalMathy.Sortings;
 using System;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Xml.Linq;
 
 namespace PalMathy.ViewModels
 {
@@ -85,9 +87,14 @@ namespace PalMathy.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    // TODO
-                    MessageBox.Show("Функциональности нет! Но держите анекдот: Если у вас нет проблем, проверьте еще пульс. " +
-                        "Может, его тоже нет");
+                    try
+                    {
+                        Matrix = ImportHelper.Get2DList<double>();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Внимание", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 });
             }
         }        

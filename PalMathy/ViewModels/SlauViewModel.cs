@@ -1,4 +1,5 @@
 ﻿using PalMathy.Async;
+using PalMathy.Helpers;
 using PalMathy.Slau;
 using PalMathy.Sortings;
 using System.Collections.ObjectModel;
@@ -144,9 +145,14 @@ namespace PalMathy.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    // TODO
-                    MessageBox.Show("Функциональности нет! Но держите анекдот: Если у вас нет проблем, проверьте еще пульс. " +
-                        "Может, его тоже нет");
+                    try
+                    {
+                        Matrix = ImportHelper.Get2DList<double>();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Внимание", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 });
             }
         }

@@ -1,11 +1,13 @@
 ﻿using Microsoft.Win32;
 using PalMathy.Async;
 using PalMathy.Extensions;
+using PalMathy.Helpers;
 using PalMathy.Sortings;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PalMathy.ViewModels
 {
@@ -155,6 +157,16 @@ namespace PalMathy.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
+                    try
+                    {
+                        Elements = ImportHelper.GetList<int>();
+                        OnPropertyChanged(nameof(Elements));
+                    }
+                    catch (NotSupportedException)
+                    {
+                        MessageBox.Show("Неверный формат списка! Нужно перечисление целых чисел через запятую");
+                    }
+
                     OpenFileDialog openFileDialog = new OpenFileDialog();
                     openFileDialog.Filter = "Текстовый файл (*.txt)|*.txt";
 

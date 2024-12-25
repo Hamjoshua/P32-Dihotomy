@@ -11,10 +11,7 @@
       xmlns:rbc="clr-namespace:PalMathy.Converters"
       xmlns:viewmodels="clr-namespace:PalMathy.ViewModels"
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="LeastSquaresPage">
-    <Page.Resources>
-        <rbc:RowIndexConverter x:Key="rowIndex"></rbc:RowIndexConverter>
-    </Page.Resources>
+      Title="LeastSquaresPage">    
     <Page.DataContext>
         <viewmodels:LeastSquaresViewModel />
     </Page.DataContext>
@@ -98,6 +95,17 @@ Orientation="Horizontal">
                 Width="16"
                 Height="16"
                 Kind="DiceMultiple"/>
+                </Button>
+
+                <Button Command="{Binding ParseElementsFromFile}"                    
+MouseLeave="ComboBox_MouseLeave"
+Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
+ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" 
+VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <materialDesign:PackIcon
+        Width="16"
+        Height="16"
+        Kind="File"/>
                 </Button>
 
                 <Button Command="{Binding AddColumnToMatrix}" Margin="5,0,0,0"
