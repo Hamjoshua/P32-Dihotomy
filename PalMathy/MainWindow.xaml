@@ -43,6 +43,10 @@
                         Content="Сортировка" Background="#7FFFFFFF"></Button>
                 <Button Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" Command="{Binding GoToDefinitiveIntegral}"
                         Content="Определенный интеграл" Background="#7FFFFFFF"></Button>
+                <Button Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" Command="{Binding GoToSlau}"
+                        Content="СЛАУ" Background="#7FFFFFFF"></Button>
+                <Button Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" Command="{Binding GoToLeastSquares}"
+                        Content="Метод наименьших квадратов" Background="#7FFFFFFF"></Button>
             </StackPanel>
         </Expander>
         <Frame Content="{Binding CurrentPage}" Margin="50,0,0,0" NavigationUIVisibility="Hidden"/>

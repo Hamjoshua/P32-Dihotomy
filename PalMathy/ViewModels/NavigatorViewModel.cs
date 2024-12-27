@@ -68,5 +68,27 @@ namespace PalMathy.ViewModels
                 });
             }
         }
+
+        public ICommand GoToSlau
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    CurrentPage = new LinearEquationPage();
+                });
+            }
+        }
+
+        public ICommand GoToLeastSquares
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    CurrentPage = new LeastSquaresPage();
+                });
+            }
+        }
     }
 }
