@@ -1,77 +1,65 @@
 ﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using Microsoft.Office.Interop.Excel;
 using System.Windows;
 using PalMathy.Extensions;
-using System.IO.Packaging;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
 using System.ComponentModel;
+using DocumentFormat.OpenXml;
 
 namespace PalMathy.Helpers
 {
     public class ImportHelper
     {
-        public static ObservableCollection<ObservableCollection<T>> Get2DList<T>(int expectedRowsCount = -1)
+        public static ObservableCollection<ObservableCollection<T>> Get2DList<T>(int expectedRowsCount = -1, bool isExtendedMatrix = false)
         {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Excel таблица (*.xls;*.xlsx)|*.xls;*.xlsx";
+            openFileDialog.ShowDialog();
+
             ObservableCollection<ObservableCollection<T>> nums = new ObservableCollection<ObservableCollection<T>>();
 
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Excel таблица (*.xls)|*.xls";
-
-            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
-            Workbook workbook = excel.Workbooks.Open(openFileDialog.FileName);
-            if (workbook.Worksheets.Count == 0)
+            using (SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.Open(openFileDialog.FileName, false))
             {
-                throw new Exception("В Excel файле нет рабочих листов.");
-            }
-            Worksheet worksheet = (Worksheet)workbook.Worksheets[0];
 
-            int rowCount = worksheet.Rows.Count;
-            int colCount = worksheet.Columns.Count;
+                WorkbookPart workbookPart = spreadsheetDocument.WorkbookPart ?? spreadsheetDocument.AddWorkbookPart();
+                WorksheetPart worksheetPart = workbookPart.WorksheetParts.First();
+                SheetData sheetData = worksheetPart.Worksheet.Elements<SheetData>().First();
+                string? text;
 
-            if (expectedRowsCount != -1)
-            {
-                if (rowCount > expectedRowsCount)
+                int rowCount = sheetData.Elements<Row>().Count();                
+
+                if (expectedRowsCount != -1)
                 {
-                    throw new ArgumentException("В матрице должно быть только две строки - X и Y!");
-                }
-            }
-
-            for (int row = 0; row <= rowCount; row++)
-            {
-                var rowData = new ObservableCollection<T>();
-
-                for (int col = 0; col <= colCount; col++)
-                {
-                    var cellValue = worksheet.Cells[row, col].ToString();
-
-                    var converter = TypeDescriptor.GetConverter(typeof(T));
-                    try
+                    if (rowCount > expectedRowsCount)
                     {
-                        if (converter != null && cellValue != null)
+                        throw new ArgumentException($"В матрице должно быть больше {expectedRowsCount} строк");
+                    }
+                }                
+
+                foreach (Row r in sheetData.Elements<Row>())
+                {
+                    if (isExtendedMatrix)
+                    {
+                        if (r.Elements<Cell>().Count() != rowCount + 1)
                         {
-                            rowData.Add((T)converter.ConvertFromString(cellValue));
+                            throw new ArgumentException($"Неверный формат расширенной матрицы");
                         }
                     }
-                    catch(Exception ex)
+
+                    ObservableCollection<T> newRow = new ObservableCollection<T>();
+                    foreach (Cell c in r.Elements<Cell>())
                     {
-                        if(col != 0 && row != 0)
+                        c.DataType = new EnumValue<CellValues>(CellValues.SharedString);
+                        var converter = TypeDescriptor.GetConverter(typeof(T));
+                        if (converter != null)
                         {
-                            throw ex;
-                        }
-                        else
-                        {
-                            continue;
-                        }
+                            var stringValue = c?.CellValue.InnerText;
+                            newRow.Add((T)converter.ConvertFromString(stringValue));
+                        }                        
                     }
-                    
-                }
-                // Добавляем только не пустые строки
-                if (rowData.Count > 0)
-                {
-                    nums.Add(rowData);
+                    nums.Add(newRow);
                 }
             }
 

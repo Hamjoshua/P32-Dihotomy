@@ -25,7 +25,7 @@ namespace PalMathy.ViewModels
             set
             {
                 _randomExpert.MinBound = value;
-                OnPropertyChanged(nameof(MinRandomBound));                
+                OnPropertyChanged(nameof(MinRandomBound));
             }
         }
 
@@ -35,7 +35,7 @@ namespace PalMathy.ViewModels
             set
             {
                 _randomExpert.MaxBound = value;
-                OnPropertyChanged(nameof(MaxRandomBound));                
+                OnPropertyChanged(nameof(MaxRandomBound));
             }
         }
 
@@ -47,7 +47,8 @@ namespace PalMathy.ViewModels
         };
         public List<string> Sizes { get; set; } = new List<string>()
         {
-            "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9"
+            "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9",
+            "10x10", "11x11", "12x12", "13x13", "14x14", "15x15"
         };
 
         public ObservableCollection<SlauWholeReport> WholeReports
@@ -80,7 +81,7 @@ namespace PalMathy.ViewModels
             }
             set
             {
-                int firstChar = Math.Abs('0' - value[0]);
+                int firstChar = int.Parse(value.Split("x")[0]);
 
                 ResizeMatrix(firstChar);
 
@@ -105,7 +106,7 @@ namespace PalMathy.ViewModels
                         ObservableCollection<double> row = new ObservableCollection<double>();
                         for (int _ = 0; _ < size + 1; ++_)
                         {
-                            row.Add(0);
+                            row.Add(_randomExpert.GetRandomNumber());
                         }
                         Matrix.Add(row);
                     }
@@ -118,15 +119,15 @@ namespace PalMathy.ViewModels
                 // Регулируем отделньные ячейки
                 foreach (var row in Matrix)
                 {
-                    while(row.Count != size + 1)
+                    while (row.Count != size + 1)
                     {
                         if (row.Count > size + 1)
                         {
-                                row.RemoveAt(0);
+                            row.RemoveAt(0);
                         }
                         else if (row.Count < size + 1)
                         {
-                                row.Insert(0, 0);
+                            row.Insert(0, _randomExpert.GetRandomNumber());
                         }
                         else
                         {
@@ -147,7 +148,8 @@ namespace PalMathy.ViewModels
                 {
                     try
                     {
-                        Matrix = ImportHelper.Get2DList<double>();
+                        Matrix = ImportHelper.Get2DList<double>(isExtendedMatrix: true);
+                        SizeOfMatrix = $"{Matrix.Count}x{Matrix.Count}";
                     }
                     catch (Exception ex)
                     {
@@ -163,15 +165,15 @@ namespace PalMathy.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    foreach(var row in Matrix)
+                    foreach (var row in Matrix)
                     {
-                        for(int valueIndex = 0; valueIndex <= Matrix.Count; ++valueIndex)
+                        for (int valueIndex = 0; valueIndex <= Matrix.Count; ++valueIndex)
                         {
                             row[valueIndex] = _randomExpert.GetRandomNumber();
                         }
                     }
                     OnPropertyChanged(nameof(Matrix));
-                });                
+                });
             }
         }
 
