@@ -20,6 +20,8 @@
                 <Setter Property="TextWrapping" Value="Wrap"></Setter>
             </Style>
             
+            
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -19,6 +19,11 @@ namespace PalMathy
         public MainWindow()
         {
             InitializeComponent();
-        }        
+        }
+
+        private void Frame_Navigated()
+        {
+
+        }
     }
 }

@@ -93,7 +93,7 @@ namespace PalMathy.ViewModels
 
         public void SetResultsToFormat()
         {
-            ObservableCollection<HideableString> results = new ObservableCollection <HideableString> (IntegralResults.ToList());
+            ObservableCollection<HideableString> results = new ObservableCollection<HideableString>(IntegralResults.ToList());
             foreach (var result in results)
             {
                 result.FormattedResult = result.Result.ToString($"N{EpsilonFormat}");
@@ -176,18 +176,6 @@ namespace PalMathy.ViewModels
             }
         }
 
-        public ICommand BuildGraph
-        {
-            get
-            {
-                IntegralResults.Clear();
-                return new DelegateCommand((obj) =>
-                {
-                    PageGraph = _graphContainer.CalculateGraph();
-                });
-            }
-        }
-
         public ICommand ShowOrHideSubdivideSeries
         {
             get
@@ -243,7 +231,7 @@ namespace PalMathy.ViewModels
 
             if (!result)
             {
-                MessageBox.Show("Не выбран ни один метод рассчета определенного интеграла", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Не выбран ни один метод рассчета определенного интеграла", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             return result;
@@ -255,24 +243,26 @@ namespace PalMathy.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
+                    IntegralResults.Clear();
+                    
+                    PageGraph = _graphContainer.CalculateGraph();                    
+
                     if (!IsGraphBuilded() || !IsIntegralMethodSelected())
                     {
                         return;
-                    }
-
-                    IntegralResults.Clear();
+                    }                    
 
                     foreach (var integralMethod in IntegralMethods)
                     {
                         if (integralMethod.IsEnabled)
                         {
                             double result = integralMethod.CalculateResult(
-                            _graphContainer.FunctionString,
-                            _graphContainer.B.Value,
-                            _graphContainer.A.Value,
-                            _graphContainer.C.Value,
-                            _graphContainer.Epsilon
-                        );
+                                _graphContainer.FunctionString,
+                                _graphContainer.B.Value,
+                                _graphContainer.A.Value,
+                                _graphContainer.C.Value,
+                                _graphContainer.Epsilon
+                            );
                             // Добавляем сделанные разделения в существующий график
                             PageGraph = SetSubdivisionToGraph(integralMethod.GetSubdivision());
 

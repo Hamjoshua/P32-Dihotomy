@@ -13,6 +13,6 @@
                 Text="Привет! Я Палмафи" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Image Source="/Materials/palmathy-char.png" Stretch="Fill" HorizontalAlignment="Center" Height="220" Width="261"/>
         <TextBlock Text="И я помогу тебе со всеми задачками, с которыми ты столкнешься при изучении математики. 
-Просто разверни боковое меню, чтобы мы могли начать!" FontSize="18" TextWrapping="Wrap" Width="516"/>
+Просто разверни боковое меню, чтобы мы могли начать!" FontSize="18" TextAlignment="Center" TextWrapping="Wrap" Width="516"/>
     </StackPanel>
 </Page>

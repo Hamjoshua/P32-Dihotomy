@@ -9,8 +9,7 @@
       xmlns:rbc="clr-namespace:PalMathy.Converters"
       xmlns:viewmodels="clr-namespace:PalMathy.ViewModels"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      mc:Ignorable="d"
       Title="DihotomyPage">
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
@@ -63,11 +62,11 @@
                 materialDesign:HintAssist.Hint="E = " Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,10"/>
         </StackPanel>
 
-
-
-        <materialDesign:Card Grid.Row="2" Grid.Column="1" Margin="10" Padding="10" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}"
+        <materialDesign:Card x:Name="vb" Grid.Row="2" Grid.Column="1" Margin="10" Padding="10" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}"
             Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" UniformCornerRadius="6">
-            <TextBlock Text="{Binding Description}" TextWrapping="Wrap"/>
+            <Viewbox VerticalAlignment="Top">
+                <TextBlock TextWrapping="WrapWithOverflow" MaxWidth="250" TextAlignment="Justify" Text="{Binding Description}"/>
+            </Viewbox>
         </materialDesign:Card>
 
 
@@ -88,7 +87,9 @@
 
         <materialDesign:Card Grid.Row="2" Grid.Column="2" Margin="10" Padding="10" Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}"
                 Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" UniformCornerRadius="6">
-            <TextBlock Text="{Binding Result}" TextWrapping="Wrap"/>
+            <Viewbox VerticalAlignment="Top">
+                <TextBlock Text="{Binding Result}" MaxWidth="250" TextWrapping="Wrap"/>
+            </Viewbox>
         </materialDesign:Card>
 
 

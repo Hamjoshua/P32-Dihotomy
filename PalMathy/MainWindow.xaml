@@ -14,7 +14,11 @@
         <viewmodels:NavigatorViewModel />
     </Window.DataContext>
     <Grid>
-        <Expander ExpandDirection="Right" HorizontalAlignment="Left" Panel.ZIndex="3">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Expander Grid.Column="0" ExpandDirection="Right" HorizontalAlignment="Left" Panel.ZIndex="3">
             <Expander.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF352E92"/>
@@ -49,6 +53,6 @@
                         Content="Метод наименьших квадратов" Background="#7FFFFFFF"></Button>
             </StackPanel>
         </Expander>
-        <Frame Content="{Binding CurrentPage}" Margin="50,0,0,0" NavigationUIVisibility="Hidden"/>
+        <Frame Grid.Column="1" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
