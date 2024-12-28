@@ -275,7 +275,10 @@ ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" Ver
             <StackPanel Orientation="Horizontal" Grid.Row="4" HorizontalAlignment="Right">
                 <Button Height="24" Content="ОТМЕНИТЬ ВСЕ СОРТИРОВКИ" FontSize="12" materialDesign:ButtonAssist.CornerRadius="10"
                     Command="{Binding CancelSortings}"
-                    Style="{StaticResource MaterialDesignRaisedSecondaryButton}" Background="#FFCC0E4B" BorderBrush="#FFCC0E4B">
+                    Style="{StaticResource MaterialDesignRaisedSecondaryButton}" BorderBrush="{x:Null}">
+                    <Button.Background>
+                        <SolidColorBrush Color="{DynamicResource CancelColor}"/>
+                    </Button.Background>
                 </Button>
             </StackPanel>
 

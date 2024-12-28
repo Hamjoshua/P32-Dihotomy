@@ -18,9 +18,9 @@
             <Style x:Key="PopupText" TargetType="TextBlock">
                 <Setter Property="MaxWidth" Value="300" ></Setter>
                 <Setter Property="TextWrapping" Value="Wrap"></Setter>
-            </Style>
+            </Style>            
             
-            
+            <Color x:Key="CancelColor">#e57373</Color>
             
         </ResourceDictionary>
     </Application.Resources>

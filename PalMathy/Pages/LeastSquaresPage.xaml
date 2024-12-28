@@ -32,9 +32,9 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <materialDesign:Card Grid.Row="1" Grid.Column="0" Padding="10" Margin="0,0,10,0" Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}"
+            <materialDesign:Card Grid.Row="1" Grid.Column="0" Padding="10" Margin="10" Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}"
         Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" UniformCornerRadius="6">
-                <TextBox IsReadOnly="True" Text="{Binding Result, Mode=OneWay}" TextWrapping="Wrap"/>
+                <TextBox IsReadOnly="True" Text="{Binding Result, Mode=OneWay, TargetNullValue=Здесь будет выводиться результат}" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
             </materialDesign:Card>
 
             <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" RenderTransformOrigin="50,0" HorizontalAlignment="Right">
@@ -76,11 +76,14 @@ Orientation="Horizontal">
                 </materialDesign:PopupBox>
             </StackPanel>
 
-            <dg2d:DataGrid2D Name="d2dGrid" Grid.Row="1" Grid.Column="1" LoadingRow="d2dGrid_LoadingRow"
-                 ItemsSource2D="{Binding Matrix}">
-            </dg2d:DataGrid2D>
+            <materialDesign:Card Margin="10" Padding="10" Grid.Column="1" Grid.Row="1" UniformCornerRadius="6">
+                <dg2d:DataGrid2D Name="d2dGrid" LoadingRow="d2dGrid_LoadingRow" BorderBrush="{x:Null}"
+                    ItemsSource2D="{Binding Matrix}">
+                </dg2d:DataGrid2D>
+            </materialDesign:Card>
+            
 
-            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right">
+            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,0,10,10">
                 <Button Height="24" Content="ПОСЧИТАТЬ" FontSize="12" materialDesign:ButtonAssist.CornerRadius="10"
                     Command="{Binding Calculate}"
                     Style="{StaticResource MaterialDesignRaisedSecondaryButton}">
@@ -121,17 +124,22 @@ VerticalAlignment="Top" HorizontalAlignment="Right">
                 <Button Command="{Binding RemoveColumnFromMatrix}"
                         MouseLeave="ComboBox_MouseLeave"
                     Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
-                    ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top" Background="#FFCC0E4B" BorderBrush="#FFCC0E4B">
+                    ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top" BorderBrush="{x:Null}">
+                    <Button.Background>
+                        <SolidColorBrush Color="{DynamicResource CancelColor}"/>
+                    </Button.Background>
+
                     <materialDesign:PackIcon
                         Width="16"
                         Height="16"
-                        Kind="Minus"/>
-                </Button>
-
-
+                        Kind="Minus" />
+                </Button>             
             </StackPanel>
 
         </Grid>
-        <oxy:PlotView Grid.Row="1" Grid.ColumnSpan="2" x:Name="pvGraph" Model="{Binding Graph}"/>
+        <materialDesign:Card Grid.Row="1" Grid.ColumnSpan="2" Margin="10" Padding="10">
+            <oxy:PlotView x:Name="pvGraph" Model="{Binding Graph}"/>
+        </materialDesign:Card>
+        
     </Grid>
 </Page>

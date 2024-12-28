@@ -68,9 +68,12 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        
-        <oxy:PlotView Grid.Row="0" Grid.Column="1" x:Name="pvGraph" Model="{Binding PageGraph}"/>
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">            
+
+        <materialDesign:Card Margin="10" Padding="10" Grid.Row="0" Grid.Column="1" >
+            <oxy:PlotView x:Name="pvGraph" Model="{Binding PageGraph}"/>
+        </materialDesign:Card>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,10,0">
             <Button Height="24" Content="ПОСЧИТАТЬ" FontSize="12"  materialDesign:ButtonAssist.CornerRadius="10"
                              Command="{Binding CalculateResult}"
                             Style="{StaticResource MaterialDesignRaisedSecondaryButton}">
@@ -83,8 +86,8 @@
                                 Width="16"
                                 Height="16"
                                 Kind="Refresh"/>
-            </Button>            
-        </StackPanel>        
+            </Button>
+        </StackPanel>
 
         <ScrollViewer Grid.Row="2" Grid.Column="0" VerticalScrollBarVisibility="Auto">
             <materialDesign:Card 
@@ -103,12 +106,12 @@
                 </ItemsControl>
             </materialDesign:Card>
         </ScrollViewer>
-        
+
         <Grid Grid.Row="2" Grid.Column="1" Name="IntegralGrid" Margin="0,0,10,0">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>                
+                <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -122,18 +125,18 @@
            FontSize="14" HorizontalAlignment="Left" FontFamily="Bahnschrift" VerticalAlignment="Center"/>
             </Viewbox>
 
-            
-                <TextBox Grid.Row="0" Grid.Column="4" materialDesign:HintAssist.Hint="{Binding SubdivCount.Hint}"
+
+            <TextBox Grid.Row="0" Grid.Column="4" materialDesign:HintAssist.Hint="{Binding SubdivCount.Hint}"
             Text="{Binding SubdivCount.Value}" VerticalAlignment="Center"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"></TextBox>
-                <TextBox Grid.Row="1" Grid.Column="4" materialDesign:HintAssist.Hint="Точность Epsilon"
+            <TextBox Grid.Row="1" Grid.Column="4" materialDesign:HintAssist.Hint="Точность Epsilon"
             Text="{Binding Epsilon}" VerticalAlignment="Center"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"></TextBox>
 
             <Border Grid.Column="2" Grid.RowSpan="3" Margin="10" Background="#FF0D0D0D" Width="1">
-                
+
             </Border>
-            
+
 
             <TextBox materialDesign:HintAssist.Hint="{Binding BMax.Hint}" Grid.Row="0" Grid.Column="1"
                 Text="{Binding BMax.Value}"
@@ -145,8 +148,8 @@
 
             <TextBox materialDesign:HintAssist.Hint="{Binding AMin.Hint}" Grid.Row="2" Grid.Column="1"
                 Text="{Binding AMin.Value}"
-                Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"/>         
-            
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"/>
+
         </Grid>
 
     </Grid>

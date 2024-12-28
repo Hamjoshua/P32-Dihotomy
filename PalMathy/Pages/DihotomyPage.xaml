@@ -10,7 +10,7 @@
       xmlns:viewmodels="clr-namespace:PalMathy.ViewModels"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       mc:Ignorable="d"
-      Title="DihotomyPage">
+      Title="DihotomyPage" Cursor="">
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <rbc:RadioButtonConverter x:Key="RBConverter"></rbc:RadioButtonConverter>
@@ -19,10 +19,10 @@
         <viewmodels:MathViewModel />
     </Page.DataContext>
 
-    <Grid Background="#FFFFFF">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -31,7 +31,7 @@
             <ColumnDefinition Width="5*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Margin="4" Orientation="Vertical" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0">
+        <StackPanel Margin="4" Orientation="Vertical" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
             <RadioButton Margin="4" Content="ДИХОТОМИЯ" Style="{StaticResource MaterialDesignTabRadioButtonRight}"
                          GroupName="Method" IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=D }" HorizontalAlignment="Right"/>
             <RadioButton Margin="4" Content="ЗОЛ. СЕЧЕНИЕ" Style="{StaticResource MaterialDesignTabRadioButtonRight}"
@@ -42,14 +42,8 @@
                          GroupName="Method" IsChecked="{Binding ChosenMethod, Converter={StaticResource ResourceKey=RBConverter}, ConverterParameter=C }" HorizontalAlignment="Right"/>
         </StackPanel>
 
-        <materialDesign:Card VerticalAlignment="Top" Grid.Row="0" Grid.ColumnSpan="3">
-            <Menu>
-                <MenuItem Header="Очистка полей" Command="{Binding ClearFields}" />
-                <MenuItem Header="Посчитать результат" Command="{Binding CalculateFunction}" />
-            </Menu>
-        </materialDesign:Card>
 
-        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Margin="10">
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="0" Margin="10">
             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FunctionString}"
                 materialDesign:HintAssist.Hint="f(x) = " Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding A.Value}"
@@ -62,32 +56,51 @@
                 materialDesign:HintAssist.Hint="E = " Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,10"/>
         </StackPanel>
 
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
+            <Button Command="{Binding ClearFields}"
+                Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
+                ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top">
+                <materialDesign:PackIcon
+                    Width="16"
+                    Height="16"
+                    Kind="Trash"/>
+            </Button>
+            <Button Height="24" Content="ПОСТРОИТЬ" FontSize="12"  materialDesign:ButtonAssist.CornerRadius="10"
+                Command="{Binding CalculateFunction}"
+                Style="{StaticResource MaterialDesignRaisedSecondaryButton}" />
+        </StackPanel>
+
         <materialDesign:Card x:Name="vb" Grid.Row="2" Grid.Column="1" Margin="10" Padding="10" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}"
             Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" UniformCornerRadius="6">
-            <Viewbox VerticalAlignment="Top">
+            <Viewbox VerticalAlignment="Top" HorizontalAlignment="Left">
                 <TextBlock TextWrapping="WrapWithOverflow" MaxWidth="250" TextAlignment="Justify" Text="{Binding Description}"/>
             </Viewbox>
         </materialDesign:Card>
 
 
-        <Grid Grid.Column="2" Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="9*"></RowDefinition>
-                <RowDefinition Height="1*"></RowDefinition>
-            </Grid.RowDefinitions>
 
-            <oxy:PlotView Grid.Row="0" x:Name="pvGraph" Model="{Binding Plot}"/>
-            <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock Text="Строить функцию от x=" VerticalAlignment="Center"></TextBlock>
-                <TextBox HorizontalAlignment="Left" Text="{Binding BeginInterval}" Width="50px"></TextBox>
-                <TextBlock Text="до x=" VerticalAlignment="Center"></TextBlock>
-                <TextBox HorizontalAlignment="Right" Text="{Binding EndInterval}" Width="50px"></TextBox>
-            </StackPanel>
-        </Grid>
+        <materialDesign:Card Grid.Column="2" Grid.Row="0" UniformCornerRadius="6" Padding="10" Margin="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="9*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <oxy:PlotView  x:Name="pvGraph" Model="{Binding Plot}"/>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock Text="Строить функцию от x=" VerticalAlignment="Center"></TextBlock>
+                    <TextBox HorizontalAlignment="Left" Text="{Binding BeginInterval}" Width="50px"></TextBox>
+                    <TextBlock Text="до x=" VerticalAlignment="Center"></TextBlock>
+                    <TextBox HorizontalAlignment="Right" Text="{Binding EndInterval}" Width="50px"></TextBox>
+                </StackPanel>
+            </Grid>
+        </materialDesign:Card>
+
+
+
 
         <materialDesign:Card Grid.Row="2" Grid.Column="2" Margin="10" Padding="10" Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}"
                 Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" UniformCornerRadius="6">
-            <Viewbox VerticalAlignment="Top">
+            <Viewbox VerticalAlignment="Top" HorizontalAlignment="Left">
                 <TextBlock Text="{Binding Result}" MaxWidth="250" TextWrapping="Wrap"/>
             </Viewbox>
         </materialDesign:Card>
