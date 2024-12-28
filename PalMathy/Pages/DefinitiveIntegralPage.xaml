@@ -81,7 +81,7 @@
             </Button>
             <Button Command="{Binding ShowOrHideSubdivideSeries}"                        
                 Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
-                ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
+                ToolTip="Обновить график" Height="24" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
                 <materialDesign:PackIcon
                                 Width="16"
                                 Height="16"

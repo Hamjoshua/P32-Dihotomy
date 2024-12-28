@@ -92,7 +92,7 @@ Orientation="Horizontal">
                 <Button Command="{Binding RandomMatrix}"                    
         MouseLeave="ComboBox_MouseLeave"
         Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
-        ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" 
+        ToolTip="Сгенерировать числа" Height="24" Width="24" 
         VerticalAlignment="Top" HorizontalAlignment="Right">
                     <materialDesign:PackIcon
                 Width="16"
@@ -103,7 +103,7 @@ Orientation="Horizontal">
                 <Button Command="{Binding ParseElementsFromFile}"                    
 MouseLeave="ComboBox_MouseLeave"
 Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
-ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" 
+ToolTip="Прочитать из файла" Height="24" Width="24" 
 VerticalAlignment="Top" HorizontalAlignment="Right">
                     <materialDesign:PackIcon
         Width="16"
@@ -114,7 +114,7 @@ VerticalAlignment="Top" HorizontalAlignment="Right">
                 <Button Command="{Binding AddColumnToMatrix}" Margin="5,0,0,0"
                         MouseLeave="ComboBox_MouseLeave"
                     Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
-                    ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
+                    ToolTip="Добавить новый столбец" Height="24" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
                     <materialDesign:PackIcon
                         Width="16"
                         Height="16"
@@ -124,7 +124,7 @@ VerticalAlignment="Top" HorizontalAlignment="Right">
                 <Button Command="{Binding RemoveColumnFromMatrix}"
                         MouseLeave="ComboBox_MouseLeave"
                     Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
-                    ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top" BorderBrush="{x:Null}">
+                    ToolTip="Удалить столбец" Height="24" Width="24" VerticalAlignment="Top" BorderBrush="{x:Null}">
                     <Button.Background>
                         <SolidColorBrush Color="{DynamicResource CancelColor}"/>
                     </Button.Background>

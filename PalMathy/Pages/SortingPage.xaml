@@ -162,7 +162,7 @@ Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{Binding Name}" 
 
                     <Button Command="{Binding GenerateList}"
 Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
-ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
+ToolTip="Сгенерировать числа" Height="24" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
                         <materialDesign:PackIcon
                                 Width="16"
                                 Height="16"
@@ -171,7 +171,7 @@ ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" Ver
 
                     <Button Command="{Binding ShuffleElements}"
     Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
-    ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
+    ToolTip="Перемешать числа" Height="24" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
                         <materialDesign:PackIcon
             Width="16"
             Height="16"
@@ -179,7 +179,7 @@ ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" Ver
                     </Button>
                     <Button Command="{Binding ParseElementsFromFile}"
     Style="{StaticResource MaterialDesignFloatingActionSecondaryLightButton}"
-    ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="24" Width="24" VerticalAlignment="Top">
+    ToolTip="Прочитать из файла" Height="24" Width="24" VerticalAlignment="Top">
                         <materialDesign:PackIcon
         Width="16"
         Height="16"
