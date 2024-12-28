@@ -6,11 +6,16 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>palmathy-icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Materials\palmathy-char.png" />
     <None Remove="Materials\palmathy-icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="palmathy-icon.ico" />
   </ItemGroup>
 
   <ItemGroup>

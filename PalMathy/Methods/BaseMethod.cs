@@ -108,8 +108,7 @@ namespace PalMathy.Methods
         }
 
         public virtual string CalculateResult()
-        {
-            ParseFunction(A.Value, B.Value);
+        {            
             string result = "";
             if (_countOfZeros == 0)
             {
@@ -212,7 +211,7 @@ namespace PalMathy.Methods
             Function parsedFunction = GetFunction();
             double prevY = 0;
 
-            for (double counterI = start; counterI <= end; counterI += 0.15)
+            for (double counterI = start; counterI <= end; counterI += 1)
             {
                 Expression e1 = new Expression($"f({counterI.ToString().Replace(",", ".")})", parsedFunction);
                 double newY = e1.calculate();
